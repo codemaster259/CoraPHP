@@ -1,0 +1,15 @@
+AddDefaultCharset UTF-8
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+### USE THIS IF index.php IS IN PUBLIC FOLDER ###
+# if request_filename is not a directory
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# if request_filename is not a file
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# QSA = Query String Append
+RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
