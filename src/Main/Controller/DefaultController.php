@@ -30,4 +30,5 @@ class DefaultController extends TemplateController{
         
         $this->template->add("web_content", $view);
     }
+    
 }
