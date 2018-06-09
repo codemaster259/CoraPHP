@@ -23,18 +23,25 @@ define('CORE_ROOT', dirname(__FILE__).'/');
 require_once CORE_ROOT.'src/Core/Loader.php';
 
 use Core\Loader;
-
-Loader::load();
-
-//Loader::enable();
-
-Loader::$DEFAULT_PATH = CORE_ROOT."src/";
-
 use Core\Module;
 use Core\Router;
 use Core\View;
+use Core\Bucket;
+
+Loader::load();
+//Loader::enableLog();
+Loader::$DEFAULT_PATH = CORE_ROOT."src/";
 
 View::$DEFAULT_PATH = CORE_ROOT."src/";
+
+
+
+$bucket = new Bucket("main");
+
+$bucket->set("lang", new Core\Lang());
+$bucket->set("lang", new Core\Lang());
+
+Router::setBucket($bucket);
 
 require_once CORE_ROOT.'app/config/routes.php';
 

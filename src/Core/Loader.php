@@ -4,6 +4,12 @@ namespace Core;
 class Loader{
     
     public static $DEFAULT_PATH = null;
+    
+    public static function setDefaultPath($path)
+    {
+        self::$DEFAULT_PATH = $path;
+    }
+    
     public static $DEFAULT_EXT = ".php";
     
     private static $paths = array();
@@ -94,8 +100,8 @@ class Loader{
     
     private static $enabled_log = false;
     
-    public static function enable(){self::$enabled_log = true;}
-    public static function disable(){self::$enabled_log = false;}
+    public static function enableLog(){self::$enabled_log = true;}
+    public static function disableLog(){self::$enabled_log = false;}
     
     public static function log($log)
     {

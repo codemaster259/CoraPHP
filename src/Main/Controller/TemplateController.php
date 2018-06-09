@@ -19,7 +19,7 @@ class TemplateController extends Controller{
         
         if($this->request->isInitial())
         {
-            $msg = $this->load("Main:Service:MessageService");
+            $msg = $this->bucket->load("Main:Service:MessageService");
             
             $layout = "Main:Layout:base";
             $this->template = View::make($layout)

@@ -1,6 +1,7 @@
 <html>
     <head>
         <title><?php echo $web_title;?></title>
+        <link href='images/favicon.ico' rel='shortcut icon' type='image/x-icon'>
         <link rel="stylesheet" href="css/style.css?<?php echo rand();?>" />
     </head>
     <body>
@@ -17,9 +18,8 @@
                 </div>
             </div>
             <div id='footer' class='row'>
-                <?php echo $web_msg;?> - Copy &copy; 2018
+                <?php echo $web_msg;?> - CoraPHP v3 &copy; 2018
             </div>
         </div>
     </body>
 </html>
-

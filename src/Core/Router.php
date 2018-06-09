@@ -3,8 +3,14 @@ namespace Core;
 
 class Router{
     
-    private static $routes = array();
+    
     public $url = "/";
+    private static $routes = array();
+    protected static $bucket = null;
+    
+    public static function setBucket(Bucket $bucket) {
+        self::$bucket = $bucket;
+    }
     
     public static function register($route, $data)
     {
@@ -69,6 +75,8 @@ class Router{
                     ->set("_action", $action)
                     ->set("_url", $this->url);
             
+            self::$bucket->set("request", $request);
+            
             if(!class_exists($controllerName))
             {
                 $controllerName = "Core\\ErrorController";
@@ -76,7 +84,7 @@ class Router{
             }
             
             /* @var Controler $controllerObject  */
-            $controllerObject = new $controllerName($request);
+            $controllerObject = new $controllerName(self::$bucket);
             
             if(!$controllerObject->actionExists($action))
             {

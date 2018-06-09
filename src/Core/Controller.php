@@ -10,9 +10,13 @@ class Controller{
     /** @var Response */
     protected $response = null;
     
-    public function __construct($request = null)
+    /** @var Bucket */
+    protected $bucket = null;
+    
+    public function __construct(Bucket $bucket)
     {
-        $this->request = $request;
+        $this->bucket = $bucket;
+        $this->request = $this->bucket->get("request");
         $this->response = new Response();
     }
     
@@ -34,26 +38,9 @@ class Controller{
         exit();
     }
     
-    public function load($library, $dependences = null)
+    public function get($library)
     {
-        $mcm = explode(":", $library);
-
-        $module = ucwords(strtolower($mcm[0]));
-        $section = ucwords(strtolower($mcm[1]));
-        $class = $mcm[2];
-        
-        $libString = "{$module}\\{$section}\\{$class}";
-        
-        $reflex = new \ReflectionClass($libString);
-        
-        if($dependences)
-        {
-            $lib = $reflex->newInstanceArgs($dependences);
-        }else{
-            $lib = $reflex->newInstanceArgs();
-        }
-        
-        return $lib;
+        return $this->bucket->get($library);
     }
  
     public function execute($action)
