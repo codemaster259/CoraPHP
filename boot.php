@@ -11,9 +11,9 @@
  * 
  * Vista:
  * 
- * string = Default:layout/main
+ * string = Default:Layout:main
  * 
- * DEFAULT_PATH.Default/view/layout/main.php
+ * DEFAULT_PATH.Default/Views/Layout/main.php
  */
 
 session_start();
@@ -26,7 +26,7 @@ use Core\Loader;
 
 Loader::load();
 
-Loader::enable();
+//Loader::enable();
 
 Loader::$DEFAULT_PATH = CORE_ROOT."src/";
 
