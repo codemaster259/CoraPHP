@@ -2,16 +2,15 @@
 
 namespace Main\Controller;
 
-use CoraPHP\Controller;
+use Core\Controller;
 
 /**
  * No direct access
  */
 class PrivateController extends Controller{
     
-    public function init()
-    {
-        parent::init();
+    public function init(){
+        
         //block direct access
         if($this->request->isInitial())
         {

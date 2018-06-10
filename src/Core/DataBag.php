@@ -1,10 +1,10 @@
 <?php
 
-namespace CoraPHP;
+namespace Core;
 
 class DataBag{
     
-    protected $data = array();
+    private $data = array();
     
     public function __construct($data = array())
     {
@@ -15,25 +15,13 @@ class DataBag{
      * 
      * @param string $key
      * @param mixed $value
-     * @return self
+     * @return \Core\DataBag
      */
     public function set($key, $value)
     {
         $this->data[$key] = $value;
         
         return $this;
-    }
-    
-    /**
-     * 
-     * @param array $data
-     */
-    public function fill($data = array())
-    {
-        foreach($data as $key => $value)
-        {
-            $this->set($key, $value);
-        }
     }
     
     /**
@@ -77,7 +65,7 @@ class DataBag{
     
     /**
      * Vacia la data
-     * @return self
+     * @return \Core\DataBag
      */
     public function clear()
     {

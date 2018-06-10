@@ -1,6 +1,6 @@
 <?php
 
-namespace CoraPHP;
+namespace Core;
 
 class Controller{
     
@@ -13,10 +13,10 @@ class Controller{
     /** @var Bucket */
     protected $bucket = null;
     
-    public function __construct(Request $request)
+    public function __construct(Bucket $bucket)
     {
-        $this->bucket = Bucket::instance();
-        $this->request = $request;
+        $this->bucket = $bucket;
+        $this->request = $this->bucket->get("request");
         $this->response = new Response();
     }
     
@@ -27,7 +27,14 @@ class Controller{
     
     public function redirect($urlOrRoute = "/")
     {
-        header("Location:{$urlOrRoute}".Router::getRouteByName($urlOrRoute));
+        $url = Router::getRouteByName($urlOrRoute);
+        
+        if(!$url)
+        {
+            $url = $urlOrRoute;
+        }
+        
+        header("Location: {$url}");
         exit();
     }
     
@@ -65,21 +72,7 @@ class Controller{
         return method_exists($this,$action."Action");
     }
     
-    public function init(){
-        $event = Event::create(array(
-            "request" => $this->request
-        ));
-        
-        EventManager::raiseEvent("controller:init", $event);
-    }
+    public function init(){}
     
-    public function finish(){
-        
-        $event = Event::create(array(
-            "request" => $this->request,
-            "response" => $this->response
-        ));
-        
-        EventManager::raiseEvent("controller:finish", $event);
-    }
+    public function finish(){}
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace CoraPHP;
+namespace Core;
 
 class Request{
     
@@ -17,8 +17,6 @@ class Request{
     public $attributes = null;
     
     protected $url = "/";
-    
-    /** @var Request initial request*/
     protected static $initial = null;
     
     protected $method = 'get';
@@ -61,10 +59,6 @@ class Request{
         return self::$initial == $this;
     }
     
-    /**
-     * 
-     * @return self
-     */
     public function getInitial()
     {
         return self::$initial;

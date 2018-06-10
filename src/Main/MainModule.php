@@ -2,7 +2,7 @@
 
 namespace Main;
 
-use CoraPHP\Module;
+use Core\Module;
 
 class MainModule extends Module{
     
