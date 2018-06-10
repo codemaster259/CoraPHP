@@ -2,8 +2,11 @@
 
 namespace Main\Controller;
 
-use Core\View;
+use CoraPHP\View;
 
+/**
+ * Partial views
+ */
 class WidgetController extends PrivateController{
     
     public function sidebarAction()

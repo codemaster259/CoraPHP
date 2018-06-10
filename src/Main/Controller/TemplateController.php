@@ -2,9 +2,8 @@
 
 namespace Main\Controller;
 
-use Core\Controller;
-use Core\View;
-
+use CoraPHP\Controller;
+use CoraPHP\View;
 /**
  * Controller con template
  */
@@ -14,6 +13,7 @@ class TemplateController extends Controller{
     
     public function init()
     {
+        parent::init();
         $layout = "Main:Layout:blank";
         $this->template = View::make($layout);
         
@@ -26,12 +26,14 @@ class TemplateController extends Controller{
                 ->add("web_title", "My Web")
                 ->add("web_sidebar", $this->fordward("/widget/sidebar"))
                 ->add("web_menu", $this->fordward("/widget/menu"))
+                ->add("web_http", $this->bucket->get("URLS")["CORE_URL"])
                 ->add("web_msg", $msg->sayHello());
         }
     }
     
     public function finish()
     {
+        parent::finish();
         $this->response->body($this->template);
     }
 }

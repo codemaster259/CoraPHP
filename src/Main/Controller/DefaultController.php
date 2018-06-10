@@ -2,8 +2,11 @@
 
 namespace Main\Controller;
 
-use Core\View;
+use CoraPHP\View;
 
+/**
+ * DefaultController
+ */
 class DefaultController extends TemplateController{
     
     public function indexAction()

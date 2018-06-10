@@ -1,5 +1,6 @@
 <html>
     <head>
+        <base href="<?php echo $web_http;?>" />
         <title><?php echo $web_title;?></title>
         <link href='images/favicon.ico' rel='shortcut icon' type='image/x-icon'>
         <link rel="stylesheet" href="css/style.css?<?php echo rand();?>" />
