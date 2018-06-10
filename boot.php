@@ -29,7 +29,6 @@ use CoraPHP\Router;
 use CoraPHP\View;
 use CoraPHP\Bucket;
 use CoraPHP\ArrayLoader;
-use CoraPHP\INIParser;
 
 //Init Loader
 Loader::load();
@@ -39,6 +38,7 @@ Loader::addPath(CORE_ROOT."core/");
 
 
 Bucket::instance()->set("URLS", define_urls(__FILE__));
+Bucket::instance()->set("PAGE_TITLE", "My Website");
 
 
 $url = Bucket::instance()->get("URLS")["REQUEST_URL"];
@@ -50,8 +50,6 @@ ArrayLoader::setRecursiveKey("resource");
 
 $routes = ArrayLoader::load(CORE_ROOT."app/config/routes.ini", CORE_ROOT);
 
-debug($routes);
-
 Router::registerRoutes($routes);
 
 $router = new Router();
@@ -61,6 +59,9 @@ $response = $router->dispatch($url);
 echo $response;
 
 /*
+
+ //Routing with EventManager xD
+ 
 use CoraPHP\EventManager;
 use CoraPHP\Event;
 

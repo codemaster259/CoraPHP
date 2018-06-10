@@ -1,5 +1,20 @@
-<div class='menu'>
-    <a href="/">Home</a>
-    <a href="/default">Default</a>
-    <a href="/about">About</a>
-</div>
+<header class="menu nav-menu grid-row">
+	<nav class=''>
+		<div class='container'>			
+			<div class="nav-title"><?php echo $web_title;?></div>
+			<label class="nav-label" for="toggle" class="button">
+				<span></span>
+			</label>
+			<input class="nav-chbx" type="checkbox" id="toggle">
+			<ul class="nav-ul">
+				<li><a href="/">Home</a></li>
+				<li><a href="/about">About</a></li>
+				<li><a href="/about">About</a></li>
+				<li><a href="/about">About</a></li>
+				<li><a href="/about">About</a></li>
+				<li><a href="/about">About</a></li>
+				<li><a href="/about">About</a></li>
+			</ul>
+		</div>
+	</nav>
+</header>

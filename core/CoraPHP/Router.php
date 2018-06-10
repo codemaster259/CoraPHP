@@ -46,7 +46,7 @@ class Router{
             //match by path
             foreach(self::$routes as $route)
             {
-                if($route['route'] == $this->url)
+                if(isset($route['route']) && $route['route'] == $this->url)
                 {
                     $match = $route['path'];
                     break;

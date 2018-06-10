@@ -28,7 +28,8 @@ class WidgetController extends PrivateController{
     
     public function menuAction()
     {        
-        $view = View::make("Main:Shared:menu");        
+        $view = View::make("Main:Shared:menu")
+				->add("web_title", $this->bucket->get("PAGE_TITLE"));
         $this->response->body($view);
     }
 }

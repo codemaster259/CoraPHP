@@ -1,0 +1,54 @@
+/* 
+    Created on : 10/06/2018, 11:43:35 AM
+    Author     : Pirulo
+	File       : pirulo.grid.css
+*/
+
+/* Mobile first styles go here */
+
+.grid-row{
+	width:100%;
+}
+
+.grid-row::before,
+.grid-row::after {
+  display: table;
+  content: " ";
+  clear: both;
+}
+
+[class^="grid-"]
+{
+	width: 100%;
+}
+
+@media screen and (min-width: 800px) {
+/* Desktop styles go here */
+
+/*full*/
+.grid-all {width: 100%;}
+
+/*half*/
+.grid-half {width: calc(100% / 2);}
+
+/*3-column*/
+.grid-1-3 {width: calc(100% / 3);}
+.grid-2-3 {width: calc(100% / 3 * 2);}
+
+/*4-column*/
+.grid-1-4 {width: calc(100% / 4);}
+.grid-3-4 {width: calc(100% / 4 * 3);}
+
+/*column floated*/
+.column {float:left;}
+
+.container {
+	margin: 0px auto;
+	padding: 0px;
+	max-width: 960px;
+	}
+}
+.min{
+	padding: 0px;
+	margin: 0px;
+}

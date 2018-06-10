@@ -23,7 +23,7 @@ class TemplateController extends Controller{
             
             $layout = "Main:Layout:base";
             $this->template = View::make($layout)
-                ->add("web_title", "My Web")
+                ->add("web_title", $this->bucket->get("PAGE_TITLE"))
                 ->add("web_sidebar", $this->fordward("/widget/sidebar"))
                 ->add("web_menu", $this->fordward("/widget/menu"))
                 ->add("web_http", $this->bucket->get("URLS")["CORE_URL"])

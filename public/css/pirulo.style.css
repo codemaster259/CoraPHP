@@ -1,43 +1,39 @@
-html,body{
-    box-sizing: border-box;
-    margin:0px;
-    padding:0px;
-    background: #ddd;
-}
-#main{
-    max-width: 1080px;
-    min-width: 240px;
-    margin: auto;
-    background: #ddd;
-}
-
-#footer{
-    padding:20px;
-    text-align: center;
-    background: skyblue;
-}
-
-.menu a{
-    display: inline-block;
-    padding:20px;
-}
-
-#header{
-    background: skyblue;
-}
-
-#content{
+/* 
+    Created on : 10/06/2018, 11:43:35 AM
+    Author     : Pirulo
+	File       : pirulo.style.css
+*/
+.main{
     background: #fff;
-
 }
+.header{
+    background: skyblue;
+}
+.header h1{
+	margin:0px;
+}
+
+.content{
+    background: #fff;
+}
+
+.footer{
+    background: skyblue;
+}
+
+.menu{
+    background: #000;
+}
+
+
 #content article{
     padding:10px
 }
 
-.row{
+.rows{
     clear:both;
 }
-.row::after{
+.rows::after{
     content:' ';
     display: block;
     clear:both;
