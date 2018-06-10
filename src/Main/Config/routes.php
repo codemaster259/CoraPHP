@@ -1,7 +1,7 @@
 <?php
 //src/Main/Config/routes.php
 
-use Core\Router;
+use CoraPHP\Router;
 
 Router::register('main_default_index', array(
                     "route" => "/",

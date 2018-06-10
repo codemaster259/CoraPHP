@@ -1,17 +1,13 @@
 <?php
-namespace Core;
+
+namespace CoraPHP;
 
 class Router{
     
-    
     public $url = "/";
+    
     private static $routes = array();
-    protected static $bucket = null;
-    
-    public static function setBucket(Bucket $bucket) {
-        self::$bucket = $bucket;
-    }
-    
+
     public static function register($route, $data)
     {
         self::$routes[$route] = $data;
@@ -74,22 +70,18 @@ class Router{
                     ->set("_module", $module)
                     ->set("_action", $action)
                     ->set("_url", $this->url);
-            
-            self::$bucket->set("request", $request);
-            
+
             if(!class_exists($controllerName))
             {
                 $controllerName = "Core\\ErrorController";
-                //return "<strong>Class {$controllerName} doesn't exists.</strong><br/>";
             }
             
             /* @var Controler $controllerObject  */
-            $controllerObject = new $controllerName(self::$bucket);
+            $controllerObject = new $controllerName($request);
             
             if(!$controllerObject->actionExists($action))
             {
                 $action = "index";
-                //return "<strong>Action {$action} doesn't exists in {$controllerName} class.</strong><br/>";
             }
 
             $result = $controllerObject->execute($action);
