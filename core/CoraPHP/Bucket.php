@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace CoraPHP;
 
 /**
  * Bucket: Container for things
@@ -8,10 +8,26 @@ namespace Core;
 class Bucket{
     
     protected $container = null;
-    protected $name = null;
+        
+    /** @var self */
+    private static $instance = null;
     
-    public function __construct($name) {
-        $this->name = $name;
+    /**
+     * 
+     * @return self
+     */
+    public static function instance()
+    {
+        if(!self::$instance)
+        {
+            self::$instance = new self;
+        }
+        
+        return self::$instance;
+    }
+    
+    private function __construct()
+    {
         $this->container = array();
     }
     

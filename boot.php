@@ -16,42 +16,62 @@
  * DEFAULT_PATH.Default/Views/Layout/main.php
  */
 
+
+
 session_start();
 
 define('CORE_ROOT', dirname(__FILE__).'/');
 
-require_once CORE_ROOT.'src/Core/Loader.php';
+require_once CORE_ROOT."app/functions.php";
+require_once CORE_ROOT."core/CoraPHP/Loader.php";
 
-use Core\Loader;
-use Core\Module;
-use Core\Router;
-use Core\View;
-use Core\Bucket;
+use CoraPHP\Loader;
+use CoraPHP\Module;
+use CoraPHP\Router;
+use CoraPHP\View;
+use CoraPHP\Bucket;
 
+//Init Loader
 Loader::load();
 //Loader::enableLog();
-Loader::$DEFAULT_PATH = CORE_ROOT."src/";
+Loader::addPath(CORE_ROOT."src/");
+Loader::addPath(CORE_ROOT."core/");
 
+Bucket::instance()->set("URLS", define_urls(__FILE__));
+
+$url = Bucket::instance()->get("URLS")["REQUEST_URL"];
+
+
+//Default Views Path
 View::$DEFAULT_PATH = CORE_ROOT."src/";
-
-
-
-$bucket = new Bucket("main");
-
-$bucket->set("lang", new Core\Lang());
-$bucket->set("lang", new Core\Lang());
-
-Router::setBucket($bucket);
 
 require_once CORE_ROOT.'app/config/routes.php';
 
 //Register Modules
 Module::registerModule(new Main\MainModule());
 
-$url = parse_url(rtrim($_SERVER['REQUEST_URI'],'/'), PHP_URL_PATH);
-
 $router = new Router();
 
 $response = $router->dispatch($url);
 
 echo $response;
+
+
+/*
+use CoraPHP\EventManager;
+use CoraPHP\Event;
+
+EventManager::listenTo("/", function($name, Event $event){
+    echo "Home!";
+});
+
+EventManager::listenTo("/admin", function($name, Event $event){
+    echo "Admin Page!";
+});
+
+EventManager::listenAll(function($name, Event $event){
+    echo "<br>Some Footer!";
+});
+
+EventManager::raiseEvent($url, Event::create(array("url" => $url)));
+*/
