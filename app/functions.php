@@ -44,3 +44,10 @@ function define_urls($file = null){
     
     return $urls;
 }
+
+function debug($obj)
+{
+    echo "<pre>";
+    print_r($obj);
+    echo "</pre>";
+}

@@ -13,12 +13,12 @@ class Router{
         self::$routes[$route] = $data;
     }
     
-    public static function registerArray($routes = array())
+    public static function registerRoutes($routes = array())
     {
         foreach($routes as $route => $data)
-            {
-                self::register($route, $data);
-            }
+		{
+			self::register($route, $data);
+		}
     }
     
     public static function getRouteByName($name)
@@ -49,6 +49,7 @@ class Router{
                 if($route['route'] == $this->url)
                 {
                     $match = $route['path'];
+                    break;
                 }
             }
         }
@@ -73,7 +74,7 @@ class Router{
 
             if(!class_exists($controllerName))
             {
-                $controllerName = "Core\\ErrorController";
+                $controllerName = "CoraPHP\\ErrorController";
             }
             
             /* @var Controler $controllerObject  */

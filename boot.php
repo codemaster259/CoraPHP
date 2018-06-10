@@ -17,7 +17,6 @@
  */
 
 
-
 session_start();
 
 define('CORE_ROOT', dirname(__FILE__).'/');
@@ -26,10 +25,11 @@ require_once CORE_ROOT."app/functions.php";
 require_once CORE_ROOT."core/CoraPHP/Loader.php";
 
 use CoraPHP\Loader;
-use CoraPHP\Module;
 use CoraPHP\Router;
 use CoraPHP\View;
 use CoraPHP\Bucket;
+use CoraPHP\ArrayLoader;
+use CoraPHP\INIParser;
 
 //Init Loader
 Loader::load();
@@ -37,25 +37,28 @@ Loader::load();
 Loader::addPath(CORE_ROOT."src/");
 Loader::addPath(CORE_ROOT."core/");
 
+
 Bucket::instance()->set("URLS", define_urls(__FILE__));
 
-$url = Bucket::instance()->get("URLS")["REQUEST_URL"];
 
+$url = Bucket::instance()->get("URLS")["REQUEST_URL"];
 
 //Default Views Path
 View::$DEFAULT_PATH = CORE_ROOT."src/";
 
-require_once CORE_ROOT.'app/config/routes.php';
+ArrayLoader::setRecursiveKey("resource");
 
-//Register Modules
-Module::registerModule(new Main\MainModule());
+$routes = ArrayLoader::load(CORE_ROOT."app/config/routes.ini", CORE_ROOT);
+
+debug($routes);
+
+Router::registerRoutes($routes);
 
 $router = new Router();
 
 $response = $router->dispatch($url);
 
 echo $response;
-
 
 /*
 use CoraPHP\EventManager;

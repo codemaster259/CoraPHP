@@ -19,7 +19,7 @@ class WidgetController extends PrivateController{
 
         $loop = View::loop("Main:Partial:link", $links);
         
-        $view = View::make("Main:Default:index");
+        $view = View::make("Main:Shared:page");
         $view->add("page_title", "Sidebar ");
         $view->add("page_content", "<ul>".$loop."</ul>");
         

@@ -4,4 +4,3 @@
         <?php echo $page_content;?>
     </div>
 </article>
-
