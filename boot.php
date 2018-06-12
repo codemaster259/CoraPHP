@@ -35,15 +35,17 @@ Loader::load();
 Loader::addPath(CORE_ROOT."src/");
 Loader::addPath(CORE_ROOT."core/");
 
-
 Bucket::instance()->set("URLS", define_urls(__FILE__));
 Bucket::instance()->set("PAGE_TITLE", "My Website");
 
 $url = Bucket::instance()->get("URLS")["REQUEST_URL"];
 
-ArrayLoader::setRecursiveKey("resource");
+Bucket::instance()->set("config", ArrayLoader::load(CORE_ROOT."app/config/config.ini", CORE_ROOT, "resource"));
 
-$routes = ArrayLoader::load(CORE_ROOT."app/config/routes.ini", CORE_ROOT);
+debug(Bucket::instance()->get("config"));
+die();
+
+$routes = Bucket::instance()->get("config")["Routes"];
 
 Router::registerRoutes($routes);
 

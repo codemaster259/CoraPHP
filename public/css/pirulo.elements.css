@@ -6,6 +6,10 @@
 
 /* Mobile first styles go here */
 
+article{
+	padding:10px;
+}
+
 .block{
 	padding:20px;
 }
@@ -20,10 +24,7 @@
 	width: 100%;
 }
 
-article{
-	padding:10px;
-}
-
+/*NAV MENU*/
 .nav-menu{
 	width: 100%;
 	margin: 0px auto;
@@ -43,7 +44,7 @@ article{
     display: block;
     float: left;
     padding: 11px;
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .nav-menu .nav-label{
@@ -139,5 +140,4 @@ article{
 .nav-menu .nav-title{
 	float:left;
 }
-
 }

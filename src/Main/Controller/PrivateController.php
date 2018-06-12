@@ -15,7 +15,7 @@ class PrivateController extends Controller{
         //block direct access
         if($this->request->isInitial())
         {
-            die("Acceso no permitido!");
+            //die("Acceso no permitido!");
         }
     }
 }

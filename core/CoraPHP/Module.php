@@ -2,12 +2,16 @@
 
 namespace CoraPHP;
 
-abstract class Module{
+class Module{
     
-    public abstract function register();
+    protected $name = null;
     
-    public static function registerModule(Module $module)
+    public function __construct($name) {
+        $this->name = $name;
+    }
+    
+    public function setBasePath($path)
     {
-        $module->register();
+        
     }
 }

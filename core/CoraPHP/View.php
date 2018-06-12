@@ -6,6 +6,7 @@ class View{
 
     private $file = null;
     public $data = array();
+    protected static $shared = array();
     
     public static function make($f, $d = array())
     {
@@ -28,10 +29,25 @@ class View{
     }
     
     public function add($k, $v){
-        if($v instanceof View)
-        {$v = (string) $v;}
-        $this->data[$k]=$v;
+        if($k != "view")
+        {
+            if($v instanceof View)
+            {
+                $v = (string) $v;
+            }
+            $this->data[$k]=$v;
+        }
         return $this;
+    }
+    
+    public function shared($key, $val = null)
+    {
+        self::$shared[$key] = $val;
+    }
+    
+    public function getShared($key)
+    {
+        return (isset(self::$shared[$key]) ? self::$shared[$key] : null);
     }
     
     public function get($key = null, $data = null){
@@ -53,6 +69,9 @@ class View{
         $file = Loader::findFile($module."Views/".$folder.$template);
         
         $output = "Archivo {$file} no existe";
+        
+        $this->data['_view'] = new ViewHelper();
+        $this->data['_shared'] = new ViewHelper();
         
         if($file)
         {
