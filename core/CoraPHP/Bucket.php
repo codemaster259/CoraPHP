@@ -28,12 +28,12 @@ class Bucket{
     
     private function __construct()
     {
-        $this->container = array();
+        $this->container = new DataBag();
     }
     
     public function set($key, $object)
     {
-        $this->container[$key] = $object;
+        $this->container->set($key, $object);
         return $this;
     }
     
@@ -66,20 +66,17 @@ class Bucket{
     
     public function has($key)
     {
-        return isset($this->container[$key]);
+        return $this->container->has($key);
     }
     
-    public function get($key)
+    public function get($key, $def = null)
     {
-        return $this->has($key) ? $this->container[$key] : null;
+        return $this->container->get($key, $def);
     }
     
     public function remove($key)
     {
-        if($this->has($key))
-        {
-            unlink($this->container[$key]);
-        }
+        $this->container->remove($key);
         
         return $this;
     }

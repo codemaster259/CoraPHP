@@ -3,9 +3,7 @@
 namespace CoraPHP;
 
 class View{
-    public static $DEFAULT_EXT = "php";
-    public static $DEFAULT_PATH = "";
-    
+
     private $file = null;
     public $data = array();
     
@@ -42,9 +40,9 @@ class View{
         return isset($this->data[$key]) ? $this->data[$key] : $data;
     }
     
-    public function render($file = null){
+    public function render($temp = null){
 
-        if($file){$this->file = $file;}
+        if($temp){$this->file = $temp;}
         
         $mft = explode(":", $this->file);
         
@@ -52,25 +50,15 @@ class View{
         $folder = (trim($mft[1] != "") ? $mft[1]."/" : "");
         $template = $mft[2];
         
-        $file = self::$DEFAULT_PATH.$module."Views/".$folder.$template.".php";
+        $file = Loader::findFile($module."Views/".$folder.$template);
         
         $output = "Archivo {$file} no existe";
         
-        if(file_exists($file))
+        if($file)
         {
-            $output = self::capture($file, $this->data);
+            $output = Loader::capture($file, $this->data);
         }
         return $output;
-    }
-    
-    public static function capture($file, $data)
-    {
-        return (string)call_user_func_array(function(){
-            extract(func_get_arg(1));
-            ob_start();
-            include(func_get_arg(0));
-            return ob_get_clean();
-        }, array($file, $data));
     }
     
     public function __toString() {

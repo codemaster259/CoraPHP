@@ -34,6 +34,7 @@ class DataBag{
         {
             $this->set($key, $value);
         }
+        return $this;
     }
     
     /**
@@ -56,7 +57,21 @@ class DataBag{
     {
         return isset($this->data[$key]);
     }
+
+    /**
+     * 
+     * @param string $key
+     */
+    public function remove($key)
+    {
+        if($this->has($key))
+        {
+            unlink($this->data[$key]);
+        }
+        return $this;
+    }
     
+        
     /**
      * Verifica si esta Vacio
      * @return boolean
@@ -65,6 +80,7 @@ class DataBag{
     {
         return empty($this->data);
     }
+    
     
     /**
      * retorna toda la data

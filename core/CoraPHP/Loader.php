@@ -4,45 +4,63 @@ namespace CoraPHP;
 
 class Loader{
        
-    public static $DEFAULT_EXT = ".php";
+    public static $DEFAULT_EXT = "php";
     
     private static $paths = array();
     
     public static function addPath($path)
     {
-        $path = self::FS($path);
-        
         self::log("Add Path: {$path}<br><br>");
-        
-        self::$paths[$path] = $path;
+        self::$paths[$path] = self::FS($path);
     }
     
     public static function load($className = null)
     {       
         //register
-        if(!$className)
+        if(!$className){return spl_autoload_register(__METHOD__);}
+        
+
+        $file = self::findFile($className);
+
+        if($file)
         {
-            return spl_autoload_register(__METHOD__);
+            require_once $file;
+            return true;
         }
         
-        self::log("Search: {$className}<br>");
+        self::log("No Existe: {$file}<br><br>");
+        return false;
+    }
+    
+    public static function findFile($filename, $ext = "php")
+    {
+        self::log("Search: {$filename}<br>");
         
         foreach (self::$paths as $path)
         {
             self::log("Path: {$path}:<br>");
             
-            $file = self::FS($path.$className.self::$DEFAULT_EXT);
+            $file = self::FS($path.$filename.".".$ext);
             
             if(file_exists($file))
             {
                 self::log("Existe {$file} !<br><br>");
-                require_once $file;
-                return true;
+                return $file;
             }
         }
         
         self::log("No Existe: {$file}<br><br>");
         return false;
+    }
+    
+    public static function capture($file, $data)
+    {
+        return (string)call_user_func_array(function(){
+            extract(func_get_arg(1));
+            ob_start();
+            include(func_get_arg(0));
+            return ob_get_clean();
+        }, array($file, $data));
     }
     
     private static function FS($path)
@@ -63,4 +81,3 @@ class Loader{
         }
     }
 }
-

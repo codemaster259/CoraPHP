@@ -26,7 +26,6 @@ require_once CORE_ROOT."core/CoraPHP/Loader.php";
 
 use CoraPHP\Loader;
 use CoraPHP\Router;
-use CoraPHP\View;
 use CoraPHP\Bucket;
 use CoraPHP\ArrayLoader;
 
@@ -40,11 +39,7 @@ Loader::addPath(CORE_ROOT."core/");
 Bucket::instance()->set("URLS", define_urls(__FILE__));
 Bucket::instance()->set("PAGE_TITLE", "My Website");
 
-
 $url = Bucket::instance()->get("URLS")["REQUEST_URL"];
-
-//Default Views Path
-View::$DEFAULT_PATH = CORE_ROOT."src/";
 
 ArrayLoader::setRecursiveKey("resource");
 
@@ -58,9 +53,61 @@ $response = $router->dispatch($url);
 
 echo $response;
 
+
+/*
+//Another Wierd Router xD
+use CoraPHP\System;
+$s = new System("Test");
+
+//make route list
+
+//add route
+$s->add("routes", function($s, $name = null, $route = null){
+    
+    static $r = array();
+    
+    echo $s == null ? "yes" : "no";
+    
+    if($name && $route)
+    {
+        $r[$name] = $route;
+    }else{
+        return $r;
+    }
+});
+
+$s->add("route", function($s, $url = "/"){
+    
+    $routes = $s->routes($s);
+    
+    if(isset($routes[$url]))
+    {
+        if(is_callable($routes[$url]))
+        {
+            return call_user_func_array($routes[$url], array($url));
+        }
+        
+        return $routes[$url];
+    }
+});
+
+$s->routes("/", function($s){
+    echo "HOME!";
+});
+
+$s->routes("/about", function($s){
+    echo "MORE!";
+});
+
+echo $s->route($url);
+
+*/
+
+
+
 /*
 
- //Routing with EventManager xD
+//Routing with EventManager xD
  
 use CoraPHP\EventManager;
 use CoraPHP\Event;
@@ -77,5 +124,14 @@ EventManager::listenAll(function($name, Event $event){
     echo "<br>Some Footer!";
 });
 
-EventManager::raiseEvent($url, Event::create(array("url" => $url)));
+and Event object can be user as "Service Locatior / Container" :D
+
+$data=array();
+
+$data['url'] = $url;
+
+$event = Event::create($data);
+
+EventManager::raiseEvent($url, $event);
+
 */
