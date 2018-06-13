@@ -22,7 +22,7 @@ class Controller{
     
     public function fordward($url)
     {
-        return Router::sub($url);
+        return Router::make($url);
     }
     
     public function redirect($urlOrRoute = "/")

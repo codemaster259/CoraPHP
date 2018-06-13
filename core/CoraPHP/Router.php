@@ -7,18 +7,13 @@ class Router{
     public $url = "/";
     
     private static $routes = array();
-
-    public static function register($route, $data)
-    {
-        self::$routes[$route] = $data;
-    }
     
     public static function registerRoutes($routes = array())
     {
         foreach($routes as $route => $data)
-		{
-			self::register($route, $data);
-		}
+        {
+            self::$routes[$route] = $data;
+        }
     }
     
     public static function getRouteByName($name)
@@ -27,7 +22,7 @@ class Router{
     }
     
     function dispatch($url = "/")
-    {    
+    {
         if($url== "")
         {
             $url= "/";
@@ -41,6 +36,7 @@ class Router{
         if(isset(self::$routes[$this->url]))
         {
             $match = self::$routes[$this->url]['path'];
+            $this->url = self::$routes[$this->url]['path'];
             
         }else{
             //match by path
@@ -94,8 +90,10 @@ class Router{
         }
     }
     
-    public static function sub($url)
+    public static function make($url, $routes = array())
     {
+        self::registerRoutes($routes);
+        
         $router = new self();
         return $router->dispatch($url);
     }

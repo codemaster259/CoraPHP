@@ -35,18 +35,17 @@ Loader::load();
 Loader::addPath(CORE_ROOT."src/");
 Loader::addPath(CORE_ROOT."core/");
 
+//FILL BUCKET
 Bucket::instance()->set("Urls", define_urls(__FILE__));
-//Bucket::instance()->set("PAGE_TITLE", "My Webste");
 
+Bucket::instance()->fill(ArrayLoader::load(CORE_ROOT."app/config/config.ini"));
+
+
+//ROUTING
+$routes = Bucket::instance()->get("Routes");
 $url = Bucket::instance()->get("Urls")["REQUEST_URL"];
 
-Bucket::instance()->fill(ArrayLoader::load("app/config/config.ini", CORE_ROOT));
-
-Router::registerRoutes(Bucket::instance()->get("Routes"));
-
-$router = new Router();
-
-$response = $router->dispatch($url);
+$response = Router::make($url, $routes);
 
 echo $response;
 
@@ -97,13 +96,11 @@ $s->routes("/about", function($s){
 });
 
 echo $s->route($url);
-
 */
 
 
 
 /*
-
 //Routing with EventManager xD
  
 use CoraPHP\EventManager;
@@ -130,5 +127,4 @@ $data['url'] = $url;
 $event = Event::create($data);
 
 EventManager::raiseEvent($url, $event);
-
 */

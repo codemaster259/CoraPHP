@@ -27,12 +27,15 @@ class DataBag{
     /**
      * 
      * @param array $data
+     * @param bool $replace
+     * @return self
      */
     public function fill($data = array(), $replace = false)
     {
         if($replace)
         {
-            
+            $this->data = $data;
+            return $this;
         }
         foreach($data as $key => $value)
         {
