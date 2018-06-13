@@ -36,7 +36,6 @@ class ArrayLoader{
             self::$recursiveKey = $recursiveKey;
         }
         $r = array();
-        
         switch($file)
         {
             case self::endsWith(".json", $file):
@@ -54,46 +53,23 @@ class ArrayLoader{
                 return $r;
         }
         
-        return self::map($r, $root);
-    }
-    
-    private static function map($r, $root)
-    {
-        foreach($r as $key => $data)
+        foreach($r as $route => $data)
         {
-            echo "$key ";
             if(empty($data))
             {
-                unset($r[$key]);
+                unset($r[$route]);
                 continue;
             }
-            
-            if(is_array($r[$key]))
+            if(self::$recursiveKey != null && isset($data[self::$recursiveKey]))
             {
-                echo " is array";
-                
-                if($key == self::$recursiveKey)
-                {
-                    echo " is recursive<br>";
-
-                    $new = array();
-                    
-                    foreach($r[$key] as $res)
-                    {
-                        $file = $root.$res;
-
-                        echo "import: $res<br>";
-                        $new = array_merge($new, self::load($file, $root, self::$recursiveKey));
-                    }
-
-                    $r = $new;
-
-                }else{
-                    echo " not recursive, procesar<br>";
-                    $r[$key] = self::map($r[$key], $root);
-                }
+                $file = $root.$data[self::$recursiveKey];
+				
+                //unset($r[$route]);
+				
+                $r = array_merge($r, self::load($file, $root, $recursiveKey));
             }
         }
+        return $r;
     }
 	
     protected static function asJSON($file)
