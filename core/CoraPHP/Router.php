@@ -16,9 +16,9 @@ class Router{
     public static function registerRoutes($routes = array())
     {
         foreach($routes as $route => $data)
-		{
-			self::register($route, $data);
-		}
+        {
+            self::register($route, $data);
+        }
     }
     
     public static function getRouteByName($name)
@@ -94,8 +94,10 @@ class Router{
         }
     }
     
-    public static function sub($url)
+    public static function make($url, $routes = array())
     {
+        self::registerRoutes($routes);
+        
         $router = new self();
         return $router->dispatch($url);
     }

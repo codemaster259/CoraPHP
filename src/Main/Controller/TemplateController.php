@@ -24,7 +24,7 @@ class TemplateController extends Controller{
             $layout = "Main:Layout:base";
             
             $this->template = View::make($layout)
-                ->add("web_title", $this->bucket->get("Settings")["Page_Title"])
+                ->add("web_title", $this->bucket->get("Settings")["page_title"])
                 ->add("web_http", $this->bucket->get("Urls")["CORE_URL"])
                     
                 ->add("web_sidebar", $this->fordward("/widget/sidebar"))
