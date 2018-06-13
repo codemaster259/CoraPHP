@@ -3,10 +3,14 @@
 namespace Main\Service;
 
 class MessageService{
-    
-    public function sayHello()
+
+    public function sayRandom()
     {
-        return "Hello World";
+        $msgs = array("Mortal Kombat!","Here be dragons!","LOL", "Lorem ipsum dolor sit amet...","Hello World");
+        
+        $key = array_rand($msgs);
+        
+        return $msgs[$key];
     }
 	
 	public function lorem()

@@ -35,7 +35,7 @@
             </section>
             <footer class="footer">
 				<div class="container block text-center">
-					<?php echo $web_msg;?> - CoraPHP v3 &copy; 2018
+					<?php echo $web_msg;?> - &copy; 2018 CoraPHP v3
 				</div>
             </footer>
         </main>

@@ -3,97 +3,66 @@
 namespace CoraPHP;
 
 class ArrayLoader{
-	
-	protected static $recursiveKey = null;
-	
-	/**
-	 * <b>key</b> for check in array and load
-	 * it's value as file
-	 * 
-	 * @param string $key
-	 */
-	public static function setRecursiveKey($key)
-	{
-		self::$recursiveKey = $key;
-	}
-    
+	   
 	/**
 	 * Loads .ini, .json and .xml files as PHP arrays
-	 * 
-	 * If <b>$recursiveKey</b> is given, it will attempt
-	 * to load it's value as new file and merge with
-	 * data loaded.
 	 * 
 	 * @param string $file the file path
 	 * @param string $root the root path for load files
 	 * with relative path
 	 * @return array an array of data
 	 */
-    public static function load($file, $root = "", $recursiveKey = null)
+    public static function load($file, $root = "")
     {
-        if($recursiveKey)
-        {
-            self::$recursiveKey = $recursiveKey;
-        }
         $r = array();
         
         switch($file)
         {
             case self::endsWith(".json", $file):
-                $r = self::asJSON($file);
+                $r = self::asJSON($root.$file);
             break;
 
             case self::endsWith(".ini", $file):
-                $r = self::asINI($file);
+                $r = self::asINI($root.$file);
             break;
 
             case self::endsWith(".xml", $file):
-                $r = self::asXML($file);
+                $r = self::asXML($root.$file);
             break;
             default:
                 return $r;
         }
-        
-        return self::map($r, $root);
+        return self::map($r, $root, $root.$file);
     }
     
-    private static function map($r, $root)
+    private static function map($r, $root, $f)
     {
         foreach($r as $key => $data)
         {
-            echo "$key ";
-            if(empty($data))
+            if(!empty($r[$key]))
             {
-                unset($r[$key]);
-                continue;
-            }
-            
-            if(is_array($r[$key]))
-            {
-                echo " is array";
-                
-                if($key == self::$recursiveKey)
+                if(is_array($r[$key]))
                 {
-                    echo " is recursive<br>";
-
-                    $new = array();
-                    
-                    foreach($r[$key] as $res)
+                    if(!self::is_assoc($r[$key]))
                     {
-                        $file = $root.$res;
+                        $new = array();
 
-                        echo "import: $res<br>";
-                        $new = array_merge($new, self::load($file, $root, self::$recursiveKey));
+                        foreach($data as $res)
+                        {
+                            if(is_string($key))
+                            {
+                                $file = $res;
+                                $new = array_merge_recursive($new, self::load($file, $root));
+                            }
+                        }
+                        $r = $new;
+                    }else{
+                        $r[$key] = self::map($r[$key], $root, $f);
                     }
-
-                    $r = $new;
-
-                }else{
-                    echo " not recursive, procesar<br>";
-                    $r[$key] = self::map($r[$key], $root);
                 }
             }
         }
+        return $r;
     }
 	
     protected static function asJSON($file)
@@ -114,5 +83,17 @@ class ArrayLoader{
     protected static function endsWith($needle, $string)
     {        
         return (substr($string, -strlen($needle)) === $needle);
+    }
+    
+    protected static function is_assoc($a)
+    {
+        foreach(array_keys($a) as $k)
+        {
+            if (!is_int($k))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

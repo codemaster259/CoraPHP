@@ -22,12 +22,13 @@ class TemplateController extends Controller{
             $msg = $this->bucket->load("Main:Service:MessageService");
             
             $layout = "Main:Layout:base";
+            
             $this->template = View::make($layout)
-                ->add("web_title", $this->bucket->get("PAGE_TITLE"))
+                ->add("web_title", $this->bucket->get("Settings")["Page_Title"])
                 ->add("web_sidebar", $this->fordward("/widget/sidebar"))
                 ->add("web_menu", $this->fordward("/widget/menu"))
-                ->add("web_http", $this->bucket->get("URLS")["CORE_URL"])
-                ->add("web_msg", $msg->sayHello());
+                ->add("web_http", $this->bucket->get("Urls")["CORE_URL"])
+                ->add("web_msg", $msg->sayRandom());
         }
     }
     

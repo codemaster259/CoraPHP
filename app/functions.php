@@ -45,9 +45,12 @@ function define_urls($file = null){
     return $urls;
 }
 
-function debug($obj)
+function debug($obj, $label = null)
 {
-    echo "<pre>";
-    print_r($obj);
-    echo "</pre>";
+    if($label)
+    {
+        $label = "$label:<br>";
+    }
+    
+    echo "<pre>".$label.print_r($obj, 1)."</pre>";
 }
