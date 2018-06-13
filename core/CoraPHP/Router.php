@@ -97,6 +97,6 @@ class Router{
     public static function sub($url)
     {
         $router = new self();
-        return $router->dispatch($url, true);
+        return $router->dispatch($url);
     }
 }

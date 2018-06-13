@@ -10,20 +10,20 @@ class Bucket{
     protected $container = null;
         
     /** @var self */
-    private static $instance = null;
+    private static $instances = array();
     
     /**
      * 
      * @return self
      */
-    public static function instance()
+    public static function instance($name = "default")
     {
-        if(!self::$instance)
+        if(!isset(self::$instances[$name]))
         {
-            self::$instance = new self;
+            self::$instances[$name] = new self;
         }
         
-        return self::$instance;
+        return self::$instances[$name];
     }
     
     private function __construct()
@@ -64,6 +64,13 @@ class Bucket{
         return $this->get($library);
     }
     
+    public function fill($data, $replace = false)
+    {
+        $this->container->fill($data, $replace);
+        
+        return $this;
+    }
+    
     public function has($key)
     {
         return $this->container->has($key);
@@ -72,6 +79,11 @@ class Bucket{
     public function get($key, $def = null)
     {
         return $this->container->get($key, $def);
+    }
+    
+    public function all()
+    {
+        return $this->container->all();
     }
     
     public function remove($key)

@@ -28,8 +28,12 @@ class DataBag{
      * 
      * @param array $data
      */
-    public function fill($data = array())
+    public function fill($data = array(), $replace = false)
     {
+        if($replace)
+        {
+            
+        }
         foreach($data as $key => $value)
         {
             $this->set($key, $value);

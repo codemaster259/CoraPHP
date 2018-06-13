@@ -19,7 +19,7 @@
 
 session_start();
 
-define('CORE_ROOT', dirname(__FILE__).'/');
+define('CORE_ROOT', str_replace("\\","/", dirname(__FILE__)).'/');
 
 require_once CORE_ROOT."app/functions.php";
 require_once CORE_ROOT."core/CoraPHP/Loader.php";
@@ -35,19 +35,14 @@ Loader::load();
 Loader::addPath(CORE_ROOT."src/");
 Loader::addPath(CORE_ROOT."core/");
 
-Bucket::instance()->set("URLS", define_urls(__FILE__));
-Bucket::instance()->set("PAGE_TITLE", "My Website");
+Bucket::instance()->set("Urls", define_urls(__FILE__));
+//Bucket::instance()->set("PAGE_TITLE", "My Webste");
 
-$url = Bucket::instance()->get("URLS")["REQUEST_URL"];
+$url = Bucket::instance()->get("Urls")["REQUEST_URL"];
 
-Bucket::instance()->set("config", ArrayLoader::load(CORE_ROOT."app/config/config.ini", CORE_ROOT, "resource"));
+Bucket::instance()->fill(ArrayLoader::load("app/config/config.ini", CORE_ROOT));
 
-debug(Bucket::instance()->get("config"));
-die();
-
-$routes = Bucket::instance()->get("config")["Routes"];
-
-Router::registerRoutes($routes);
+Router::registerRoutes(Bucket::instance()->get("Routes"));
 
 $router = new Router();
 
