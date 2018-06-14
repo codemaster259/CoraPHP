@@ -4,14 +4,14 @@ namespace CoraPHP;
 
 class ArrayLoader{
 	   
-	/**
-	 * Loads .ini, .json and .xml files as PHP arrays
-	 * 
-	 * @param string $file the file path
-	 * @param string $root the root path for load files
-	 * with relative path
-	 * @return array an array of data
-	 */
+    /**
+     * Loads .ini, .json and .xml files as PHP arrays
+     * 
+     * @param string $file the file path
+     * @param string $root the root path for load files
+     * with relative path
+     * @return array an array of data
+     */
     public static function load($file, $root = "")
     {
         $r = array();
