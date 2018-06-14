@@ -14,10 +14,11 @@ use CoraPHP\Router;
 use CoraPHP\Bucket;
 use CoraPHP\ArrayLoader;
 use CoraPHP\Database;
+use CoraPHP\Console;
 
 //Init Loader
 Loader::load();
-//Loader::enableLog();
+Loader::enableLog();
 Loader::addPath(CORE_ROOT."src/");
 Loader::addPath(CORE_ROOT."core/");
 
@@ -36,6 +37,8 @@ $response = Router::make($url, $routes);
 
 echo $response;
 
+if(isset($_GET['cmd']))
+    Console::command("std:dump");
 
 /*
 //Another Wierd Router xD
