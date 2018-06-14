@@ -3,6 +3,8 @@
 namespace Main\Controller;
 
 use CoraPHP\View;
+use CoraPHP\Query;
+use CoraPHP\Database;
 
 /**
  * HomeController
@@ -10,7 +12,7 @@ use CoraPHP\View;
 class HomeController extends TemplateController{
     
     public function indexAction()
-    {	
+    {
         $view = View::make("Main:Home:index")
                 ->add("page_title", "Home")
                 ->add("page_content", "This is Home!");

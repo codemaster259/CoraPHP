@@ -1,21 +1,6 @@
 <?php
 
-/* Emulando Symfony:
- * 
- * Rutas:
- * 
- * string = Default:Default:index
- * 
- * Archivo:
- * ../src/Default/controller/DefaultController:indexAction
- * 
- * Vista:
- * 
- * string = Default:Layout:main
- * 
- * DEFAULT_PATH.Default/Views/Layout/main.php
- */
-
+error_reporting(E_ALL);
 
 session_start();
 
@@ -28,6 +13,7 @@ use CoraPHP\Loader;
 use CoraPHP\Router;
 use CoraPHP\Bucket;
 use CoraPHP\ArrayLoader;
+use CoraPHP\Database;
 
 //Init Loader
 Loader::load();
@@ -40,6 +26,7 @@ Bucket::instance()->set("Urls", define_urls(__FILE__));
 
 Bucket::instance()->fill(ArrayLoader::load(CORE_ROOT."app/config/config.ini"));
 
+Bucket::instance()->set("database", Database::instance());
 
 //ROUTING
 $routes = Bucket::instance()->get("Routes");
@@ -48,7 +35,6 @@ $url = Bucket::instance()->get("Urls")["REQUEST_URL"];
 $response = Router::make($url, $routes);
 
 echo $response;
-
 
 
 /*

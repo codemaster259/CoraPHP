@@ -7,7 +7,7 @@
 /* Mobile first styles go here */
 
 .grid-row{
-	width:100%;
+    width:100%;
 }
 
 .grid-row::before,
@@ -19,7 +19,7 @@
 
 [class^="grid-"]
 {
-	width: 100%;
+    width: 100%;
 }
 
 @media screen and (min-width: 800px) {
@@ -43,12 +43,8 @@
 .column {float:left;}
 
 .container {
-	margin: 0px auto;
-	padding: 0px;
-	max-width: 960px;
-	}
-}
-.min{
-	padding: 0px;
-	margin: 0px;
+    margin: 0px auto;
+    padding: 0px;
+    /*max-width: 960px;*/
+    }
 }
