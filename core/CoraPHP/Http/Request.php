@@ -1,6 +1,9 @@
 <?php
 
-namespace CoraPHP;
+namespace CoraPHP\Http;
+
+use CoraPHP\Container\DataBag;
+use CoraPHP\Container\FlashBag;
 
 class Request{
     

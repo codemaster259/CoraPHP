@@ -1,6 +1,14 @@
 <?php
 
-namespace CoraPHP;
+namespace CoraPHP\Mvc;
+
+use CoraPHP\Http\Router;
+use CoraPHP\Http\Request;
+use CoraPHP\Http\Response;
+
+use CoraPHP\Container\Bucket;
+
+use CoraPHP\Events\Event;
 
 class Controller{
     
@@ -66,20 +74,24 @@ class Controller{
     }
     
     public function init(){
-        $event = Event::create(array(
-            "request" => $this->request
-        ));
         
-        EventManager::raiseEvent("controller:init", $event);
+        $event = array(
+            "request" => $this->request,
+            "response" => $this->response,
+            "cnotroller" => $this
+        );
+        
+        Event::trigger("controller:init", $event);
     }
     
     public function finish(){
         
-        $event = Event::create(array(
+        $event = array(
             "request" => $this->request,
-            "response" => $this->response
-        ));
+            "response" => $this->response,
+            "cnotroller" => $this
+        );
         
-        EventManager::raiseEvent("controller:finish", $event);
+        Event::trigger("controller:finish", $event);
     }
 }

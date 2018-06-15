@@ -1,6 +1,8 @@
 <?php
 
-namespace CoraPHP;
+namespace CoraPHP\Mvc;
+
+use CoraPHP\Core\Loader;
 
 class View{
 

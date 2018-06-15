@@ -2,9 +2,7 @@
 
 namespace Main\Controller;
 
-use CoraPHP\View;
-use CoraPHP\Query;
-use CoraPHP\Database;
+use CoraPHP\Mvc\View;
 
 /**
  * HomeController

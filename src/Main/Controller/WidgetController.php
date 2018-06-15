@@ -2,7 +2,7 @@
 
 namespace Main\Controller;
 
-use CoraPHP\View;
+use CoraPHP\Mvc\View;
 
 /**
  * Partial views

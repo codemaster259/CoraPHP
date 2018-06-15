@@ -1,6 +1,6 @@
 <?php
 
-namespace CoraPHP;
+namespace CoraPHP\Core;
 
 class Loader{
        
@@ -32,23 +32,33 @@ class Loader{
         return false;
     }
     
-    public static function findFile($filename, $ext = "php")
+    public static function findFile($filename, $ext = "php", $absolute = false)
     {
         self::log("Search: {$filename}<br>");
         
-        foreach (self::$paths as $path)
+        if($absolute)
         {
-            self::log("Path: {$path}:<br>");
-            
-            $file = self::FS($path.$filename.".".$ext);
-            
-            if(file_exists($file))
+            if(file_exists($filename.".".$ext))
             {
-                self::log("Existe {$file} !<br><br>");
-                return $file;
+                self::log("Existe {$filename}.{$ext} !<br><br>");
+                return $filename.".".$ext;
             }
-        }
+        }else{
+            foreach (self::$paths as $path)
+            {
+                self::log("Path: {$path}:<br>");
+
+                $file = self::FS($path.$filename.".".$ext);
+
+                if(file_exists($file))
+                {
+                    self::log("Existe {$file} !<br><br>");
+                    return $file;
+                }
+            }
         
+        }
+
         self::log("No Existe: {$file}<br><br>");
         return false;
     }

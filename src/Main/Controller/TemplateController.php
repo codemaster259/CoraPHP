@@ -2,8 +2,8 @@
 
 namespace Main\Controller;
 
-use CoraPHP\Controller;
-use CoraPHP\View;
+use CoraPHP\Mvc\Controller;
+use CoraPHP\Mvc\View;
 /**
  * Controller con template
  */
@@ -14,14 +14,14 @@ class TemplateController extends Controller{
     public function init()
     {
         parent::init();
-        $layout = "Main:Layout:blank";
+        $layout = "Shared:Layout:blank";
         $this->template = View::make($layout);
         
         if($this->request->isInitial())
         {
             $msg = $this->bucket->load("Main:Service:MessageService");
             
-            $layout = "Main:Layout:base";
+            $layout = "Shared:Layout:base";
             
             $this->template = View::make($layout)
                 ->add("web_title", $this->bucket->get("Settings")["page_title"])

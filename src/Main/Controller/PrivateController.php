@@ -2,7 +2,7 @@
 
 namespace Main\Controller;
 
-use CoraPHP\Controller;
+use CoraPHP\Mvc\Controller;
 
 /**
  * No direct access

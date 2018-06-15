@@ -1,6 +1,8 @@
 <?php
 
-namespace CoraPHP;
+namespace CoraPHP\Model;
+
+use CoraPHP\Container\Bucket;
 
 class Database{
     

@@ -1,10 +1,10 @@
 <?php
 
-namespace CoraPHP;
+namespace CoraPHP\Http;
 
 class Router{
     
-    public $url = "/";
+    private $url = "/";
     
     private static $routes = array();
     
@@ -23,23 +23,26 @@ class Router{
     
     function dispatch($url = "/")
     {
+        //url base
         if($url== "")
         {
             $url= "/";
         }
         
+        //guardar url
         $this->url = $url;
         
+        //ruta encontrada = null
         $match = null;
         
-        //match by name
+        //encontrar ruta por nombre
         if(isset(self::$routes[$this->url]))
         {
             $match = self::$routes[$this->url]['path'];
             $this->url = self::$routes[$this->url]['path'];
             
         }else{
-            //match by path
+            //encontrar por 'path'
             foreach(self::$routes as $route)
             {
                 if(isset($route['route']) && $route['route'] == $this->url)
@@ -50,44 +53,58 @@ class Router{
             }
         }
         
-        //filter url
+        //ruta encontrada
         if($match)
         {
+            //ensamblar controllador
             $ModuleControllerAction = explode(":", strtolower($match));
 
             $module = ucwords($ModuleControllerAction[0]);
             $controller = ucwords($ModuleControllerAction[1]);
-            $action = $ModuleControllerAction[2];
-
-            $controllerName = $module."\\Controller\\".$controller."Controller";
+            $action = strtolower($ModuleControllerAction[2]);
             
+            //crear objeto requets
             $request = new Request($this->url);
             
+            //guardar attributos del controller
             $request->attributes->set("_controller", $controller)
                     ->set("_module", $module)
                     ->set("_action", $action)
                     ->set("_url", $this->url);
 
+            //nombre controller
+            $controllerName = $module."\\Controller\\".$controller."Controller";
+            
+            //controller no existe
             if(!class_exists($controllerName))
             {
-                $controllerName = "CoraPHP\\ErrorController";
+                return $this->errorPage("Pagina {$this->url} no encontrada (C)");
             }
             
             /* @var Controler $controllerObject  */
             $controllerObject = new $controllerName($request);
             
+            //accion no existe
             if(!$controllerObject->actionExists($action))
             {
-                $action = "index";
+                return $this->errorPage("Pagina {$this->url} no encontrada (A)");
             }
 
+            //ejecutar controller
             $result = $controllerObject->execute($action);
 
+            //retornar result
             return $result;
 
         }else{
-            return new Response("<strong>No match for {$this->url}.</strong><br/>");
+            //no hay ruta definida para esta url
+            return $this->errorPage("Pagina <strong>$this->url}</strong> no encontrada (R)");
         }
+    }
+    
+    protected function errorPage($msg)
+    {
+        return new Response($msg);
     }
     
     public static function make($url, $routes = array())
