@@ -29,6 +29,10 @@ article{
     margin: 0px;
 }
 
+.scroll-y{
+    overflow-y: auto;
+}
+
 /*NAV MENU*/
 .nav-menu{
     width: 100%;

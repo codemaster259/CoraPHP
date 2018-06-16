@@ -10,9 +10,12 @@ class Router{
     
     public static function registerRoutes($routes = array())
     {
-        foreach($routes as $route => $data)
+        if(is_array($routes))
         {
-            self::$routes[$route] = $data;
+            foreach($routes as $route => $data)
+            {
+                self::$routes[$route] = $data;
+            }
         }
     }
     
@@ -45,6 +48,7 @@ class Router{
             //encontrar por 'path'
             foreach(self::$routes as $route)
             {
+                //echo $route['route']."<br>";
                 if(isset($route['route']) && $route['route'] == $this->url)
                 {
                     $match = $route['path'];
@@ -78,7 +82,7 @@ class Router{
             //controller no existe
             if(!class_exists($controllerName))
             {
-                return $this->errorPage("Pagina {$this->url} no encontrada (C)");
+                return $this->errorPage("Pagina <strong>{$this->url}</strong> no encontrada (C)");
             }
             
             /* @var Controler $controllerObject  */
@@ -87,7 +91,7 @@ class Router{
             //accion no existe
             if(!$controllerObject->actionExists($action))
             {
-                return $this->errorPage("Pagina {$this->url} no encontrada (A)");
+                return $this->errorPage("Pagina <strong>{$this->url}</strong> no encontrada (A)");
             }
 
             //ejecutar controller
@@ -98,7 +102,7 @@ class Router{
 
         }else{
             //no hay ruta definida para esta url
-            return $this->errorPage("Pagina <strong>$this->url}</strong> no encontrada (R)");
+            return $this->errorPage("Pagina <strong>{$this->url}</strong> no encontrada (R)");
         }
     }
     

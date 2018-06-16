@@ -13,29 +13,13 @@ class Database{
     protected $user = null;
     protected $pass = null;
     protected $dbname = null;
-    
-    private static $instance = null;
-    /**
-     * 
-     * @return self
-     */
-    public static function instance()
+       
+    public function __construct($database)
     {
-        if(!isset(self::$instance))
-        {
-            self::$instance = new self;
-        }
-        
-        return self::$instance;
-    }
-    
-    private function __construct()
-    {
-        $database = Bucket::instance()->get("Database")['MySQL'];
         $this->user = $database['user'];
         $this->pass = $database['pass'];
         $this->host = $database['host'];
-        $this->dbname = $database['dbname'];   
+        $this->dbname = $database['dbname'];
     }
     
     protected function connect()

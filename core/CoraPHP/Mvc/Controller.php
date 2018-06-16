@@ -18,12 +18,8 @@ class Controller{
     /** @var Response */
     protected $response = null;
     
-    /** @var Bucket */
-    protected $bucket = null;
-    
     public function __construct(Request $request)
     {
-        $this->bucket = Bucket::instance();
         $this->request = $request;
         $this->response = new Response();
     }
@@ -37,11 +33,6 @@ class Controller{
     {
         header("Location:{$urlOrRoute}".Router::getRouteByName($urlOrRoute));
         exit();
-    }
-    
-    public function get($library)
-    {
-        return $this->bucket->get($library);
     }
  
     public function execute($action)

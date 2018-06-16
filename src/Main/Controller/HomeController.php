@@ -23,7 +23,7 @@ class HomeController extends TemplateController{
         $page['page_title'] = "Lorem Ipsum! ".rand();
         $page['page_content'] = $this->get("Main:Service:MessageService")->lorem();
 
-        $view = View::loop("Main:Shared:page", array($page,$page,$page,$page,$page));
+        $view = View::loop("Common:Shared:page", array($page,$page,$page));
         
         $this->template->add("web_content", $view);
     }    

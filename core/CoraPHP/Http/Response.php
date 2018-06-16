@@ -20,8 +20,13 @@ class Response{
         return $this->body;
     }
     
-    public function __toString()
+    public function send()
     {
         return (string) $this->body;
+    }
+    
+    public function __toString()
+    {
+        return (string) $this->send();
     }
 }

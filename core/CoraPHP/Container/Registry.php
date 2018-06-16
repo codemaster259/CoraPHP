@@ -3,27 +3,27 @@
 namespace CoraPHP\Container;
 
 /**
- * Bucket: Container for things
+ * Registry: Container for things
  */
-class Bucket{
+class Registry{
     
     protected $container = null;
         
-    /** @var self */
-    private static $instances = array();
+    /** @var Registry[] */
+    public static $channels = array();
     
     /**
      * 
-     * @return self
+     * @return Registry
      */
-    public static function instance($name = "default")
+    public static function channel($channel = "default")
     {
-        if(!isset(self::$instances[$name]))
+        if(!isset(self::$channels[$channel]))
         {
-            self::$instances[$name] = new self;
+            self::$channels[$channel] = new self;
         }
         
-        return self::$instances[$name];
+        return self::$channels[$channel];
     }
     
     private function __construct()

@@ -1,25 +1,20 @@
 <?php
 
 error_reporting(E_ALL);
-
 session_start();
 
 define('CORE_ROOT', str_replace("\\","/", dirname(__FILE__)).'/');
 
-require_once CORE_ROOT."app/functions.php";
-require_once CORE_ROOT."core/CoraPHP/Core\Loader.php";
+//Requires
+require_once CORE_ROOT."core/functions.php";
+require_once CORE_ROOT."core/CoraPHP/Core/Loader.php";
 
+//Uses
 use CoraPHP\Core\Loader;
 use CoraPHP\Core\Logger;
-use CoraPHP\Core\Console;
-use CoraPHP\Core\Module;
-
 use CoraPHP\Http\Router;
+use CoraPHP\Container\Registry;
 
-use CoraPHP\Container\Bucket;
-use CoraPHP\Container\ArrayLoader;
-
-use CoraPHP\Model\Database;
 
 //Init Loader
 Loader::load();
@@ -27,77 +22,17 @@ Loader::load();
 Loader::addPath(CORE_ROOT."src/");
 Loader::addPath(CORE_ROOT."core/");
 
-Logger::enabled(true);
+//logegr
+//Logger::enabled(true);
 
-//FILL BUCKET
-Bucket::instance()->set("Urls", define_urls(__FILE__));
-Bucket::instance()->set("database", Database::instance());
-Bucket::instance()->fill(ArrayLoader::load(CORE_ROOT."app/config/config.ini"));
+//Registry
+Registry::channel("Urls")->fill(define_urls(__FILE__));
 
-Module::loadModules(CORE_ROOT."src/");
+//Init MOdules
+require_once CORE_ROOT.'src/ini.php';
 
 //ROUTING
-$routes = Bucket::instance()->get("Routes");
-
-$url = Bucket::instance()->get("Urls")["REQUEST_URL"];
-
-$response = Router::make($url, $routes);
-
-echo $response;
-
-if(isset($_GET['cmd']))
-{
-    Console::command($_GET['cmd']);
-}
-
-/*
-//Another Wierd Router xD
-use CoraPHP\System;
-$s = new System("Test");
-
-//make route list
-
-//add route
-$s->add("routes", function($s, $name = null, $route = null){
-    
-    static $r = array();
-    
-    echo $s == null ? "yes" : "no";
-    
-    if($name && $route)
-    {
-        $r[$name] = $route;
-    }else{
-        return $r;
-    }
-});
-
-$s->add("route", function($s, $url = "/"){
-    
-    $routes = $s->routes($s);
-    
-    if(isset($routes[$url]))
-    {
-        if(is_callable($routes[$url]))
-        {
-            return call_user_func_array($routes[$url], array($url));
-        }
-        
-        return $routes[$url];
-    }
-});
-
-$s->routes("/", function($s){
-    echo "HOME!";
-});
-
-$s->routes("/about", function($s){
-    echo "MORE!";
-});
-
-echo $s->route($url);
-*/
-
+echo Router::make(Registry::channel("Urls")->get("REQUEST_URL"), Registry::channel("Routes")->all());
 
 
 /*

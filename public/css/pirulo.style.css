@@ -29,12 +29,3 @@
 #content article{
     padding:10px
 }
-
-.rows{
-    clear:both;
-}
-.rows::after{
-    content:' ';
-    display: block;
-    clear:both;
-}

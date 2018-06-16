@@ -7,7 +7,7 @@ use CoraPHP\Core\Loader;
 class View{
 
     private $file = null;
-    public $data = array();
+    private $data = array();
     protected static $shared = array();
     
     public static function make($f, $d = array())
@@ -42,6 +42,12 @@ class View{
         return $this;
     }
     
+    public function setFile($f)
+    {
+        $this->file = $f;
+        return $this;
+    }
+    
     public function shared($key, $val = null)
     {
         self::$shared[$key] = $val;
@@ -54,7 +60,9 @@ class View{
     
     public function get($key = null, $data = null){
         if(!$key)
-        {return $this->data;}
+        {
+            return $this->data;
+        }
         return isset($this->data[$key]) ? $this->data[$key] : $data;
     }
     
@@ -68,9 +76,11 @@ class View{
         $folder = (trim($mft[1] != "") ? $mft[1]."/" : "");
         $template = $mft[2];
         
-        $file = Loader::findFile($module."Views/".$folder.$template);
+        $filename = $module."Views/".$folder.$template;
         
-        $output = "Archivo {$file} no existe";
+        $file = Loader::findFile($filename);
+        
+        $output = "Archivo <b>{$this->file}</b> no existe.<br>";
         
         $this->data['_view'] = new ViewHelper();
         $this->data['_shared'] = new ViewHelper();

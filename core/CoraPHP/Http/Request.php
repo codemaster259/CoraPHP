@@ -9,10 +9,13 @@ class Request{
     
     /** @var DataBag $_POST */
     public $post = null;
+    
     /** @var DataBag $_GET */
     public $get = null;
+    
     /** @var DataBag $_FILES */
     public $files = null;
+    
     /** @var DataBag $_SESSION['FLASH_VARS'] */
     public $flash = null;
     
@@ -54,6 +57,11 @@ class Request{
         return $this->method;
     }
     
+    public function isPost()
+    {
+        return $this->isMethod("post");
+    }
+    
     public function isMethod($method)
     {
         return $this->method == strtolower($method);
@@ -63,7 +71,7 @@ class Request{
     {
         return self::$initial == $this;
     }
-    
+
     /**
      * 
      * @return self

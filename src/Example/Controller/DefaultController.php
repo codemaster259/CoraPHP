@@ -2,8 +2,8 @@
 
 namespace Example\Controller;
 
-use CoraPHP\Controller;
-use CoraPHP\View;
+use CoraPHP\Mvc\Controller;
+use CoraPHP\Mvc\View;
 
 /**
  * DefaultController
@@ -12,6 +12,12 @@ class DefaultController extends Controller{
     
     public function indexAction()
     {
-        $this->response->body(View::make("Example:Default:index"));
+        $view = View::make("Example:Default:index");
+        
+        $layout = View::make("Example::layout");
+        
+        $layout->add("web_content", $view);
+        
+        $this->response->body($layout);
     }
 }

@@ -4,6 +4,8 @@ namespace Main\Controller;
 
 use CoraPHP\Mvc\Controller;
 use CoraPHP\Mvc\View;
+
+use CoraPHP\Container\Registry;
 /**
  * Controller con template
  */
@@ -14,19 +16,17 @@ class TemplateController extends Controller{
     public function init()
     {
         parent::init();
-        $layout = "Shared:Layout:blank";
+        $layout = "Common:Layout:blank";
         $this->template = View::make($layout);
         
         if($this->request->isInitial())
         {
-            $msg = $this->bucket->load("Main:Service:MessageService");
+            $msg = Registry::channel("Library")->get("Main:Service:MessageService");
             
-            $layout = "Shared:Layout:base";
+            $this->template->setFile("Common:Layout:base");
             
-            $this->template = View::make($layout)
-                ->add("web_title", $this->bucket->get("Settings")["page_title"])
-                ->add("web_http", $this->bucket->get("Urls")["CORE_URL"])
-                    
+            $this->template->add("web_title", Registry::channel("Settings")->get("page_title"))
+                ->add("web_http", Registry::channel("Urls")->get("CORE_URL"))
                 ->add("web_sidebar", $this->fordward("/widget/sidebar"))
                 ->add("web_menu", $this->fordward("/widget/menu"))
                 ->add("web_msg", $msg->sayRandom());

@@ -36,6 +36,8 @@ class Loader{
     {
         self::log("Search: {$filename}<br>");
         
+        $file = $filename;
+        
         if($absolute)
         {
             if(file_exists($filename.".".$ext))
@@ -59,7 +61,7 @@ class Loader{
         
         }
 
-        self::log("No Existe: {$file}<br><br>");
+        self::log("No Existe: {$file} <br><br>");
         return false;
     }
     

@@ -1,6 +1,6 @@
 <?php
 
-namespace Shared\Controller;
+namespace Common\Controller;
 
 use CoraPHP\Mvc\Controller;
 

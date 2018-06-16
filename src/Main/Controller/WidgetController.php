@@ -3,6 +3,7 @@
 namespace Main\Controller;
 
 use CoraPHP\Mvc\View;
+use CoraPHP\Container\Registry;
 
 /**
  * Partial views
@@ -10,16 +11,17 @@ use CoraPHP\Mvc\View;
 class WidgetController extends PrivateController{
     
     public function sidebarAction()
-    {        
+    {
         $links = array(
             array('href'=>'//www.google.com','text'=>'Google'),
             array('href'=>'//www.facebook.com','text'=>'Facebook'),
+            array('href'=>'//www.wikipedia.org','text'=>'Wikipedia'),
             array('href'=>'//www.youtube.com','text'=>'Youtube')
         );
 
         $loop = View::loop("Main:Partial:link", $links);
         
-        $view = View::make("Main:Shared:page");
+        $view = View::make("Common:Shared:page");
         $view->add("page_title", "Sidebar ");
         $view->add("page_content", "<ul>".$loop."</ul>");
         
@@ -27,9 +29,9 @@ class WidgetController extends PrivateController{
     }
     
     public function menuAction()
-    {        
-        $view = View::make("Main:Shared:menu")
-                ->add("web_title", $this->bucket->get("PAGE_TITLE"));
+    {
+        $view = View::make("Main:Partial:menu")
+                ->add("web_title", Registry::channel("Settings")->get("page_title"));
         
         $this->response->body($view);
     }
