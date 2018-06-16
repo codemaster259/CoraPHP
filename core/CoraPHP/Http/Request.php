@@ -4,6 +4,7 @@ namespace CoraPHP\Http;
 
 use CoraPHP\Container\DataBag;
 use CoraPHP\Container\FlashBag;
+use CoraPHP\Container\SessionBag;
 
 class Request{
     
@@ -16,8 +17,11 @@ class Request{
     /** @var DataBag $_FILES */
     public $files = null;
     
-    /** @var DataBag $_SESSION['FLASH_VARS'] */
+    /** @var DataBag $_SESSION[flash key] */
     public $flash = null;
+    
+    /** @var DataBag $_SESSION[session key] */
+    public $session = null;
     
     /** @var DataBag attributes */
     public $attributes = null;
@@ -39,7 +43,8 @@ class Request{
         $this->files = new DataBag($_FILES);
         
         $this->attributes = new DataBag();
-        $this->flash = new FlashBag();
+        $this->flash = new FlashBag('FLASH_VARS');
+        $this->session = new SessionBag();
         
         if(!$this->post->isEmpty())
         {

@@ -83,7 +83,7 @@ class View{
         $output = "Archivo <b>{$this->file}</b> no existe.<br>";
         
         $this->data['_view'] = new ViewHelper();
-        $this->data['_shared'] = new ViewHelper();
+        $this->data['_shared'] = self::$shared;
         
         if($file)
         {

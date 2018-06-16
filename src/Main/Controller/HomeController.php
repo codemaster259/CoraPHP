@@ -3,7 +3,7 @@
 namespace Main\Controller;
 
 use CoraPHP\Mvc\View;
-
+use CoraPHP\Container\Registry;
 /**
  * HomeController
  */
@@ -20,8 +20,12 @@ class HomeController extends TemplateController{
     
     public function aboutAction()
     {
+        $msgs = Registry::channel("Library")->get("Main:Service:MessageService");
+        
         $page['page_title'] = "Lorem Ipsum! ".rand();
-        $page['page_content'] = $this->get("Main:Service:MessageService")->lorem();
+        $page['page_content'] = $msgs->lorem();
+
+        $this->request->flash->set("msg", $msgs->sayRandom());
 
         $view = View::loop("Common:Shared:page", array($page,$page,$page));
         

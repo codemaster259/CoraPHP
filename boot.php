@@ -23,7 +23,7 @@ Loader::addPath(CORE_ROOT."src/");
 Loader::addPath(CORE_ROOT."core/");
 
 //logegr
-//Logger::enabled(true);
+Logger::enabled(false);
 
 //Registry
 Registry::channel("Urls")->fill(define_urls(__FILE__));
