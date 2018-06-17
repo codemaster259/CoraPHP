@@ -1,3 +1,3 @@
 <?php
 
-require_once '../app/boot.php';
+require_once '../boot.php';

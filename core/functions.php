@@ -54,3 +54,76 @@ function debug($obj, $label = null)
     
     echo "<pre>".$label.print_r($obj, 1)."</pre>";
 }
+
+function decide($b, $t, $f = null)
+{
+    return $b ? $t : $f;
+}
+
+function fake_loader($classOrCommand, $param = null, $other = null)
+{
+    static $simplelog = false;
+    static $paths = array();
+    static $commands = array();
+    
+    $func = __FUNCTION__;
+    
+    if($classOrCommand[0] == ":")
+    {
+        $command = $classOrCommand;
+        
+        switch($command)
+        {
+            case ":echo":
+                echo ":echo $param<br>";
+            break;
+        
+            case ":log":
+                $simplelog = $param;
+                echo decide($param, ":log ENABLED!<br>");
+            break;
+        
+            case ":register":
+                spl_autoload_register($func);
+                echo decide($simplelog, "$func registered in spl_autoload_register!<br>");
+            break;
+        
+            case ":addPath":
+                $paths[$param] = $param;
+                echo decide($simplelog, ":addPath {$param} added!<br>");
+            break;
+        
+            case ":command:add":
+                $commands[$param] = $other;
+            break;
+        
+            case ":command:call":
+                return isset($commands[$param]) ? call_user_func_array(commands[$param], $other) : null;
+                
+            case ":command:get":
+                return isset($commands[$param]) ? $commands[$param] : $other;
+                
+            default :
+                throw new Exception("COMMAND {$command} NOT DEFINED");
+        }
+    }else{
+    
+        echo decide($simplelog, "$func: {$classOrCommand}<br>");
+        
+        foreach($paths as $path)
+        {
+            $filename = str_replace("\\", "/", $path.$classOrCommand.".php");
+            
+            if(file_exists($filename))
+            {
+                echo decide($simplelog, "Existe $filename<br>");
+                
+                require_once $filename;
+                return true;
+            }
+        }
+        
+        echo decide($simplelog, "No Existe $filename<br>");
+        return false;
+    }
+}

@@ -2,7 +2,7 @@
 
 namespace CoraPHP\Core;
 
-class Loader{
+class FileSystem{
        
     public static $DEFAULT_EXT = "php";
     
@@ -10,7 +10,7 @@ class Loader{
     
     public static function addPath($path)
     {
-        self::log("Add Path: {$path}<br><br>");
+        Logger::getLogger(get_called_class())->info("Add Path: {$path}<br><br>");
         self::$paths[$path] = self::FS($path);
     }
     

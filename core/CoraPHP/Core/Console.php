@@ -8,20 +8,19 @@ class Console{
     
     static function command($cmd)
     {
-
         switch($cmd)
         {
             case 'std:dump':
                 echo "<pre>".print_r(self::$data, true)."</pre>";
-            break;
+                return true;
 
             case 'std:add':
                 $name = func_get_arg(1);
                 $value = func_get_arg(2);
                 self::$data[$name] = $value;
-            break;
+                return true;
 
-            case 'std:exe':
+            case 'std:call':
                 $callback = self::$data[func_get_arg(1)];
                 $params = (func_num_args() >=3) ? func_get_arg(2) : array();
                 return call_user_func_array($callback, $params);
@@ -29,7 +28,6 @@ class Console{
             case "std:get":
                 $name = func_get_arg(1);
                 return isset(self::$data[$name]) ? self::$data[$name] : null;
-
         }
     }
 }
@@ -39,7 +37,7 @@ Console::command("std:add",'fn.sayHello',function(){
     echo "Hello World!";
     }
 );
-Console::command("std:exe",'fn.sayHello');
+Console::command("std:call",'fn.sayHello');
 
 Console::command("std:add",'str.name', 'lol');
 

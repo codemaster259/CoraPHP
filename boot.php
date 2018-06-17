@@ -7,28 +7,28 @@ define('CORE_ROOT', str_replace("\\","/", dirname(__FILE__)).'/');
 
 //Requires
 require_once CORE_ROOT."core/functions.php";
-require_once CORE_ROOT."core/CoraPHP/Core/Loader.php";
+
+fake_loader(":log", false);
+fake_loader(":register");
+fake_loader(":addPath", CORE_ROOT."src/");
+fake_loader(":addPath", CORE_ROOT."core/");
 
 //Uses
-use CoraPHP\Core\Loader;
 use CoraPHP\Core\Logger;
-use CoraPHP\Http\Router;
+use CoraPHP\Core\FileSystem;
 use CoraPHP\Container\Registry;
+use CoraPHP\Http\Router;
 
-
-//Init Loader
-Loader::load();
-//Loader::enableLog();
-Loader::addPath(CORE_ROOT."src/");
-Loader::addPath(CORE_ROOT."core/");
-
-//logegr
+//Logger
 Logger::enabled(false);
+
+//FileSystem
+FileSystem::addPath(CORE_ROOT."src/");
 
 //Registry
 Registry::channel("Urls")->fill(define_urls(__FILE__));
 
-//Init MOdules
+//Init Modules
 require_once CORE_ROOT.'src/ini.php';
 
 //ROUTING

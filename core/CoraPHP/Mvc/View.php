@@ -2,7 +2,7 @@
 
 namespace CoraPHP\Mvc;
 
-use CoraPHP\Core\Loader;
+use CoraPHP\Core\FileSystem;
 
 class View{
 
@@ -78,7 +78,7 @@ class View{
         
         $filename = $module."Views/".$folder.$template;
         
-        $file = Loader::findFile($filename);
+        $file = FileSystem::findFile($filename);
         
         $output = "Archivo <b>{$this->file}</b> no existe.<br>";
         
@@ -87,7 +87,7 @@ class View{
         
         if($file)
         {
-            $output = Loader::capture($file, $this->data);
+            $output = FileSystem::capture($file, $this->data);
         }
         return $output;
     }
