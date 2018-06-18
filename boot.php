@@ -40,6 +40,8 @@ echo Router::make(Registry::channel("Urls")->get("REQUEST_URL"), Registry::chann
 
 use CoraPHP\Events\Event;
 
+$url = Registry::channel("Urls")->get("REQUEST_URL");
+
 Event::listenTo("/", function($event, $data){
     Event::trigger("_base", array("content" => "Home Page!"));
 });
@@ -49,15 +51,15 @@ Event::listenTo("/about", function($event, $data){
 });
 
 Event::listenTo("_menu", function($event, $data){
-    echo "menu - menu - menu";
+    return "<div>menu - menu - menu</div>";
 });
 
 Event::listenTo("_base", function($event, $data){
-    echo "Header<br>";
-    Event::trigger("_menu");
-    echo "<br>";
-    echo $data['content']."<br>";
-    echo "Footer<br>";
+    $output = "<div>Header</div>";
+    $output .= Event::trigger("_menu");
+    $output .=  "<div>".$data['content']."</div>";
+    $output .=  "<div>Footer:{$event}</div>";
+    echo $output;
 });
 
 //and $data can be user as "Service Locatior / Container" :D

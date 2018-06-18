@@ -104,7 +104,8 @@ function fake_loader($classOrCommand, $param = null, $other = null)
                 return isset($commands[$param]) ? $commands[$param] : $other;
                 
             default :
-                throw new Exception("COMMAND {$command} NOT DEFINED");
+                echo ("COMMAND {$command} NOT DEFINED");
+                return true;
         }
     }else{
     

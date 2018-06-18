@@ -40,12 +40,20 @@ class Event{
             
             foreach(self::$listeners[strtolower($event)] as $callback)
             {
-                call_user_func_array($callback, $args);    
+                $r = call_user_func_array($callback, $args);
+                if($r)
+                {
+                    return $r;
+                }
             }
             
             foreach(self::$all as $all)
             {
-                call_user_func_array($all, $args);
+                $r = call_user_func_array($all, $args);
+                if($r)
+                {
+                    return $r;
+                }
             }
         }
     }
