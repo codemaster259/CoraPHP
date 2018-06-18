@@ -3,71 +3,44 @@
 error_reporting(E_ALL);
 session_start();
 
-define('CORE_ROOT', str_replace("\\","/", dirname(__FILE__)).'/');
+define('CORE_ROOT', str_replace("\\","/", __DIR__.'/'));
+
+define('SYSTEM_ROOT', CORE_ROOT."system/");
+define('MODULE_ROOT', CORE_ROOT."src/");
 
 //Requires
-require_once CORE_ROOT."core/functions.php";
+require_once SYSTEM_ROOT."functions.php";
 
 fake_loader(":log", false);
 fake_loader(":register");
-fake_loader(":addPath", CORE_ROOT."src/");
-fake_loader(":addPath", CORE_ROOT."core/");
+fake_loader(":addPath", SYSTEM_ROOT);
+fake_loader(":addPath", MODULE_ROOT);
 
 //Uses
+use CoraPHP\Core\Console;
 use CoraPHP\Core\Logger;
 use CoraPHP\Core\FileSystem;
+use CoraPHP\Core\ModuleBase;
+
 use CoraPHP\Container\Registry;
+
 use CoraPHP\Http\Router;
 
 //Logger
 Logger::enabled(false);
 
 //FileSystem
-FileSystem::addPath(CORE_ROOT."src/");
+FileSystem::addPath(MODULE_ROOT);
 
 //Registry
 Registry::channel("Urls")->fill(define_urls(__FILE__));
 
 //Init Modules
-require_once CORE_ROOT.'src/ini.php';
+ModuleBase::loadModule(CORE_ROOT."src/");
 
 //ROUTING
 echo Router::make(Registry::channel("Urls")->get("REQUEST_URL"), Registry::channel("Routes")->all());
 
+//Console::createModule("Admin", MODULE_ROOT);
 
-/*
-//Routing with EventManager xD
-
-use CoraPHP\Events\Event;
-
-$url = Registry::channel("Urls")->get("REQUEST_URL");
-
-Event::listenTo("/", function($event, $data){
-    Event::trigger("_base", array("content" => "Home Page!"));
-});
-
-Event::listenTo("/about", function($event, $data){
-    Event::trigger("_base", array("content" => "Admin Page!"));
-});
-
-Event::listenTo("_menu", function($event, $data){
-    return "<div>menu - menu - menu</div>";
-});
-
-Event::listenTo("_base", function($event, $data){
-    $output = "<div>Header</div>";
-    $output .= Event::trigger("_menu");
-    $output .=  "<div>".$data['content']."</div>";
-    $output .=  "<div>Footer:{$event}</div>";
-    echo $output;
-});
-
-//and $data can be user as "Service Locatior / Container" :D
-
-$data = array();
-
-$data['url'] = $url;
-
-Event::trigger($url, $data);
-
-*/
+//include CORE_ROOT."test.php";
