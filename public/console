@@ -1,0 +1,92 @@
+<?php
+
+error_reporting(E_ALL);
+session_start();
+
+define('CORE_ROOT', str_replace("\\","/", dirname(__DIR__).'/'));
+
+define('SYSTEM_ROOT', CORE_ROOT."system/");
+define('MODULE_ROOT', CORE_ROOT."src/");
+
+//Requires
+require_once SYSTEM_ROOT."functions.php";
+
+fake_loader(":log", false);
+fake_loader(":register");
+fake_loader(":addPath", SYSTEM_ROOT);
+fake_loader(":addPath", MODULE_ROOT);
+
+use CoraPHP\Command;
+
+Command::addCommand("system:test:hello", function(){
+	$args = func_get_args();
+	
+	$name = "World";
+	
+	if(isset($args[0]))
+	{
+		$name = $args[0];
+	}
+	
+	echo "Hello {$name}!!!";
+});
+
+Command::addCommand("system:folder:make", function(){
+	$args = func_get_args();
+	
+	$name = null;
+	
+	if(isset($args[0]))
+	{
+		$name = $args[0];
+	}
+	
+	if($name)
+	{
+		mkdir($name);
+	}
+	
+	echo "folder $name created";
+	
+});
+
+Command::addCommand("system:file:make", function(){
+	$args = func_get_args();
+	
+	$name = null;
+	
+	if(isset($args[0]))
+	{
+		$name = $args[0];
+	}
+	
+	if($name)
+	{
+		$myfile = fopen($name, "w") or die("Unable to open file!");
+		fclose($myfile);
+	}
+	
+	echo "file $name created";
+	
+});
+
+Command::addCommand("system:file:delete", function(){
+	$args = func_get_args();
+	
+	$name = null;
+	
+	if(isset($args[0]))
+	{
+		$name = $args[0];
+	}
+	
+	if($name)
+	{
+		unlink($name);
+	}
+	
+	echo "file $name deleted";
+	
+});
+
+Command::run($argv);

@@ -8,18 +8,13 @@ class Router{
     
     private static $routes = array();
     
-    public static function addRoute($route, $data)
-    {
-        self::$routes[$route] = $data;
-    }
-    
     public static function registerRoutes($routes = array())
     {
         if(is_array($routes))
         {
             foreach($routes as $route => $data)
             {
-                self::addRoute($route, $data);
+                self::$routes[$route] = $data;
             }
         }
     }

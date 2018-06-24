@@ -31,7 +31,7 @@ function define_urls($file = null){
     
     $real_url = $scheme.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"];
         
-    $request_url = parse_url(rtrim("/".str_replace($core_url,"",$real_url),'/'), PHP_URL_PATH);
+    $request_url = parse_url(rtrim($_SERVER["REQUEST_URI"],'/'), PHP_URL_PATH);
     
     if($request_url == "")
     {

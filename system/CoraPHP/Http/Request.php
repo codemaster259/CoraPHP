@@ -22,12 +22,6 @@ class Request{
     
     /** @var DataBag $_SESSION[session key] */
     public $session = null;
-
-    /** @var DataBag $_SESSION[session key] */
-    public $headers = null;
-    
-    /** @var DataBag $_SESSION[session key] */
-    public $server = null;
     
     /** @var DataBag attributes */
     public $attributes = null;
@@ -37,7 +31,7 @@ class Request{
     /** @var Request initial request*/
     protected static $initial = null;
     
-    protected $method = 'GET';
+    protected $method = 'get';
     
     public function __construct($url = "/")
     {
@@ -52,11 +46,10 @@ class Request{
         $this->flash = new FlashBag('FLASH_VARS');
         $this->session = new SessionBag();
         
-        $this->headers = new DataBag(getallheaders());
-        
-        $this->server = new DataBag($_SERVER);
-        
-        $this->method = $this->server->get("REQUEST_METHOD");
+        if(!$this->post->isEmpty())
+        {
+            $this->method = 'post';
+        }
         
         if(!self::$initial)
         {
@@ -71,12 +64,12 @@ class Request{
     
     public function isPost()
     {
-        return $this->isMethod("POST");
+        return $this->isMethod("post");
     }
     
     public function isMethod($method)
     {
-        return strtolower($this->method) == strtolower($method);
+        return $this->method == strtolower($method);
     }
     
     public function isInitial()

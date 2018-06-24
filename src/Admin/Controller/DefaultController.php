@@ -4,10 +4,12 @@ namespace Admin\Controller;
 
 use CoraPHP\Mvc\View;
 
+use Common\Controller\TemplateController;
+
 /**
  * DefaultController
  */
-class DefaultController extends SecureController{
+class DefaultController extends TemplateController{
     
     public function indexAction()
     {

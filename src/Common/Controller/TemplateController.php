@@ -15,10 +15,9 @@ class TemplateController extends Controller{
     /** @var View */
     protected $template = null;
     
-    public function preInit()
+    public function init()
     {
-        parent::preInit();
-        
+        parent::init();
         $layout = "Common:Layout:blank";
         $this->template = View::make($layout);
         
@@ -33,9 +32,9 @@ class TemplateController extends Controller{
         }
     }
     
-    public function postInit()
+    public function finish()
     {
-        parent::postInit();
+        parent::finish();
         $this->response->body($this->template);
     }
 }
