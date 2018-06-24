@@ -3,7 +3,6 @@
 namespace Main\Controller;
 
 use CoraPHP\Mvc\View;
-use CoraPHP\Container\Registry;
 
 use Common\Controller\TemplateController;
 /**

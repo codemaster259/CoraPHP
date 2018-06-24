@@ -9,9 +9,9 @@ use CoraPHP\Mvc\Controller;
  */
 class PrivateController extends Controller{
     
-    public function init()
+    public function preInit()
     {
-        parent::init();
+        parent::preInit();
         //block direct access
         if($this->request->isInitial())
         {

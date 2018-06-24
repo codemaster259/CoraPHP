@@ -6,8 +6,6 @@ use CoraPHP\Http\Router;
 use CoraPHP\Http\Request;
 use CoraPHP\Http\Response;
 
-use CoraPHP\Container\Bucket;
-
 use CoraPHP\Events\Event;
 
 class Controller{
@@ -37,7 +35,7 @@ class Controller{
  
     public function execute($action)
     {
-        $init = $this->init();
+        $init = $this->preInit();
         if($init)
         {
             return $init;
@@ -50,7 +48,7 @@ class Controller{
             $this->{$method}();
         }
 
-        $finish = $this->finish();
+        $finish = $this->postInit();
         if($finish)
         {
             return $finish;
@@ -61,10 +59,13 @@ class Controller{
     
     public function actionExists($action)
     {
-        return method_exists($this,$action."Action");
+        return method_exists($this, $action."Action");
     }
     
-    public function init(){
+    /**
+     * Before Action
+     */
+    public function preInit(){
         
         $event = array(
             "request" => $this->request,
@@ -72,10 +73,13 @@ class Controller{
             "cnotroller" => $this
         );
         
-        Event::trigger("controller:init", $event);
+        Event::trigger("controller:preInit", $event);
     }
     
-    public function finish(){
+    /**
+     * After Action
+     */
+    public function postInit(){
         
         $event = array(
             "request" => $this->request,
@@ -83,6 +87,6 @@ class Controller{
             "cnotroller" => $this
         );
         
-        Event::trigger("controller:finish", $event);
+        Event::trigger("controller:postInit", $event);
     }
 }

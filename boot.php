@@ -17,7 +17,7 @@ fake_loader(":addPath", SYSTEM_ROOT);
 fake_loader(":addPath", MODULE_ROOT);
 
 //Uses
-use CoraPHP\Core\Console;
+//use CoraPHP\Core\Console;
 use CoraPHP\Core\Logger;
 use CoraPHP\Core\FileSystem;
 use CoraPHP\Core\ModuleBase;
