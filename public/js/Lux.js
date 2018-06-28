@@ -1,7 +1,3 @@
-document.ready = function (fn){
-    return document.addEventListener("DOMContentLoaded",fn);
-};
-
 (function (){
     
     //Define main entrance
@@ -9,6 +5,7 @@ document.ready = function (fn){
         return new init(selector);
     };
     
+    //main object
     var init = function(selector){
         
         var els;
@@ -44,6 +41,19 @@ document.ready = function (fn){
         return this;
     };
     
+    /*only for inputs*/
+    init.prototype.val = function (value) {
+        if (typeof value !== "undefined")
+        {
+            return this.forEach(function (el){
+                el.value = value;
+            });
+        }else{
+            return this.map(function (el){
+                return el.value;
+            });
+        }
+    };
     
     init.prototype.text = function (txt) {
         if (typeof txt !== "undefined")
@@ -177,6 +187,13 @@ document.ready = function (fn){
             }
         }); 
     };
+    
+    init.prototype.clear = function (){
+        return this.forEach(function (el){
+            return el.innerHTML = "";
+        });
+    };
+
 
 
     init.prototype.remove = function (){
@@ -248,7 +265,9 @@ document.ready = function (fn){
     });
     
     
-    //Static Methods    
+    //Static Methods
+    Lux.doc = Lux(document);
+    
     Lux.create = function (tagName, attrs){
         var el = new Dome([document.createElement(tagName)]);
         if(attrs)
@@ -285,15 +304,29 @@ document.ready = function (fn){
             }
         }
     };
-
+    
     Lux.req = {};
     
-    Lux.req.ajax = function(opts){
+    Lux.req.jsonToQuery = function(json) {
+        var str = "";
+        var amp = "";
+        for(var key in json)
+        {
+            if(json.hasOwnProperty(key))
+            {
+                str += amp + encodeURIComponent(key) + "=" + encodeURIComponent(json[key]);
+                amp = "&";
+            }
+        }
+        return str;
+    };
+    
+    Lux.req.ajax = function(o){
       
-        var o = opts || {};
+        var opts = o || {};
         var method = opts['method'] || 'GET';
         var url = opts['url'] || '';
-        var data = JSON.stringify(opts['data']) || null;
+        var data = Lux.req.jsonToQuery(opts['data']) || null;
         var success = opts['success'] || function(){};
         var error = opts['error'] || function(){};
         
@@ -306,17 +339,17 @@ document.ready = function (fn){
                     error.call(null, this.status);
                     return;
                 }
-                console.log(xhr);
-                if(this.readyState == XMLHttpRequest.DONE)
+
+                if(this.readyState === XMLHttpRequest.DONE)
                 {
-                    if(this.status == 200)
+                    if(this.status === 200)
                     {
-                        success.call(null, this.responseText);
+                        success.call(null, JSON.parse(this.responseText));
                     }
                 }
             };
             
-            if(method.toLowerCase() == 'post')
+            if(method.toLowerCase() === 'post')
             {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             }
@@ -325,12 +358,32 @@ document.ready = function (fn){
             
             xhr.send(data);
         }catch(e){
-            alert(e);
+            console.log("AJAX ERROR: " + e);
         }
     };
     
-    window.Lux = Lux;
+    Lux.req.post = function(o){
+        o['method'] = "POST";
+        
+        Lux.req.ajax(o);
+    };
+    
+    Lux.req.get = function(o){
+        o['method'] = "GET";
+        
+        Lux.req.ajax(o);
+    };
+    
+    /**
+     * 
+     * 
+     * @param {type} callback
+     * 
+     */
+    Lux.ready = function(fn){
+        Lux.doc.on("DOMContentLoaded", fn);
+    };
+
+    //create alias
+    window.Lux = window.L = Lux;
 })();
-
-
-////

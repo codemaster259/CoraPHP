@@ -8,20 +8,117 @@ class Router{
     
     private static $routes = array();
     
+    public static function getRoutes(){
+        return self::$routes;
+    }
+    
     public static function registerRoutes($routes = array())
     {
         if(is_array($routes))
         {
             foreach($routes as $route => $data)
             {
-                self::$routes[$route] = $data;
+                self::addRoute($route, $data);
             }
         }
+    }
+    
+    public static function addRoute($route, $data)
+    {
+        $data['regex'] = self::prepare($data['route']);
+        
+        self::$routes[$route] = $data;
     }
     
     public static function getRouteByName($name)
     {
         return isset(self::$routes[$name]) ? self::$routes[$name]['route'] : $name;
+    }
+    
+    private static function prepare($pattern)
+    {
+        //echo "<input type='text' style='width:400px;' value='first: {$pattern}'><br>";
+        
+        if(preg_match('/[^:\/\*_{}()a-zA-Z\d]/', $pattern))
+        {
+            //Invalid Pattern
+            return false;
+        }
+        
+        $chars = array(
+            ':num'  =>  '[0-9]+',          //integers
+            ':str'  =>  '[a-zA-Z]+',       //leters
+            ':alpha'=>  '[a-zA-Z0-9]+',    //alphanumerics
+            ':any'  =>  '[a-zA-Z0-9_]+',   //any but slash
+            ':all'  =>  '[a-zA-Z0-9_/\.]*',//matches all usable chars :)
+            '{'     =>  '(',               //named start OK
+            '}'     =>  ')',               //named end OK
+        );
+        
+        $allowedParamChars = '[a-zA-Z0-9\_]+';
+        
+        // Turn "(/)" into "/?" DEPRECATED
+        //$pattern = preg_replace('#\(/\)#', '/?', $pattern);
+        
+        
+        //todo 0: Change '*' into '?' for making any parameter optional xD
+        $pattern = preg_replace('#\*#', '?', $pattern);
+        //echo "<input type='text' style='width:400px;' value='*->? {$pattern}'><br>";
+
+        
+        //todo 1: required format {parameter:type}
+        
+        //todo 1.1: replace {parameter} with {parameter:any} DONE
+        $pattern = preg_replace(
+            '/\{(' . $allowedParamChars . ')}/', // Replace "{parameter}"
+            '{$1:any}'                        , // with "{parameter:any}"
+            $pattern
+        );
+        //echo "<input type='text' style='width:400px;' value=':any {$pattern}'><br>";
+        
+        
+        //todo 1.2: replace {:type} with {type:type} DONE
+        $pattern = preg_replace(
+            '/\{:(' . $allowedParamChars . ')}/', // Replace "{:type}"
+            '{$1:$1}'                          , // with "{type:type}"
+            $pattern
+        );
+        //echo "<input type='text' style='width:400px;' value=':any {$pattern}'><br>";        
+        
+        
+        //todo 2: replace {parameter:type} with {?<parameter>:type} DONE
+        $pattern = preg_replace(
+            '/\{(' . $allowedParamChars . ')/', // Replace "{parameter"
+            '{?P<$1>'                        , // with "{?P<parameter>"
+            $pattern
+        );
+        //echo "<input type='text' style='width:400px;' value='type {$pattern}'><br>";
+        
+        
+        //todo 3: replace {?P<parameter>:type} with {?P<parameter>[chars]} DONE
+        $searches = array_keys($chars);
+        $replaces = array_values($chars);
+        
+        $pattern = str_replace($searches, $replaces, $pattern);
+        //echo "<input type='text' style='width:400px;' value='s-r {$pattern}'><br><br>";
+
+        
+        //todo 4: Add start and end matching => REGEX!
+        $patternAsRegex = "@^" . $pattern . "$@D";
+
+        return $patternAsRegex;
+    }
+    
+    protected static function noInt($a)
+    {
+        foreach ($a as $k => $v)
+        {
+            if(is_int($k)) 
+            {
+                unset($a[$k]);
+            }
+        }
+        return $a;
     }
     
     function dispatch($url = "/")
@@ -32,11 +129,18 @@ class Router{
             $url= "/";
         }
         
+        if($url != "/")
+        {
+            $url = rtrim($url, "/");
+        }
+        
         //guardar url
         $this->url = $url;
         
         //ruta encontrada = null
         $match = null;
+        
+        $matches = array();
         
         //encontrar ruta por nombre
         if(isset(self::$routes[$this->url]))
@@ -46,11 +150,17 @@ class Router{
             
         }else{
             //encontrar por 'path'
+            
             foreach(self::$routes as $route)
             {
-                //echo $route['route']."<br>";
-                if(isset($route['route']) && $route['route'] == $this->url)
+                $matches = array();
+
+                //if(isset($route['route']) && $route['route'] == $this->url)
+                if(preg_match($route['regex'], $this->url, $matches))
                 {
+                    //$matches = self::noInt($matches);
+                    array_shift($matches);
+                    //debug($matches);
                     $match = $route['path'];
                     break;
                 }
@@ -60,21 +170,24 @@ class Router{
         //ruta encontrada
         if($match)
         {
-            //ensamblar controllador
+            //armar controller
             $ModuleControllerAction = explode(":", strtolower($match));
 
             $module = ucwords($ModuleControllerAction[0]);
             $controller = ucwords($ModuleControllerAction[1]);
             $action = strtolower($ModuleControllerAction[2]);
             
-            //crear objeto requets
+            //crear objeto request
             $request = new Request($this->url);
             
+            $request->get->fill($matches);
+            
             //guardar attributos del controller
-            $request->attributes->set("_controller", $controller)
-                    ->set("_module", $module)
+            $request->attributes->set("_module", $module)
+                    ->set("_controller", $controller)
                     ->set("_action", $action)
-                    ->set("_url", $this->url);
+                    ->set("_url", $this->url)
+                    ->set("_route", $match);
 
             //nombre controller
             $controllerName = $module."\\Controller\\".$controller."Controller";
@@ -88,7 +201,7 @@ class Router{
             /* @var Controler $controllerObject  */
             $controllerObject = new $controllerName($request);
             
-            //accion no existe
+            //action no existe
             if(!$controllerObject->actionExists($action))
             {
                 return $this->errorPage("Pagina <strong>{$this->url}</strong> no encontrada (A)");

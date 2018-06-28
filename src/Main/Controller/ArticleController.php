@@ -19,6 +19,12 @@ class ArticleController extends TemplateController{
         $msgs = Registry::channel("Library")->get("Main:Service:MessageService");
         
         $page['page_title'] = "Lorem Ipsum! ".rand();
+        
+        if($this->request->get->has("id"))
+        {
+            $id = $this->request->get->get("id");
+            $page['page_title'] = "Lorem Ipsum! ".rand()." ID: ".$id;
+        }
         $page['page_content'] = $msgs->lorem();
 
         $this->request->flash->set("msg", $msgs->sayRandom());

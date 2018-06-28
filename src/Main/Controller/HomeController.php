@@ -21,5 +21,16 @@ class HomeController extends TemplateController{
         
         $this->template->append("web_title", "{$title} - ");
         $this->template->add("web_content", $view);
-    }    
+    }
+    
+    public function mvcAction()
+    {
+        $title = "This is MVC";
+        
+        $view = View::make("Main:Home:mvc")
+                ->add("page_title", $title);
+
+        $this->template->append("web_title", "{$title} - ");
+        $this->template->add("web_content", $view);
+    } 
 }
