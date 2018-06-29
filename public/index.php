@@ -41,7 +41,7 @@ ModuleBase::loadModule(CORE_ROOT."src/");
 //ROUTING
 echo Router::make(Registry::channel("Urls")->get("REQUEST_URL"), Registry::channel("Routes")->all());
 
-debug(Router::getRoutes());
+//debug(Router::getRoutes());
 
 //Console::createModule("Admin", MODULE_ROOT);
 
