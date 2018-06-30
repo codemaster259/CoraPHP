@@ -29,12 +29,7 @@ class App{
         
         return null;
     }
-    
-    public function onPrepare($callback){
-        
-        $this->on["onPrepare"] = $callback;
-    }
-    
+
     public function onLoad($callback){
         
         $this->on["onLoad"] = $callback;
@@ -53,8 +48,6 @@ class App{
     }
     
     public function load(){
-        
-        $this->emit("onPrepare");
         
         $this->emit("onLoad");
     }

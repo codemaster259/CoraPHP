@@ -2,7 +2,7 @@
 
 namespace System\CoraPHP\Container;
 
-class ArrayLoader{
+class Config{
 	   
     /**
      * Loads .ini, .json and .xml files as PHP arrays

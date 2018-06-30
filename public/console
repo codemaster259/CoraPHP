@@ -13,8 +13,7 @@ require_once SYSTEM_ROOT."functions.php";
 
 fake_loader(":log", false);
 fake_loader(":register");
-fake_loader(":addPath", SYSTEM_ROOT);
-fake_loader(":addPath", MODULE_ROOT);
+fake_loader(":addPath", CORE_ROOT);
 
 use System\CoraPHP\Command;
 

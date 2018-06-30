@@ -19,7 +19,7 @@ class UserController extends TemplateController{
         
         $title = "Users";
         
-        $view = View::make("App:User:index")
+        $view = View::make("User:index")
                 ->add("page_title", $title)
                 ->add("users", $users->getAll());
         
@@ -38,7 +38,7 @@ class UserController extends TemplateController{
         
         $title = "Users - View";
         
-        $view = View::make("App:User:view")
+        $view = View::make("User:view")
                 ->add("page_title", $title)
                 ->add("user", $users->getById($id));
         

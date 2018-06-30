@@ -19,9 +19,9 @@ class WidgetController extends PrivateController{
             array('href'=>'//www.youtube.com','text'=>'Youtube')
         );
 
-        $loop = View::loop("App:Partial:link", $links);
+        $loop = View::loop("Partial:link", $links);
         
-        $view = View::make("App:Shared:page");
+        $view = View::make("Shared:page");
         $view->add("page_title", "Sidebar ");
         $view->add("page_content", "<ul>".$loop."</ul>");
         
@@ -30,7 +30,7 @@ class WidgetController extends PrivateController{
     
     public function menuAction()
     {
-        $view = View::make("App:Shared:menu")
+        $view = View::make("Shared:menu")
                 ->add("web_title", Registry::channel("Settings")->get("page_title"));
         
         $this->response->body($view);

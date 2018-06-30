@@ -80,11 +80,9 @@ class View{
         
         $mft = explode(":", $this->file);
         
-        $module = (trim($mft[0] != "") ? $mft[0]."/" : "");
-        $folder = (trim($mft[1] != "") ? $mft[1]."/" : "");
-        $template = $mft[2];
+        $template = str_replace(":", "/", $this->file);
         
-        $filename = $module."Views/".$folder.$template;
+        $filename = "app/Views/".$template;
         
         $file = FileSystem::findFile($filename);
         

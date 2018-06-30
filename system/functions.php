@@ -30,7 +30,7 @@ function define_urls(){
     //full request url
     $urls["REAL_URL"] = $real_url;
     //custom request uri fragment
-    $urls["REQUEST_URL"] = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $urls["REQUEST_URL"] = $request_url;
     
     return $urls;
 }

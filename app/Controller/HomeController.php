@@ -13,7 +13,7 @@ class HomeController extends TemplateController{
     {        
         $title = "Home";
         
-        $view = View::make("App:Home:index")
+        $view = View::make("Home:index")
                 ->add("page_title", $title)
                 ->add("page_content", "This is Home!");
         
@@ -25,7 +25,7 @@ class HomeController extends TemplateController{
     {
         $title = "This is MVC";
         
-        $view = View::make("App:Home:mvc")
+        $view = View::make("Home:mvc")
                 ->add("page_title", $title);
 
         $this->template->append("web_title", "{$title} - ");

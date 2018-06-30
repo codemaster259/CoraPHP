@@ -18,12 +18,12 @@ class TemplateController extends Controller{
     public function init()
     {
         parent::init();
-        $layout = "App:Layout:blank";
+        $layout = "Layout:blank";
         $this->template = View::make($layout);
         
         if($this->request->isInitial())
         {
-            $this->template->setFile("App:Layout:base");
+            $this->template->setFile("Layout:base");
             
             $this->template->add("web_title", Registry::channel("Settings")->get("page_title"))
                 ->add("web_sidebar", $this->fordward("/widget/sidebar"))
