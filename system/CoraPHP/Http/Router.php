@@ -1,10 +1,18 @@
 <?php
 
-namespace CoraPHP\Http;
+namespace System\CoraPHP\Http;
+
+use System\CoraPHP\Container\Injecter;
 
 class Router{
     
     private $url = "/";
+    
+    /**
+     *
+     * @var Injecter
+     */
+    private $injecter = null;
     
     private static $routes = array();
     
@@ -182,6 +190,11 @@ class Router{
             
             $request->get->fill($matches);
             
+            if($this->injecter)
+            {
+                $request->injecter = $this->injecter;
+            }
+            
             //guardar attributos del controller
             $request->attributes->set("_module", $module)
                     ->set("_controller", $controller)
@@ -224,11 +237,22 @@ class Router{
         return new Response($msg);
     }
     
-    public static function make($url, $routes = array())
+    protected function setInjecter(Injecter $injecter)
+    {
+        $this->injecter = $injecter;
+    }
+    
+    public static function make($url, $routes = array(), $injecter = null)
     {
         self::registerRoutes($routes);
         
         $router = new self();
+        
+        if($injecter)
+        {
+            $router->setInjecter($injecter);
+        }
+        
         return $router->dispatch($url);
     }
 }

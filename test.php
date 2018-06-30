@@ -3,8 +3,8 @@
 
 //Routing with EventManager xD
 
-use CoraPHP\Events\Event;
-use CoraPHP\Container\Registry;
+use System\CoraPHP\Events\Event;
+use System\CoraPHP\Container\Registry;
 
 $url = Registry::channel("Urls")->get("REQUEST_URL");
 

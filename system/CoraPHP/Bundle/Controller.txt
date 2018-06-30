@@ -2,8 +2,8 @@
 
 namespace {{Module}}\Controller;
 
-use CoraPHP\Mvc\Controller;
-use CoraPHP\Mvc\View;
+use System\CoraPHP\Mvc\Controller;
+use System\CoraPHP\Mvc\View;
 
 /**
  * DefaultController

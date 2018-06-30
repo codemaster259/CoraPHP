@@ -1,6 +1,6 @@
 <?php
 
-namespace CoraPHP\Mvc;
+namespace System\CoraPHP\Mvc;
 
 class ViewHelper{
     

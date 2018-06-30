@@ -1,10 +1,11 @@
 <?php
 
-namespace CoraPHP\Http;
+namespace System\CoraPHP\Http;
 
-use CoraPHP\Container\DataBag;
-use CoraPHP\Container\FlashBag;
-use CoraPHP\Container\SessionBag;
+use System\CoraPHP\Container\DataBag;
+use System\CoraPHP\Container\FlashBag;
+use System\CoraPHP\Container\SessionBag;
+use System\CoraPHP\Container\Injecter;
 
 class Request{
     
@@ -26,10 +27,13 @@ class Request{
     /** @var DataBag attributes */
     public $attributes = null;
     
-    protected $url = "/";
-    
+    /** @var Injecter dependences */
+    public $injecter = null;
+        
     /** @var Request initial request*/
     protected static $initial = null;
+    
+    protected $url = "/";
     
     protected $method = 'get';
     

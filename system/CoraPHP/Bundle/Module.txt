@@ -2,10 +2,10 @@
 
 namespace {{Module}};
 
-use CoraPHP\Core\Logger;
-use CoraPHP\Core\ModuleBase;
-use CoraPHP\Container\Registry;
-use CoraPHP\Container\ArrayLoader;
+use System\CoraPHP\Core\Logger;
+use System\CoraPHP\Core\ModuleBase;
+use System\CoraPHP\Container\Registry;
+use System\CoraPHP\Container\ArrayLoader;
 
 class Module extends ModuleBase{
 

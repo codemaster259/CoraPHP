@@ -1,14 +1,11 @@
 <?php
 
-namespace CoraPHP\Mvc;
+namespace System\CoraPHP\Mvc;
 
-use CoraPHP\Http\Router;
-use CoraPHP\Http\Request;
-use CoraPHP\Http\Response;
-
-use CoraPHP\Container\Bucket;
-
-use CoraPHP\Events\Event;
+use System\CoraPHP\Events\Event;
+use System\CoraPHP\Http\Router;
+use System\CoraPHP\Http\Request;
+use System\CoraPHP\Http\Response;
 
 class Controller{
     

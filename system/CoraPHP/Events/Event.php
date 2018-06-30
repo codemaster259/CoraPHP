@@ -1,6 +1,6 @@
 <?php
 
-namespace CoraPHP\Events;
+namespace System\CoraPHP\Events;
 
 class Event{
 

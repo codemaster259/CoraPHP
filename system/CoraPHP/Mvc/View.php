@@ -1,8 +1,8 @@
 <?php
 
-namespace CoraPHP\Mvc;
+namespace System\CoraPHP\Mvc;
 
-use CoraPHP\Core\FileSystem;
+use System\CoraPHP\Core\FileSystem;
 
 class View{
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace CoraPHP\Http;
+namespace System\CoraPHP\Http;
 
 class Response{
     

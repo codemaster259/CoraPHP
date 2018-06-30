@@ -1,5 +1,5 @@
 <?php
-namespace CoraPHP;
+namespace System\CoraPHP;
 
 class Command{
 	

@@ -1,6 +1,6 @@
 <?php
 
-namespace CoraPHP;
+namespace System\CoraPHP;
 
 class ListArray extends ArrayObject{
     

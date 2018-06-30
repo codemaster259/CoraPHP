@@ -1,6 +1,6 @@
 <?php
 
-namespace CoraPHP\Model;
+namespace System\CoraPHP\Model;
 
 class Query{
     

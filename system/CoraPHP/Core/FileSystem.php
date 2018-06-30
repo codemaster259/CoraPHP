@@ -1,6 +1,6 @@
 <?php
 
-namespace CoraPHP\Core;
+namespace System\CoraPHP\Core;
 
 class FileSystem{
        

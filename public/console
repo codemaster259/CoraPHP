@@ -16,7 +16,7 @@ fake_loader(":register");
 fake_loader(":addPath", SYSTEM_ROOT);
 fake_loader(":addPath", MODULE_ROOT);
 
-use CoraPHP\Command;
+use System\CoraPHP\Command;
 
 Command::addCommand("system:test:hello", function(){
 	$args = func_get_args();

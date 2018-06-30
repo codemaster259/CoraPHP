@@ -1,6 +1,6 @@
 <?php
 
-namespace CoraPHP\Container;
+namespace System\CoraPHP\Container;
 
 class FlashBag extends SessionBag{
     
