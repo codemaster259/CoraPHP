@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use System\CoraPHP\Mvc\View;
 
-use App\Model\User;
+use App\Entity\UserEntity;
 /**
  * UserController
  */
@@ -14,8 +14,8 @@ class UserController extends TemplateController{
     {
         $factory = $this->request->injecter->get("ModelFactory");
         
-        /* @var Main\Model\User $users */
-        $users = $factory->create(User::class);
+        /* @var App\Entity\UserEntity $users */
+        $users = $factory->create(UserEntity::class);
         
         $title = "Users";
         
@@ -31,8 +31,8 @@ class UserController extends TemplateController{
     {
         $factory = $this->request->injecter->get("ModelFactory");
         
-        /** @var Main\Model\User $users */
-        $users = $factory->create(User::class);
+        /** @var App\Entity\UserEntity $users */
+        $users = $factory->create(UserEntity::class);
         
         $id = $this->request->get->get("id");
         

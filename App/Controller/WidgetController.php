@@ -8,7 +8,7 @@ use System\CoraPHP\Container\Registry;
 /**
  * Partial views
  */
-class WidgetController extends PrivateController{
+class WidgetController extends ProtectedController{
     
     public function sidebarAction()
     {
@@ -31,7 +31,7 @@ class WidgetController extends PrivateController{
     public function menuAction()
     {
         $view = View::make("Shared:menu")
-                ->add("web_title", Registry::channel("Settings")->get("page_title"));
+                ->add("web_title", Registry::channel("Settings")->get("web_title"));
         
         $this->response->body($view);
     }
