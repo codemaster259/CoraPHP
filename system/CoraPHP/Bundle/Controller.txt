@@ -1,0 +1,23 @@
+<?php
+
+namespace {{Module}}\Controller;
+
+use System\CoraPHP\Mvc\Controller;
+use System\CoraPHP\Mvc\View;
+
+/**
+ * DefaultController
+ */
+class DefaultController extends Controller{
+    
+    public function indexAction()
+    {
+        $view = View::make("{{Module}}:Default:index");
+        
+        $layout = View::make("{{Module}}:Layout:base");
+        
+        $layout->add("web_content", $view);
+        
+        $this->response->body($layout);
+    }
+}
