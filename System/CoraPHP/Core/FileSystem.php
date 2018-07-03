@@ -99,16 +99,23 @@ class FileSystem{
         try{
             if(!$overwrite)
             {
+                echo "no over";
                 if(self::findFile($file, null))
                 {
                     echo "file exists $file\n";
                     return false;
+                }else{
+                    echo "no existe";
                 }
+                
+            }else{
+                echo "si over";
             }
             
             $file = fopen($file, "w") or die("Unable to open file!");
             fwrite($file, $content);
             fclose($file);
+            return true;
             
         }catch(\Exception $e){
             echo $e->getMessage();

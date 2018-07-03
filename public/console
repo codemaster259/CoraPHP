@@ -21,7 +21,7 @@ use System\CoraPHP\Container\Config;
 use System\CoraPHP\Container\Registry;
 use System\CoraPHP\Model\Database;
 
-//FileSystem::enableLog();
+FileSystem::enableLog();
 FileSystem::addPath(CORE_ROOT);
 FileSystem::addPath(APP_ROOT);
 FileSystem::addPath(SYSTEM_ROOT);
