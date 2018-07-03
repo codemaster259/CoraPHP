@@ -28,13 +28,13 @@ class FileSystem{
             return true;
         }
         
-        self::log("No Existe: {$file}<br><br>");
+        self::log("No Existe: {$file}<br><br>\n");
         return false;
     }
     
     public static function findFile($filename, $ext = ".php", $absolute = false)
     {
-        self::log("Search: {$filename}<br>");
+        self::log("Search: {$filename}<br>\n");
         
         $fullfile = $filename.$ext;
         
@@ -42,7 +42,7 @@ class FileSystem{
         {
             if(file_exists($fullfile))
             {
-                self::log("Existe {$fullfile} !<br><br>");
+                self::log("Existe {$fullfile} !<br><br>\n");
                 return $fullfile;
             }
         }else{
@@ -54,14 +54,16 @@ class FileSystem{
 
                 if(file_exists($file))
                 {
-                    self::log("Existe {$file} !<br><br>");
+                    self::log("Existe {$file} !<br><br>\n");
                     return $file;
+                }else{
+                    self::log("No Existe {$file} !<br><br>\n");
                 }
             }
         
         }
 
-        self::log("No Existe: {$fullfile} <br><br>");
+        self::log("No Existe: {$fullfile} <br><br>\n");
         return false;
     }
     
@@ -99,17 +101,11 @@ class FileSystem{
         try{
             if(!$overwrite)
             {
-                echo "no over";
-                if(self::findFile($file, null))
+                if(self::findFile($file, null, true))
                 {
                     echo "file exists $file\n";
                     return false;
-                }else{
-                    echo "no existe";
                 }
-                
-            }else{
-                echo "si over";
             }
             
             $file = fopen($file, "w") or die("Unable to open file!");

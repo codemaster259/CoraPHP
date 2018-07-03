@@ -1,3 +1,0 @@
-[{{Module}}:Default:index]
-route = "/{{module}}"
-path = "{{Module}}:Default:index"

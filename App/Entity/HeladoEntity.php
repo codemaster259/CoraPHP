@@ -5,13 +5,13 @@ namespace App\Entity;
 use System\CoraPHP\Model\ActiveRecord;
 
 /**
- * NotaEntity
+ * HeladoEntity
  */
-class NotaEntity extends ActiveRecord{
+class HeladoEntity extends ActiveRecord{
 
     
     protected function getTable(){
-        return "nota";
+        return "helado";
     }
 
     public function getAll(){

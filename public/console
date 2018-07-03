@@ -21,7 +21,7 @@ use System\CoraPHP\Container\Config;
 use System\CoraPHP\Container\Registry;
 use System\CoraPHP\Model\Database;
 
-FileSystem::enableLog();
+//FileSystem::enableLog();
 FileSystem::addPath(CORE_ROOT);
 FileSystem::addPath(APP_ROOT);
 FileSystem::addPath(SYSTEM_ROOT);
@@ -112,7 +112,7 @@ Command::addCommand("fw:controller:create", function(){
     if($name)
     {
         echo "Create Controller $name\n";
-        $temp = FileSystem::findFile("CoraPHP/Bundles/Controller.txt", null);
+        $temp = FileSystem::findFile("System/CoraPHP/Bundles/Controller.txt", null);
         
         $data = array(
             "{{name}}" => ucwords($name)
@@ -160,7 +160,7 @@ Command::addCommand("fw:entity:create", function(){
         }
         
         echo "Create Entity $name\n";
-        $temp = FileSystem::findFile("CoraPHP/Bundles/Entity.txt", null);
+        $temp = FileSystem::findFile("System/CoraPHP/Bundles/Entity.txt", null);
         
         $data = array(
             "{{name}}" => ucwords($name),
@@ -210,7 +210,7 @@ Command::addCommand("fw:service:create", function(){
         }
         
         echo "Create Service $name\n";
-        $temp = FileSystem::findFile("CoraPHP/Bundles/Service.txt", null);
+        $temp = FileSystem::findFile("System/CoraPHP/Bundles/Service.txt", null);
         
         $data = array(
             "{{name}}" => ucwords($name)
