@@ -4,9 +4,8 @@ error_reporting(E_ALL);
 session_start();
 
 define('CORE_ROOT', str_replace("\\","/", dirname(__DIR__).'/'));
-
-define('SYSTEM_ROOT', CORE_ROOT."system/");
-define('APP_ROOT', CORE_ROOT."app/");
+define('SYSTEM_ROOT', CORE_ROOT."System/");
+define('APP_ROOT', CORE_ROOT."App/");
 
 //Requires
 require_once SYSTEM_ROOT."functions.php";
@@ -33,8 +32,7 @@ use System\CoraPHP\Model\ModelFactory;
 $app = new App();
 
 $app->onLoad(function(App $app){
-    
-    
+
     //Logger
     Logger::enabled(false);
     
@@ -82,7 +80,12 @@ $app->onLoad(function(App $app){
     //debug(Router::getRoutes());
 });
 
-$app->load();
+try{
+    $app->load();
+} catch (Exception $e){
+    
+    debug($e->getMessage());
+}
 
 //use System\CoraPHP\Core\Console;
 

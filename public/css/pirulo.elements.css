@@ -41,6 +41,13 @@ article{
     color:#fff;
 }
 
+.nav-menu a{
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+    color:#fff;
+}
+
 .nav-fixed{
     position: fixed;
 }
@@ -49,10 +56,8 @@ article{
     padding-top: 40px;
 }
 
-.nav-menu .nav-title{
-    display: block;
+.nav-menu .nav-brand{
     float: left;
-    padding: 11px;
     font-weight: bold;
 }
 
@@ -112,13 +117,6 @@ article{
     display: block;
     float: left;
     width: 100%;
-}
-
-.nav-menu .nav-ul a{
-    display: block;
-    padding: 11px;
-    text-decoration: none;
-    color:#fff;
 }
 
 .nav-menu .nav-ul a:hover{

@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Model;
+namespace App\Entity;
 
 use System\CoraPHP\Model\ActiveRecord;
 
 /**
- * Description of User
- *
- * @author Pirulo
+ * UserEntity
  */
-class User extends ActiveRecord{
+class UserEntity extends ActiveRecord{
 
     public $usuario;
     public $password;

@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Controller;
+
+use System\CoraPHP\Mvc\Controller;
+
+/**
+ * {{name}}Controller
+ */
+class {{name}}Controller extends Controller{
+    
+    public function indexAction()
+    {       
+        $this->response->body("Hello from ".__METHOD__."!!");
+    }
+}

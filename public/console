@@ -4,88 +4,288 @@ error_reporting(E_ALL);
 session_start();
 
 define('CORE_ROOT', str_replace("\\","/", dirname(__DIR__).'/'));
-
-define('SYSTEM_ROOT', CORE_ROOT."system/");
-define('MODULE_ROOT', CORE_ROOT."src/");
+define('SYSTEM_ROOT', CORE_ROOT."System/");
+define('APP_ROOT', CORE_ROOT."App/");
 
 //Requires
 require_once SYSTEM_ROOT."functions.php";
 
-fake_loader(":log", false);
-fake_loader(":register");
+//fake_loader(":log", true);
 fake_loader(":addPath", CORE_ROOT);
+fake_loader(":register");
+
 
 use System\CoraPHP\Command;
+use System\CoraPHP\Core\FileSystem;
+use System\CoraPHP\Container\Config;
+use System\CoraPHP\Container\Registry;
+use System\CoraPHP\Model\Database;
+
+//FileSystem::enableLog();
+FileSystem::addPath(CORE_ROOT);
+FileSystem::addPath(APP_ROOT);
+FileSystem::addPath(SYSTEM_ROOT);
+
+Registry::channel("Database")->fill(Config::load(APP_ROOT."Config/database.ini"));
 
 Command::addCommand("system:test:hello", function(){
-	$args = func_get_args();
-	
-	$name = "World";
-	
-	if(isset($args[0]))
-	{
-		$name = $args[0];
-	}
-	
-	echo "Hello {$name}!!!";
+    $args = func_get_args();
+
+    $name = "World";
+
+    if(isset($args[0]))
+    {
+        $name = $args[0];
+    }
+
+    echo "Hello {$name}!!!";
 });
 
 Command::addCommand("system:folder:make", function(){
-	$args = func_get_args();
-	
-	$name = null;
-	
-	if(isset($args[0]))
-	{
-		$name = $args[0];
-	}
-	
-	if($name)
-	{
-		mkdir($name);
-	}
-	
-	echo "folder $name created";
+    $args = func_get_args();
+
+    $name = null;
+
+    if(isset($args[0]))
+    {
+        $name = $args[0];
+    }
+
+    if($name)
+    {
+        mkdir($name);
+    }
+
+    echo "folder $name created";
 	
 });
 
 Command::addCommand("system:file:make", function(){
-	$args = func_get_args();
-	
-	$name = null;
-	
-	if(isset($args[0]))
-	{
-		$name = $args[0];
-	}
-	
-	if($name)
-	{
-		$myfile = fopen($name, "w") or die("Unable to open file!");
-		fclose($myfile);
-	}
-	
-	echo "file $name created";
+    $args = func_get_args();
+
+    $name = null;
+
+    if(isset($args[0]))
+    {
+        $name = $args[0];
+    }
+
+    if($name)
+    {
+        $myfile = fopen($name, "w") or die("Unable to open file!");
+        fclose($myfile);
+    }
+
+    echo "file $name created";
 	
 });
 
 Command::addCommand("system:file:delete", function(){
-	$args = func_get_args();
-	
-	$name = null;
-	
-	if(isset($args[0]))
-	{
-		$name = $args[0];
-	}
-	
-	if($name)
-	{
-		unlink($name);
-	}
-	
-	echo "file $name deleted";
+    $args = func_get_args();
+
+    $name = null;
+
+    if(isset($args[0]))
+    {
+        $name = $args[0];
+    }
+
+    if($name)
+    {
+        unlink($name);
+    }
+
+    echo "file $name deleted";
 	
 });
+
+Command::addCommand("fw:controller:create", function(){
+    $args = func_get_args();
+    
+    $name = null;
+
+    if(isset($args[0]))
+    {
+        $name = $args[0];
+    }
+
+    if($name)
+    {
+        echo "Create Controller $name\n";
+        $temp = FileSystem::findFile("CoraPHP/Bundles/Controller.txt", null);
+        
+        $data = array(
+            "{{name}}" => ucwords($name)
+        );
+        
+        if($temp){
+            $content = FileSystem::read($temp, function($str) use ($data){
+                return str_replace(array_keys($data), array_values($data), $str);
+            });
+            
+            $file = APP_ROOT."Controller/".ucwords($name)."Controller";
+            
+            if(FileSystem::write($file.".php", $content))
+            {
+                echo "Controller $name cerated!\n";
+            }else{
+                echo "Controller $name no created\n";
+            }
+        }
+    }
+});
+
+Command::addCommand("fw:entity:create", function(){
+    $args = func_get_args();
+    
+    $name = null;
+
+    if(isset($args[0]))
+    {
+        $name = array_shift($args);
+    }
+    
+    $table = null;
+    
+    if(isset($args[0]))
+    {
+        $table = array_shift($args);
+    }
+
+    if($name)
+    {
+        if(!$table)
+        {
+            $table = $name;
+        }
+        
+        echo "Create Entity $name\n";
+        $temp = FileSystem::findFile("CoraPHP/Bundles/Entity.txt", null);
+        
+        $data = array(
+            "{{name}}" => ucwords($name),
+            "{{table}}" => strtolower($table)
+        );
+        
+        if($temp){
+            $content = FileSystem::read($temp, function($str) use ($data){
+                return str_replace(array_keys($data), array_values($data), $str);
+            });
+            
+            $file = APP_ROOT."Entity/".ucwords($name)."Entity";
+            
+            if(FileSystem::write($file.".php", $content))
+            {
+                echo "Entity $name created!\n";
+            }else{
+                echo "Entity $name no created\n";
+            }
+        }
+    }
+});
+
+Command::addCommand("fw:service:create", function(){
+    $args = func_get_args();
+    
+    $name = null;
+
+    if(isset($args[0]))
+    {
+        $name = array_shift($args);
+    }
+    
+    $table = null;
+    
+    if(isset($args[0]))
+    {
+        $table = array_shift($args);
+        echo "table $table\n";
+    }
+
+    if($name)
+    {
+        if(!$table)
+        {
+            $table = $name;
+        }
+        
+        echo "Create Service $name\n";
+        $temp = FileSystem::findFile("CoraPHP/Bundles/Service.txt", null);
+        
+        $data = array(
+            "{{name}}" => ucwords($name)
+        );
+        
+        if($temp){
+            $content = FileSystem::read($temp, function($str) use ($data){
+                return str_replace(array_keys($data), array_values($data), $str);
+            });
+            
+            $file = APP_ROOT."Service/".ucwords($name);
+            
+            if(FileSystem::write($file.".php", $content))
+            {
+                echo "Service $name created!\n";
+            }else{
+                echo "Service $name no created\n";
+            }
+        }
+    }
+});
+
+Command::addCommand("fw:database:create", function(){
+    $args = func_get_args();
+    
+    $name = null;
+
+    if(isset($args[0]))
+    {
+        $name = array_shift($args);
+    }
+    
+    $drop = null;
+    
+    if(isset($args[0]))
+    {
+        $drop = array_shift($args);
+    }
+    
+    extract(Registry::channel("Database")->get("MySQL"));
+    
+    $database = new Database($host, $user, $pass);
+    
+    $sql = "CREATE DATABASE IF NOT EXISTS {$name}";
+    
+    $database->execute($sql);
+    
+});
+
+Command::addCommand("fw:database:drop", function(){
+    $args = func_get_args();
+    
+    $name = null;
+
+    if(isset($args[0]))
+    {
+        $name = array_shift($args);
+    }
+    
+    $drop = null;
+    
+    if(isset($args[0]))
+    {
+        $drop = array_shift($args);
+    }
+    
+    extract(Registry::channel("Database")->get("MySQL"));
+    
+    $database = new Database($host, $user, $pass);
+    
+    $sql = "DROP DATABASE {$name}";
+    
+    $database->execute($sql);
+    
+});
+
 
 Command::run($argv);
