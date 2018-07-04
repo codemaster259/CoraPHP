@@ -23,11 +23,6 @@ abstract class ActiveRecord {
         $this->db = $db;
     }
     
-    public function setDB($db){
-        
-        $this->db = $db;
-    }
-    
     public function fill($data = null)
     {
         if($data)
