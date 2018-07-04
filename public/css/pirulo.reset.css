@@ -1,0 +1,13 @@
+/* 
+    Created on : 10/06/2018, 11:43:35 AM
+    Author     : Pirulo
+	File       : pirulo.reset.css
+*/
+html, body {
+	box-sizing: border-box;
+	margin:0px;
+	padding:0px;
+}
+*, *:before, *:after {
+	box-sizing: inherit;
+}

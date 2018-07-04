@@ -1,0 +1,150 @@
+/* 
+    Created on : 10/06/2018, 11:43:35 AM
+    Author     : Pirulo
+	File       : pirulo.elements.css
+*/
+
+/* Mobile first styles go here */
+
+article{
+    padding:10px;
+}
+
+.block{
+    padding:20px;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.fixed{
+    position:fixed;
+    z-index: 100;
+    width: 100%;
+}
+
+.min{
+    padding: 0px;
+    margin: 0px;
+}
+
+.scroll-y{
+    overflow-y: auto;
+}
+
+/*NAV MENU*/
+.nav-menu{
+    width: 100%;
+    margin: 0px auto;
+    background: #000;
+    color:#fff;
+}
+
+.nav-menu a{
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+    color:#fff;
+}
+
+.nav-fixed{
+    position: fixed;
+}
+
+.nav-fixed + main{
+    padding-top: 40px;
+}
+
+.nav-menu .nav-brand{
+    float: left;
+    font-weight: bold;
+}
+
+.nav-menu .nav-label{
+    cursor: pointer;
+    float: right;
+    padding: 20px 10px;
+    position: relative;
+    display: inline-block;
+}
+
+.nav-menu .nav-label span:before, .nav-menu .nav-label span:after{
+    background: #fff;
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+
+.nav-menu .nav-label span:before{
+    top: -7px;
+}
+
+.nav-menu .nav-label span:after{
+    top: 7px;
+}
+	
+.nav-menu .nav-label span{
+    background: #fff;
+    display: block;
+    height: 2px;
+    position: relative;
+    width: 20px;
+}
+
+.nav-menu .nav-chbx{
+    display: none;
+    width: 0px;
+    height: 0px;
+    float: right;
+    /*position: fixed;*/
+}
+
+.nav-menu .nav-ul{
+    display: none;
+    width: 100%;
+    list-style: none;
+    float: left;
+    text-align: left;
+    margin: 0px;
+    padding: 0px;
+    /*position: absolute;*/
+}
+
+.nav-menu .nav-ul li{
+    display: block;
+    float: left;
+    width: 100%;
+}
+
+.nav-menu .nav-ul a:hover{
+    background: #fff;
+    color:#000;
+}
+
+.nav-chbx:checked ~ .nav-ul {
+    display: block;
+}
+
+
+@media screen and (min-width: 800px) {
+/* Desktop styles go here */
+
+.nav-menu .nav-label{
+    display: none;
+}
+.nav-menu .nav-ul{
+    display: block;
+    width: auto;
+}
+
+.nav-menu .nav-ul li{
+    width: auto;
+}
+
+.nav-menu .nav-title{
+    float:left;
+}
+}

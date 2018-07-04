@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Service;
+
+/**
+ * {{name}}
+ */
+class {{name}}{
+
+    public function test()
+    {
+        return "Test ".__METHOD__."!!!";
+    }
+}

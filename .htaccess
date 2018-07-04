@@ -1,0 +1,11 @@
+AddDefaultCharset UTF-8
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+### USE THIS IF index.php IS IN PUBLIC FOLDER ###
+#::: GO TO PUBLIC ANYWAY
+
+# QSA = Query String Append
+RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
