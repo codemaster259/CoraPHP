@@ -58,7 +58,7 @@
     init.prototype.text = function (txt) {
         if (typeof txt !== "undefined")
         {
-            return this.forEach(function (el){
+            return this.map(function (el){
                 el.innerText = txt;
             });
         }else{
@@ -70,14 +70,14 @@
 
 
     init.prototype.html = function (html){
-        if (typeof html !== "undefined")
+        if(typeof html !== "undefined")
         {
-            this.forEach(function (el){
+            this.forEach(function(el){
                 el.innerHTML = html;
             });
             return this;
         }else{
-            return this.mapOne(function (el){
+            return this.mapOne(function(el){
                 return el.innerHTML;
             });
         }
@@ -145,12 +145,12 @@
                 return el.getAttribute("data-" + key);
             });
 
-            if(n && n.toLowerCase() == "true")
+            if(n && n.toLowerCase() === "true")
             {
                 return true;
             }
             
-            if(n && n.toLowerCase() == "false")
+            if(n && n.toLowerCase() === "false")
             {
                 return false;
             }

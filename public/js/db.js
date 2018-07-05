@@ -61,7 +61,7 @@ FAKEDB.DB = function(name){
         
         for(var row in tablerows)
         {
-            if(tablerows[row].id == id)
+            if(tablerows[row].id === id)
             {
                 return getRow(tablerows[row]);
             }
@@ -77,7 +77,7 @@ FAKEDB.DB = function(name){
         
         for(var row in tablerows)
         {
-            if(tablerows[row][field] && tablerows[row][field] == value)
+            if(tablerows[row][field] && tablerows[row][field] === value)
             {
                 res.push(getRow(tablerows[row]));
             }
@@ -103,7 +103,7 @@ FAKEDB.DB = function(name){
         
         for(var row in tablerows)
         {
-            if(tablerows[row].id == id)
+            if(tablerows[row].id === id)
             {
                 tablerows[row] = data;
             }
