@@ -121,3 +121,7 @@ function fake_loader($classOrCommand, $param = null, $other = null)
         return false;
     }
 }
+
+function get_object_public_vars($object) {
+    return get_object_vars($object);
+}

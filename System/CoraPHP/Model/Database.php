@@ -13,6 +13,8 @@ class Database{
     protected $user = null;
     protected $pass = null;
     protected $dbname = null;
+    
+    protected $mode ="select";
 
     public function __construct($host, $user, $pass, $dbname)
     {   
@@ -95,20 +97,31 @@ class Database{
     {
         $this->connect();
         
-        echo "{$sql}<br>";
-        
         $sth = $this->pdo->prepare($sql);
         
         foreach($data as $key => $value)
         {
-            $sth->bindValue(":".$key, $value);
+            $sth->bindValue(":$key", $value);
         }
+        
+        echo $sth->queryString."<br>";
         
         $res = $sth->execute();
         
         if(!$res)
         {
             $this->error = $this->pdo->errorInfo()[2];
+        }
+        
+        $lastID = null;
+        
+        if($this->mode == "insert")
+        {
+            $lastID = $this->pdo->lastInsertId();
+            
+            //$this->disconnect();
+            
+            return $lastID;
         }
         
         $this->disconnect();
@@ -118,6 +131,8 @@ class Database{
     
     public function selectOne($table, $fields = "*", $where = "1=1"){
         
+        $this->mode = "select";
+        
         $sql = "SELECT {$fields} FROM {$table} WHERE {$where}";
 
         
@@ -126,6 +141,8 @@ class Database{
     
     public function selectAll($table, $fields = "*", $where = "1=1"){
         
+        $this->mode = "select";
+        
         $sql = "SELECT {$fields} FROM {$table} WHERE {$where}";
         
         return $this->queryAll($sql, array());
@@ -133,6 +150,8 @@ class Database{
     
     public function delete($table, $where)
     {
+        $this->mode = "delete";
+        
         return $this->execute("DELETE FROM {$table} WHERE {$where}");
     }
     
@@ -140,6 +159,8 @@ class Database{
     /*Specific Things*/
     public function update($table, $fields, $where)
     {
+        $this->mode = "update";
+        
         $set = $this->buildUpdate($fields);
         
         if($this->execute("UPDATE {$table} SET {$set} WHERE {$where}", $fields))
@@ -151,8 +172,10 @@ class Database{
     }
     
             
-    public function insert($table, $fields){
-     
+    public function insert($table, $fields)
+    {
+        $this->mode = "insert";
+        
         $values = $this->buildInsert($fields);
         
         if($this->execute("INSERT INTO {$table} {$values}", $fields))
@@ -171,7 +194,7 @@ class Database{
         
         foreach(array_keys($fields) as $field){
             
-            $f .= "{$comma}{$field} = ':{$field}'";
+            $f .= "{$comma}{$field} = :{$field}";
             
             $comma = ", ";
         }
@@ -182,23 +205,23 @@ class Database{
     private function buildInsert(array $fields){
         
         $f = "(";
+        $comma = "";
         
         //fields
-        foreach(array_keys($fields) as $field){
-            $comma = "";
-            
-            $f .= "{$comma}'{$field}'";
+        foreach(array_keys($fields) as $field)
+        {    
+            $f .= "{$comma}{$field}";
             
             $comma = ", ";
         }
         
         $f .= ") VALUES (";
         
+        $comma = "";
         //values
-        foreach(array_keys($fields) as $field){
-            $comma = "";
-            
-            $f .= "{$comma}':{$field}'";
+        foreach(array_keys($fields) as $field)
+        {
+            $f .= "{$comma}:{$field}";
             
             $comma = ", ";
         }

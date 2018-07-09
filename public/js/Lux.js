@@ -58,7 +58,7 @@
     init.prototype.text = function (txt) {
         if (typeof txt !== "undefined")
         {
-            return this.map(function (el){
+            return this.forEach(function (el){
                 el.innerText = txt;
             });
         }else{
