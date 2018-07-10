@@ -25,7 +25,8 @@ class TemplateController extends Controller{
         {
             $this->template->setFile("Layout:base");
             
-            $this->template->add("web_title", Registry::channel("Settings")->get("web_title"))
+            $this->template->add("web_site", Registry::channel("Settings")->get("web_site"))
+                ->add("web_title", Registry::channel("Settings")->get("web_site"))
                 ->add("web_sidebar", $this->fordward("/widget/sidebar"))
                 ->add("web_menu", $this->fordward("/widget/menu"));
         }

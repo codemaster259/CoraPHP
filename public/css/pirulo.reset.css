@@ -4,9 +4,11 @@
 	File       : pirulo.reset.css
 */
 html, body {
-	box-sizing: border-box;
-	margin:0px;
-	padding:0px;
+    box-sizing: border-box;
+    margin:0px;
+    padding:0px;
+    font-family: SANS-SERIF;
+    font-size: 14px;
 }
 *, *:before, *:after {
 	box-sizing: inherit;

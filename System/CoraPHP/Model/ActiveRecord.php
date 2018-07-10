@@ -50,6 +50,11 @@ abstract class ActiveRecord {
         return $list;
     }
     
+    /**
+     * 
+     * @param array $data
+     * @return static
+     */
     public function make($data){
         
         $me = new static($this->db);
@@ -70,4 +75,12 @@ abstract class ActiveRecord {
     abstract public function save();
     
     abstract protected function getTable();
+    
+    public function delete(){
+        
+        if($this->id !== null)
+        {
+            $this->db->delete($this->getTable(), "id = {$this->id}");
+        }
+    }
 }

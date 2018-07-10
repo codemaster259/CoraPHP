@@ -29,3 +29,35 @@
 #content article{
     padding:10px
 }
+
+/*BUTTONS*/
+.btn-red{background:#c32;color: #fff;}
+.btn-red:hover{background:#d32;}
+.btn-red:active{background:#e32;}
+
+.btn-sky{background:#3bd;color: #fff;}
+.btn-sky:hover{background:#3ce;}
+.btn-sky:active{background:#3df;}
+
+.btn-blue{background:#37b;color: #fff;}
+.btn-blue:hover{background:#38c;}
+.btn-blue:active{background:#39d;}
+
+.btn-green{background:#3c5;color: #fff;}
+.btn-green:hover{background:#3d2;}
+.btn-green:active{background:#3e2;}
+
+.btn-orange{background:#fa1;color: #fff;}
+.btn-orange:hover{background:#fb2;}
+.btn-orange:active{background:#fc3;}
+
+/*BUTTONS*/
+
+/*ALERTS*/
+.alert-default{background: #eee;border:1px solid #000;}
+.alert-primary{background: #39d;border:1px solid #37b;}
+.alert-success{background: #5d5;border:1px solid #5b5;}
+.alert-info{background: #3df;border:1px solid #3bd;}
+.alert-warning{background: #fd6;border:1px solid #fa4;}
+.alert-error{background: #e32;border:1px solid #c32;}
+/*ALERTS*/

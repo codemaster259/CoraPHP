@@ -170,14 +170,14 @@ class Router{
             {
                 $matches = array();
 
-                if($this->request->isMethod($route['method']))
+                //if($this->request->isMethod($route['method']))
                 {
                     if(preg_match($route['regex'], $this->url, $matches))
                     {
                         //$matches = self::noInt($matches);
                         array_shift($matches);
                         //debug($matches);
-                        $match = $route['path'];
+                        $match = $route;
                         break;
                     }
                 }
@@ -187,8 +187,13 @@ class Router{
         //ruta encontrada
         if($match)
         {
+            if(!$this->request->isMethod($match['method']))
+            {
+                //return $this->errorPage("Pagina <strong>{$this->url}</strong> no encontrada (M)");
+            }
+            
             //armar controller
-            $ModuleControllerAction = explode(":", strtolower($match));
+            $ModuleControllerAction = explode(":", strtolower($route['path']));
 
             $module = ucwords($ModuleControllerAction[0]);
             $controller = ucwords($ModuleControllerAction[1]);
@@ -208,7 +213,7 @@ class Router{
                     ->set("_controller", $controller)
                     ->set("_action", $action)
                     ->set("_url", $this->url)
-                    ->set("_route", $match);
+                    ->set("_route", $route['path']);
 
             //nombre controller
             $controllerName = $module."\\Controller\\".$controller."Controller";

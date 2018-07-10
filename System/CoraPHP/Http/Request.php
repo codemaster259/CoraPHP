@@ -50,10 +50,7 @@ class Request{
         $this->flash = new FlashBag('FLASH_VARS');
         $this->session = new SessionBag();
         
-        if(!$this->post->isEmpty())
-        {
-            $this->method = 'post';
-        }
+        $this->method = strtolower($_SERVER['REQUEST_METHOD']);
         
         if(!self::$initial)
         {

@@ -31,7 +31,7 @@ class WidgetController extends ProtectedController{
     public function menuAction()
     {
         $view = View::make("Shared:menu")
-                ->add("web_title", Registry::channel("Settings")->get("web_title"));
+                ->add("web_site", Registry::channel("Settings")->get("web_site"));
         
         $this->response->body($view);
     }

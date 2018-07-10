@@ -6,4 +6,6 @@
         <div>Apellido: <?php echo $user->apellido;?></div>
         <div>Email: <?php echo $user->email;?></div>
     </div>
-</article>  
+    <br>
+    <div><a class="btn-blue" href="/usuarios">Volver</a></div>
+</article>

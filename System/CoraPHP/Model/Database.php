@@ -95,6 +95,9 @@ class Database{
         
     protected function execute($sql, $data = array())
     {
+        
+        $this->lastID = null;
+        
         $this->connect();
         
         $sth = $this->pdo->prepare($sql);
@@ -117,17 +120,15 @@ class Database{
         
         if($this->mode == "insert")
         {
-            $lastID = $this->pdo->lastInsertId();
-            
-            //$this->disconnect();
-            
-            return $lastID;
+            $this->lastID = $this->pdo->lastInsertId();
         }
         
         $this->disconnect();
 
         return $res;
     }
+    
+    public $lastID = null;
     
     public function selectOne($table, $fields = "*", $where = "1=1"){
         
@@ -180,7 +181,7 @@ class Database{
         
         if($this->execute("INSERT INTO {$table} {$values}", $fields))
         {
-            return $this->pdo->lastInsertId();
+            return $this->lastID;
         }else{
             return $this->error;
         }

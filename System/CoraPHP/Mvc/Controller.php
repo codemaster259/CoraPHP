@@ -28,7 +28,7 @@ class Controller{
     
     public function redirect($urlOrRoute = "/")
     {
-        header("Location:{$urlOrRoute}".Router::getRouteByName($urlOrRoute));
+        header("Location: /".Router::getRouteByName($urlOrRoute));
         exit();
     }
  

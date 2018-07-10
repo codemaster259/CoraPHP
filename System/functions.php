@@ -122,6 +122,7 @@ function fake_loader($classOrCommand, $param = null, $other = null)
     }
 }
 
-function get_object_public_vars($object) {
+function get_object_public_vars($object)
+{
     return get_object_vars($object);
 }
