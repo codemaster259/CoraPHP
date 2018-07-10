@@ -14,7 +14,7 @@ abstract class ActiveRecord {
     /**
      * @var Database
      */
-    public $db;
+    protected $db;
     
     public $id;
     
@@ -57,6 +57,10 @@ abstract class ActiveRecord {
         $me->fill($data);
         
         return $me;
+    }
+    
+    protected function getPublicVars(){
+        return get_object_public_vars($this);
     }
     
     abstract public function getAll();
