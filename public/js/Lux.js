@@ -77,7 +77,7 @@
             });
             return this;
         }else{
-            return this.mapOne(function(el){
+            return this.map(function(el){
                 return el.innerHTML;
             });
         }
