@@ -23,6 +23,8 @@ abstract class ActiveRecord {
         $this->db = $db;
     }
     
+    abstract protected function getTable();
+    
     public function fill($data = null){
         
         if($data)
@@ -59,21 +61,73 @@ abstract class ActiveRecord {
         return $me;
     }
     
+    /**
+     * Return an array containing only public vars
+     * 
+     * @return array
+     */
     protected function getPublicVars(){
         
         return get_object_public_vars($this);
     }
     
-    abstract public function getAll();
+    /**
+     * Default implementation of <b>getAll</b> method,
+     * you can override if you need
+     * 
+     * @return array
+     */
+    public function getAll(){
+
+        return $this->makeAll($this->db->selectAll($this->getTable()));
+    }
+
+    /**
+     * Default implementation of <b>getById</b> method,
+     * you can override if you need
+     * 
+     * @return self
+     */
+    public function getById($id){
+        
+        $data = $this->db->selectOne($this->getTable(), "*", "id = {$id}");
+        
+        if($data)
+        {
+            return $this->make($data);
+        }
+        
+        return null;
+    }
     
-    abstract public function getById($id);
+    /**
+     * Default implementation of <b>save</b> method,
+     * you can override if you need
+     * 
+     * @return mixed
+     */
+    public function save(){
+        
+        $data = $this->getPublicVars();
+        
+        unset($data['id']);
+        
+        if($this->id == null)
+        {
+            return $this->db->insert($this->getTable(), $data);
+        }else{
+            return $this->db->update($this->getTable(), $data, "id = {$this->id}");
+        }
+    }
     
-    abstract public function save();
-    
-    abstract protected function getTable();
-    
+    /**
+     * Default implementation of <b>delete</b> method,
+     * you can override if you need
+     * 
+     * @return boolean
+     */
     public function delete(){
         
-        $this->db->delete($this->getTable(), "id = {$this->id}");
+        return $this->db->delete($this->getTable(), "id = {$this->id}");
     }
 }
