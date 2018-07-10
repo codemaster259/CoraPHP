@@ -28,6 +28,11 @@ class TemplateController extends Controller{
             $this->template->add("web_title", Registry::channel("Settings")->get("web_title"))
                 ->add("web_sidebar", $this->fordward("/widget/sidebar"))
                 ->add("web_menu", $this->fordward("/widget/menu"));
+            
+            if($this->request->session->has("usuario"))
+            {
+                $this->template->add("_usuario", $this->request->session->get("usuario"));
+            }
         }
     }
     

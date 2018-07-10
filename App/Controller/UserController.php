@@ -10,6 +10,12 @@ use App\Entity\UserEntity;
  */
 class UserController extends TemplateController{
     
+    public function init(){
+        parent::init();
+        
+        $this->template->append("web_title", "Usuarios - ");
+    }
+    
     public function indexAction()
     {
         $factory = $this->request->injecter->get("ModelFactory");
@@ -17,28 +23,12 @@ class UserController extends TemplateController{
         /* @var $users \App\Entity\UserEntity */
         $users = $factory->create(UserEntity::class);
         
-        $pirulo = $users->make(array(
-            "user"=>"pirulo",
-            "pass"=>"pirulop",
-            "email"=>"piruloe"
-        ));
-        
-        if($c = $pirulo->save())
-        {
-            echo "OK<br>";
-        }else{
-            echo "error: ".$c;
-        }
-        
-        debug($users->getAll());
-        
-        $title = "Users";
+        $title = "Lista de Usuarios";
         
         $view = View::make("User:index")
                 ->add("page_title", $title)
-                ->add("users", array());//$users->getAll());
+                ->add("users", $users->getAll());
         
-        $this->template->append("web_title", "{$title} - ");
         $this->template->add("web_content", $view);
     } 
     
@@ -51,13 +41,12 @@ class UserController extends TemplateController{
         
         $id = $this->request->get->get("id");
         
-        $title = "Users - View";
+        $title = "Ver Usuario";
         
         $view = View::make("User:view")
                 ->add("page_title", $title)
                 ->add("user", $users->getById($id));
         
-        $this->template->append("web_title", "{$title} - ");
         $this->template->add("web_content", $view);
     } 
 }

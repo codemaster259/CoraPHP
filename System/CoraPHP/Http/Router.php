@@ -164,22 +164,17 @@ class Router{
             $this->url = self::$routes[$this->url]['path'];
             
         }else{
-            //encontrar por 'path'
             
+            //encontrar por 'regex'
             foreach(self::$routes as $route)
             {
                 $matches = array();
 
-                if($this->request->isMethod($route['method']))
+                if(preg_match($route['regex'], $this->url, $matches))
                 {
-                    if(preg_match($route['regex'], $this->url, $matches))
-                    {
-                        //$matches = self::noInt($matches);
-                        array_shift($matches);
-                        //debug($matches);
-                        $match = $route['path'];
-                        break;
-                    }
+                    array_shift($matches);
+                    $match = $route;
+                    break;
                 }
             }
         }
@@ -188,15 +183,14 @@ class Router{
         if($match)
         {
             //armar controller
-            $ModuleControllerAction = explode(":", strtolower($match));
+            $ModuleControllerAction = explode(":", strtolower($match['path']));
 
             $module = ucwords($ModuleControllerAction[0]);
             $controller = ucwords($ModuleControllerAction[1]);
             $action = strtolower($ModuleControllerAction[2]);
             
-            //crear objeto request
-            
-            $this->request->get->fill($matches);
+            //llenar objeto request con parametros de url
+            $this->request->query->fill($matches);
             
             if($this->injecter)
             {
@@ -208,7 +202,7 @@ class Router{
                     ->set("_controller", $controller)
                     ->set("_action", $action)
                     ->set("_url", $this->url)
-                    ->set("_route", $match);
+                    ->set("_route", $match['path']);
 
             //nombre controller
             $controllerName = $module."\\Controller\\".$controller."Controller";

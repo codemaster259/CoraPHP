@@ -18,13 +18,13 @@ abstract class ActiveRecord {
     
     public $id;
     
-    public function __construct($db)
-    {
+    public function __construct($db){
+        
         $this->db = $db;
     }
     
-    public function fill($data = null)
-    {
+    public function fill($data = null){
+        
         if($data)
         {
             foreach ($data as $prop => $value)
@@ -60,6 +60,7 @@ abstract class ActiveRecord {
     }
     
     protected function getPublicVars(){
+        
         return get_object_public_vars($this);
     }
     
@@ -70,4 +71,9 @@ abstract class ActiveRecord {
     abstract public function save();
     
     abstract protected function getTable();
+    
+    public function delete(){
+        
+        $this->db->delete($this->getTable(), "id = {$this->id}");
+    }
 }

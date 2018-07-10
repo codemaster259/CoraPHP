@@ -31,7 +31,13 @@ class WidgetController extends ProtectedController{
     public function menuAction()
     {
         $view = View::make("Shared:menu")
+                ->add("login", false)
                 ->add("web_title", Registry::channel("Settings")->get("web_title"));
+        
+        if($this->request->session->has("login"))
+        {
+            $view->add("login", true);
+        }
         
         $this->response->body($view);
     }

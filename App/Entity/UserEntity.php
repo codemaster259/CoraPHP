@@ -9,12 +9,10 @@ use System\CoraPHP\Model\ActiveRecord;
  */
 class UserEntity extends ActiveRecord{
 
-    //public $usuario;
-    //public $password;
-    //public $nombre;
-    //public $apellido;
-    public $user;
-    public $pass;
+    public $usuario;
+    public $password;
+    public $nombre;
+    public $apellido;
     public $email;
     
     protected function getTable(){
@@ -28,13 +26,7 @@ class UserEntity extends ActiveRecord{
 
     public function getById($id){
         
-        $r = $this->make($this->db->selectOne($this->getTable(), "*", "id = {$id}"));
-
-        return $r;
-    }
-    
-    public function test(){
-        debug($this->getPublicVars());
+        return $this->make($this->db->selectOne($this->getTable(), "*", "id = {$id}"));
     }
 
     public function save(){

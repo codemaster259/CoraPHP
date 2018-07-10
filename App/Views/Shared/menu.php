@@ -8,6 +8,11 @@
             <input class="nav-chbx" type="checkbox" id="toggle">
             <ul class="nav-ul">
                 <li><a href="/usuarios">Usuarios</a></li>
+                <?php if($login):?>
+                    <li><a href="/logout">Logout</a></li>
+                <?php else:?>
+                    <li><a href="/login">Login</a></li>
+                <?php endif;?>
             </ul>
         </div>
     </nav>

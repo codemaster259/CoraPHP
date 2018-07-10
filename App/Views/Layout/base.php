@@ -25,6 +25,9 @@
             </header>
             <section class="content">
                 <div class="container grid-row">
+                    <?php echo isset($_usuario) ? "Bienvenido, ".$_usuario : "";?>
+                </div>
+                <div class="container grid-row">
                     <div class="grid-9 column">
                             <?php echo $web_content;?>
                     </div>

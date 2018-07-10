@@ -2,19 +2,21 @@
 
 namespace System\CoraPHP\Container;
 
-class SessionBag{
+class SessionBag {
     
     protected $key = "SESSION_VARS";
     
-    public function __construct()
+    public function __construct($key)
     {
+        $this->key = $key;
+        
         if(!isset($_SESSION[$this->key]))
         {
             $_SESSION[$this->key] = array();
         }
     }
     
-    public function get($key, $def)
+    public function get($key, $def = null)
     {
         return isset($_SESSION[$this->key][$key]) ? $_SESSION[$this->key][$key] : $def;
     }
@@ -37,5 +39,10 @@ class SessionBag{
             unset($_SESSION[$this->key][$key]);
         }
         return $this;
+    }
+    
+    public function all()
+    {
+        return $_SESSION[$this->key];
     }
 }

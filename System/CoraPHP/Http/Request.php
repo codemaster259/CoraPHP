@@ -6,6 +6,7 @@ use System\CoraPHP\Container\DataBag;
 use System\CoraPHP\Container\FlashBag;
 use System\CoraPHP\Container\SessionBag;
 use System\CoraPHP\Container\Injecter;
+use System\CoraPHP\Container\Registry;
 
 class Request{
     
@@ -13,15 +14,15 @@ class Request{
     public $post = null;
     
     /** @var DataBag $_GET */
-    public $get = null;
+    public $query = null;
     
     /** @var DataBag $_FILES */
     public $files = null;
     
-    /** @var DataBag $_SESSION[flash key] */
+    /** @var FlashBag $_SESSION['FLASH_VARS'] */
     public $flash = null;
     
-    /** @var DataBag $_SESSION[session key] */
+    /** @var SessionBag $_SESSION['SESSION_VARS'] */
     public $session = null;
     
     /** @var DataBag attributes */
@@ -43,17 +44,14 @@ class Request{
         
         //fill globals
         $this->post = new DataBag($_POST);
-        $this->get = new DataBag($_GET);
+        $this->query = new DataBag($_GET);
         $this->files = new DataBag($_FILES);
         
         $this->attributes = new DataBag();
-        $this->flash = new FlashBag('FLASH_VARS');
-        $this->session = new SessionBag();
+        $this->flash = new FlashBag(Registry::channel("Config")->get("flash_vars"));
+        $this->session = new SessionBag(Registry::channel("Config")->get("session_vars"));
         
-        if(!$this->post->isEmpty())
-        {
-            $this->method = 'post';
-        }
+        $this->method = strtolower($_SERVER['REQUEST_METHOD']);
         
         if(!self::$initial)
         {

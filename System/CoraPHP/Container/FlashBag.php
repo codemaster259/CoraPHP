@@ -3,13 +3,10 @@
 namespace System\CoraPHP\Container;
 
 class FlashBag extends SessionBag{
-    
-    protected $key = "FLASH_VARS";
-    
-    public function __construct()
+
+    public function __construct($key)
     {
-        $this->key = "FLASH_VARS";
-        parent::__construct();
+        parent::__construct($key);
     }
     
     public function show($key, $def)
