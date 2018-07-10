@@ -77,7 +77,7 @@
             });
             return this;
         }else{
-            return this.mapOne(function(el){
+            return this.map(function(el){
                 return el.innerHTML;
             });
         }
@@ -262,6 +262,13 @@
         return this.forEach(function (el) {
             el.style.display = 'none';
         });
+    });
+    
+    init.prototype.delay = (function(amount, fn){
+        var $this = this;
+        setTimeout(function(){
+            fn($this);
+        }, amount);
     });
     
     

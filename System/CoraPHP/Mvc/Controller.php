@@ -23,14 +23,15 @@ class Controller{
     
     public function fordward($url)
     {
-        return Router::make($url);
+        return Router::make($url, array(), $this->request->injecter);
     }
     
     public function redirect($urlOrRoute = "/")
     {
         $urlOrRoute = Router::getRouteByName($urlOrRoute);
         
-        header("Location:{$urlOrRoute}");
+        header("Location: {$urlOrRoute}");
+        
         exit();
     }
  

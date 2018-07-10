@@ -7,8 +7,13 @@ namespace App\Controller;
  */
 class SecureController extends TemplateController{
     
-    public function start()
+    public function init()
     {
-        parent::start();
+        parent::init();
+                
+        if(!$this->request->session->has("login"))
+        {
+            $this->redirect("login");
+        }
     }
 }

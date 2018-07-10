@@ -50,7 +50,7 @@ $app->onLoad(function(App $app){
     Registry::channel("Routes")->fill(Config::load(APP_ROOT."Config/routes.ini"));
 
     Registry::channel("Settings")->fill(Config::load(APP_ROOT."Config/settings.ini"));
-
+    
     Registry::channel("Database")->fill(Config::load(APP_ROOT."Config/database.ini"));
 
     Registry::channel("Library")->set("App:Service:MessageService", new \App\Service\MessageService());

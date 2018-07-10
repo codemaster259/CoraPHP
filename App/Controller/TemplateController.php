@@ -25,13 +25,14 @@ class TemplateController extends Controller{
         {
             $this->template->setFile("Layout:base");
             
-            $this->template->add("web_title", Registry::channel("Settings")->get("web_title"))
+            $this->template->add("web_site", Registry::channel("Settings")->get("web_site"))
+                ->add("web_title", Registry::channel("Settings")->get("web_site"))
                 ->add("web_sidebar", $this->fordward("/widget/sidebar"))
                 ->add("web_menu", $this->fordward("/widget/menu"));
             
             if($this->request->session->has("usuario"))
             {
-                $this->template->add("_usuario", $this->request->session->get("usuario"));
+                $this->template->add("usuario", $this->request->session->get("usuario"));
             }
         }
     }

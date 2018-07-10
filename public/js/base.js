@@ -13,4 +13,8 @@ Lux.ready(function(){
 
     });
     */
+   
+   Lux('[class^="alert-"]').delay(2000, function(e){
+       e.hide();
+   });
 });

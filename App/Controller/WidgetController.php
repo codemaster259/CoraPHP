@@ -32,7 +32,7 @@ class WidgetController extends ProtectedController{
     {
         $view = View::make("Shared:menu")
                 ->add("login", false)
-                ->add("web_title", Registry::channel("Settings")->get("web_title"));
+                ->add("web_site", Registry::channel("Settings")->get("web_site"));
         
         if($this->request->session->has("login"))
         {

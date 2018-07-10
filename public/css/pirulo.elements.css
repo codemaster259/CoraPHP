@@ -10,28 +10,76 @@ article{
     padding:10px;
 }
 
-.block{
-    padding:20px;
+/*SCROLLABLES*/
+.scroll-y{overflow-y: auto;}
+.scroll-x{overflow-x: auto;}
+/*SCROLLABLES*/
+
+/*BUTTONS*/
+[class^="btn-"]{
+    text-decoration: none;
+    padding: 8px 10px;
+    background: #eee;
+    color: #000;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    display: inline-block;
+    box-sizing: border-box;
+    font-family: SANS-SERIF;
+    cursor: pointer;
+    font-weight: bold;
+}
+[class^="btn-"]:hover{background: #ddd;}
+[class^="btn-"]:active{background: #ccc;}
+/*BUTTONS*/
+
+/*ALERT*/
+[class^="alert-"]{padding:20px;border-radius:5px;margin-bottom:10px;}
+/*ALERT*/
+
+/*TABLE*/
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
 }
 
-.text-center{
+.table th, .table td {
+    text-align: left;
+    padding: 8px;
+}
+
+.table tr:nth-child(odd){background-color: #eee}
+
+.table tr:first-of-type{background-color: #ddd}
+/*TABLE*/
+
+
+/*FORMS*/
+.form{
+    margin: auto;
     text-align: center;
+    padding: 20px;
 }
 
-.fixed{
-    position:fixed;
-    z-index: 100;
+.form .input-group{
+    display: block;
+}
+
+.form .input-group .input-label{
+    display: inline-block;
+    padding: 8px 10px;
+    float: left;
+}
+.form .input-group .input-field{
+    display: inline-block;
+    padding: 8px 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    text-align: left;
     width: 100%;
 }
-
-.min{
-    padding: 0px;
-    margin: 0px;
-}
-
-.scroll-y{
-    overflow-y: auto;
-}
+/*FORMS*/
 
 /*NAV MENU*/
 .nav-menu{
@@ -147,4 +195,27 @@ article{
 .nav-menu .nav-title{
     float:left;
 }
+}
+
+.block{
+    padding:20px;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.fixed{
+    position:fixed;
+    z-index: 100;
+    width: 100%;
+}
+
+.min{
+    padding: 0px;
+    margin: 0px;
+}
+
+.automargin{
+    margin:auto;
 }

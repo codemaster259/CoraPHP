@@ -13,7 +13,7 @@ class Router{
      *
      * @var Injecter
      */
-    private $injecter = null;
+    private static $injecter = null;
     
     private static $routes = array();
     
@@ -170,11 +170,16 @@ class Router{
             {
                 $matches = array();
 
-                if(preg_match($route['regex'], $this->url, $matches))
+                //if($this->request->isMethod($route['method']))
                 {
-                    array_shift($matches);
-                    $match = $route;
-                    break;
+                    if(preg_match($route['regex'], $this->url, $matches))
+                    {
+                        //$matches = self::noInt($matches);
+                        array_shift($matches);
+                        //debug($matches);
+                        $match = $route;
+                        break;
+                    }
                 }
             }
         }
@@ -182,9 +187,14 @@ class Router{
         //ruta encontrada
         if($match)
         {
+            if(!$this->request->isMethod($match['method']))
+            {
+                //return $this->errorPage("Pagina <strong>{$this->url}</strong> no encontrada (M)");
+            }
+            
             //armar controller
             $ModuleControllerAction = explode(":", strtolower($match['path']));
-
+            
             $module = ucwords($ModuleControllerAction[0]);
             $controller = ucwords($ModuleControllerAction[1]);
             $action = strtolower($ModuleControllerAction[2]);
@@ -192,9 +202,9 @@ class Router{
             //llenar objeto request con parametros de url
             $this->request->query->fill($matches);
             
-            if($this->injecter)
+            if(self::$injecter)
             {
-                $this->request->injecter = $this->injecter;
+                $this->request->injecter = self::$injecter;
             }
             
             //guardar attributos del controller
@@ -202,7 +212,7 @@ class Router{
                     ->set("_controller", $controller)
                     ->set("_action", $action)
                     ->set("_url", $this->url)
-                    ->set("_route", $match['path']);
+                    ->set("_route", $route['path']);
 
             //nombre controller
             $controllerName = $module."\\Controller\\".$controller."Controller";
@@ -239,21 +249,12 @@ class Router{
         return new Response($msg);
     }
     
-    protected function setInjecter(Injecter $injecter)
-    {
-        $this->injecter = $injecter;
-    }
-    
     public static function make($url, $routes = array(), $injecter = null)
     {
         self::registerRoutes($routes);
+        self::$injecter = $injecter;
         
         $router = new self();
-        
-        if($injecter)
-        {
-            $router->setInjecter($injecter);
-        }
         
         return $router->dispatch($url);
     }

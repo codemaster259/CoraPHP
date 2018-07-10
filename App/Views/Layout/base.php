@@ -18,27 +18,31 @@
     <body class="main">
         <?php echo $web_menu;?>
         <main>
+            
             <header class="">
                 <div class="header container block text-center">
-                    <h1><?php echo $web_title;?></h1>
+                    <h1><?php echo $web_site;?></h1>
                 </div>
             </header>
+            
             <section class="content">
                 <div class="container grid-row">
-                    <?php echo isset($_usuario) ? "Bienvenido, ".$_usuario : "";?>
+                    <?php echo isset($usuario) ? "Bienvenido, <b>{$usuario}</b>" : "";?>
                 </div>
                 <div class="container grid-row">
-                    <div class="grid-9 column">
-                            <?php echo $web_content;?>
-                    </div>
+                    <!--
                     <div class="grid-3 column">
-                            <?php echo $web_sidebar;?>
+                        <?php echo isset($web_sidebar) ? $web_sidebar : "no definido";?>
+                    </div>
+                    -->
+                    <div class="grid-all column">
+                        <?php echo isset($web_content) ? $web_content : "no definido";?>
                     </div>
                 </div>
             </section>
             <footer class="footer">
                 <div class="container block text-center">
-                    <?php echo $web_title;?> &copy; 2018 CoraPHP v3
+                    <?php echo $web_site;?> &copy; 2018 CoraPHP v3
                 </div>
             </footer>
         </main>

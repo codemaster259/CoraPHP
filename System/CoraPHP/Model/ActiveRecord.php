@@ -52,7 +52,12 @@ abstract class ActiveRecord {
         return $list;
     }
     
-    public function make($data){
+    /**
+     * 
+     * @param array $data
+     * @return static
+     */
+    public function make($data = array()){
         
         $me = new static($this->db);
         
@@ -100,6 +105,18 @@ abstract class ActiveRecord {
         return null;
     }
     
+    public function getBy($field, $value){
+        
+        $data = $this->db->selectOne($this->getTable(), "*", "{$field} = '{$value}'");
+        
+        if($data)
+        {
+            return $this->make($data);
+        }
+        
+        return null;
+    }
+    
     /**
      * Default implementation of <b>save</b> method,
      * you can override if you need
@@ -120,14 +137,11 @@ abstract class ActiveRecord {
         }
     }
     
-    /**
-     * Default implementation of <b>delete</b> method,
-     * you can override if you need
-     * 
-     * @return boolean
-     */
     public function delete(){
         
-        return $this->db->delete($this->getTable(), "id = {$this->id}");
+        if($this->id !== null)
+        {
+            $this->db->delete($this->getTable(), "id = {$this->id}");
+        }
     }
 }

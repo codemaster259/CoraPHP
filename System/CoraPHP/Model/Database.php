@@ -27,6 +27,7 @@ class Database{
     private function connect()
     {
         $this->pdo = new PDO("mysql:dbname=$this->dbname;host=$this->host", $this->user, $this->pass);
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     
     private function disconnect()
@@ -71,7 +72,6 @@ class Database{
     
     protected function queryOne($sql, $data = array())
     {
-        debug($this->pdo);
         $this->connect();
         
         $sth = $this->pdo->prepare($sql);
@@ -106,16 +106,12 @@ class Database{
             $sth->bindValue(":$key", $value);
         }
         
-        echo $sth->queryString."<br>";
-        
         $res = $sth->execute();
         
         if(!$res)
         {
-            $this->error = $this->pdo->errorInfo()[2];
+            $this->error = $this->pdo->errorInfo()[2];            
         }
-        
-        $lastID = null;
         
         if($this->mode == "insert")
         {
@@ -127,7 +123,7 @@ class Database{
         return $res;
     }
     
-    protected $lastID = null;
+    public $lastID = null;
     
     public function selectOne($table, $fields = "*", $where = "1=1"){
         
@@ -180,7 +176,7 @@ class Database{
         
         if($this->execute("INSERT INTO {$table} {$values}", $fields))
         {
-            return $this->pdo->lastInsertId();
+            return $this->lastID;
         }else{
             return $this->error;
         }

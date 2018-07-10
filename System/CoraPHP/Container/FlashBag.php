@@ -9,7 +9,7 @@ class FlashBag extends SessionBag{
         parent::__construct($key);
     }
     
-    public function show($key, $def)
+    public function show($key, $def = null)
     {
         $val = $this->get($key, $def);
         $this->remove($key);

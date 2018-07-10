@@ -122,6 +122,31 @@ function fake_loader($classOrCommand, $param = null, $other = null)
     }
 }
 
-function get_object_public_vars($object) {
+function get_object_public_vars($object)
+{
     return get_object_vars($object);
+}
+
+function flash_has($key)
+{
+    $flash = new System\CoraPHP\Container\FlashBag(\System\CoraPHP\Container\Registry::channel("Config")->get("flash_vars"));
+    return $flash->has($key);
+}
+
+function flash_show($key)
+{
+    $flash = new System\CoraPHP\Container\FlashBag(\System\CoraPHP\Container\Registry::channel("Config")->get("flash_vars"));
+    return $flash->show($key);    
+}
+
+function session_has($key)
+{
+    $flash = new System\CoraPHP\Container\SessionBag(\System\CoraPHP\Container\Registry::channel("Config")->get("session_vars"));
+    return $flash->has($key);
+}
+
+function session_get($key)
+{
+    $flash = new System\CoraPHP\Container\SessionBag(\System\CoraPHP\Container\Registry::channel("Config")->get("session_vars"));
+    return $flash->get($key);
 }
