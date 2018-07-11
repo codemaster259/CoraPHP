@@ -26,6 +26,9 @@ class LoginController extends TemplateController{
         $factory = $this->request->injecter->get("ModelFactory");
         
         $this->users = $factory->create(UserEntity::class);
+        
+        
+        $this->template->setFile("Layout:base.login");
     }
     
     public function indexAction(){

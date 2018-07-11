@@ -30,7 +30,7 @@ class WidgetController extends ProtectedController{
     
     public function menuAction()
     {
-        $view = View::make("Shared:menu")
+        $view = View::make("Shared:menu.admin")
                 ->add("login", false)
                 ->add("web_site", Registry::channel("Settings")->get("web_site"));
         

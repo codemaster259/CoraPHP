@@ -1,0 +1,136 @@
+html, body {
+  height: 100%;
+}
+
+:root{
+    
+}
+
+body {
+    overflow:hidden;
+    color: #777;
+    height: 100%;
+}
+
+a {
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
+
+.wrapper {
+    min-height: 100%;
+    width: 100%;
+    position: relative;
+    background: #f5f5f5;
+}
+
+.header {
+  position: relative;
+  font-size: 1em;
+  color: #fff;
+  background: #333;
+  text-align: center;
+}
+
+
+.nav {
+    width: 200px;
+    height: 100%;
+    float: left;
+    position: absolute;
+    
+}
+
+.nav ul span {
+  display: block;
+  padding: 15px 20px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  border-bottom: 1px solid #333333;
+  background: #404040;
+}
+
+.nav ul a {
+  position: relative;
+  display: block;
+  padding: 15px 20px;
+  color: #fff;
+  border-bottom: 1px solid #333333;
+  text-decoration: none;
+  background: #404040;
+}
+
+.nav .menuitem{
+    position: relative;
+    display: block;
+    padding: 15px 20px;
+    color: #fff;
+    border-bottom: 1px solid #333333;
+    text-decoration: none;
+    background: #404040; 
+}
+
+.nav ul li ul{
+    display: none;
+}
+
+.nav .menuitem:hover + ul{
+    display: block;
+}
+
+
+.nav ul li ul .menuitem{
+  background: #505050;
+}
+
+.nav .menuitem:hover,
+.nav .menuitem.active {
+  background: #707070;
+}
+
+.avatar:before {
+  content: '\f007';
+  font-family: fontawesome;
+  top: 7px;
+  left: 9px;
+}
+
+main {
+    width: auto;
+    height: 100%;
+    left: 200px;
+    right: 0px;
+    float: left;
+    position: absolute;
+    padding: 25px;    
+}
+
+.main-title{
+  font-size: 1em;
+  font-weight: bold;
+  background: #ddd;
+}
+
+.card{
+    background: #fff;
+    border:1px solid #000;
+    margin:10px;
+}
+.card .card-title{
+    padding:10px;
+    border-bottom: 1px solid #000;
+    font-size: 1.25em;
+}
+
+.card .card-body{
+    padding:10px;
+}
+
+/*
+** Media Queries
+***********************************************************/
+@media (max-width: 1000px) {
+}

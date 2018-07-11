@@ -21,9 +21,9 @@ class TemplateController extends Controller{
         $layout = "Layout:blank";
         $this->template = View::make($layout);
         
-        if($this->request->isInitial())
+        if($this->request->isInitial() && !$this->request->isAjax())
         {
-            $this->template->setFile("Layout:base");
+            $this->template->setFile("Layout:base.admin");
             
             $this->template->add("web_site", Registry::channel("Settings")->get("web_site"))
                 ->add("web_title", Registry::channel("Settings")->get("web_site"))

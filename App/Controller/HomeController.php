@@ -7,7 +7,7 @@ use System\CoraPHP\Mvc\View;
 /**
  * HomeController
  */
-class HomeController extends TemplateController{
+class HomeController extends SecureController{
     
     public function indexAction()
     {        

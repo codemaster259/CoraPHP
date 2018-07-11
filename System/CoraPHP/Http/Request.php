@@ -74,6 +74,12 @@ class Request{
         return $this->method == strtolower($method);
     }
     
+    public function isAjax()
+    {
+        $h = getallheaders();
+        return isset($h['X-Requested-With']);
+    }
+    
     public function isInitial()
     {
         return self::$initial == $this;

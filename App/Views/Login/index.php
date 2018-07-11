@@ -1,5 +1,5 @@
 <article >
-    <form method="POST" class="form grid-half">
+    <form method="POST" class="form grid-4">
         <h2>Iniciar Sesion</h2>
         <?php if(flash_has("error")):?>
         <div class="alert-error">

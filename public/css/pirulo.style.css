@@ -54,10 +54,10 @@
 /*BUTTONS*/
 
 /*ALERTS*/
-.alert-default{background: #eee;border:1px solid #000;}
-.alert-primary{background: #39d;border:1px solid #37b;}
-.alert-success{background: #5d5;border:1px solid #5b5;}
-.alert-info{background: #3df;border:1px solid #3bd;}
-.alert-warning{background: #fd6;border:1px solid #fa4;}
-.alert-error{background: #e32;border:1px solid #c32;}
+.alert-default{background: #eee;border:1px solid #000;color: #fff;}
+.alert-primary{background: #39d;border:1px solid #37b;color: #fff;}
+.alert-success{background: #5d5;border:1px solid #5b5;color: #fff;}
+.alert-info{background: #3df;border:1px solid #3bd;color: #fff;}
+.alert-warning{background: #fd6;border:1px solid #fa4;color: #fff;}
+.alert-error{background: #e32;border:1px solid #c32;color: #fff;}
 /*ALERTS*/

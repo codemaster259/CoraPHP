@@ -40,7 +40,6 @@ class ProfileController extends SecureController{
         $id = $this->request->session->get("usuario_id");
         
         $user = $this->users->getById($id);
-        debug($id);
         
         $view = View::make("Profile:index")
                 ->add("page_title", $title)

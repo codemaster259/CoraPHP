@@ -219,3 +219,15 @@ article{
 .automargin{
     margin:auto;
 }
+
+.bigfont{
+    font-size: 2em !important;
+}
+
+.righter{
+    float: right;
+}
+
+.lefter{
+    float: left;
+}

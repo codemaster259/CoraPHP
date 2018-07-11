@@ -10,15 +10,30 @@
     width:100%;
 }
 
-.grid-row::before,
-.grid-row::after {
+.grid-row:before,
+.grid-row:after {
+  display: block;
+  content: " ";
+  clear: both;
+}
+
+.grid-full{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    overflow-y: auto;
+}
+
+.grid-full:before,
+.grid-full:after {
   display: table;
   content: " ";
   clear: both;
 }
 
-[class^="grid-"]
-{
+[class^="grid-"]{
     width: 100%;
 }
 

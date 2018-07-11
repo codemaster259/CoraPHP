@@ -252,24 +252,84 @@
     }());
     
     /*TOGGLE*/
-    init.prototype.show = (function (){
+    init.prototype.show = function (){
         return this.forEach(function (el) {
-            el.style.display = '';
+            
+            var step = 0.1;
+            var delay = 40;
+            
+            Lux(el).loop(delay, function(e){
+                e.style.opacity = 0;
+                e.style.display = e.oldisplay || '';
+            },function(e){
+                
+                if(e.style.opacity < 1)
+                {
+                    e.style.opacity = parseFloat(e.style.opacity) +  step;
+                    return false;
+                }
+                return true;
+            });
         });
-    });
+    };
     
     init.prototype.hide = (function (){
         return this.forEach(function (el) {
-            el.style.display = 'none';
+            
+            var step = 0.1;
+            var delay = 40;
+            
+            Lux(el).loop(delay, function(e){
+                e.oldisplay = e.style.display;
+                e.style.opacity = 1;
+            },function(e){
+                
+                if(e.style.opacity > 0)
+                {
+                    e.style.opacity = parseFloat(e.style.opacity) - step;
+                    return false;
+                }
+                e.style.display = "none";
+                return true;
+            });
         });
     });
     
     init.prototype.delay = (function(amount, fn){
-        var $this = this;
-        setTimeout(function(){
-            fn($this);
-        }, amount);
+        return this.forEach(function (el) {
+            
+            setTimeout(function(){
+                fn(el);
+            }, amount);
+        });
     });
+    
+    /**
+     * 
+     * @param {type} delay
+     * @param {type} start
+     * @param {type} loop
+     * @returns {undefined}
+     */
+    init.prototype.loop = function(delay, start, loop){
+        this.forEach(function (el) {
+            start(el);
+            //console.log("start loop");
+            function l(e){
+                //console.log("make loop");
+                if(!loop(e))
+                {
+                    setTimeout(function(){
+                        l(e);
+                        //console.log("repeat loop");
+                    },delay);
+                }else{
+                    //console.log("end loop");
+                }
+            };
+            l(el);
+        });
+    };
     
     
     //Static Methods
@@ -330,20 +390,33 @@
     
     Lux.req.ajax = function(o){
       
-        var opts = o || {};
-        var method = opts['method'] || 'GET';
-        var url = opts['url'] || '';
-        var data = Lux.req.jsonToQuery(opts['data']) || null;
-        var success = opts['success'] || function(){};
-        var error = opts['error'] || function(){};
+        o = o || {};
+      
+        var options = {
+            method: "GET",
+            url: "",
+            data: null,
+            success: function(){},
+            error: function(){},
+            json: true
+        };
+      
+        var opts = Object.assign(options, o);
+        
+        if(opts.data)
+        {
+            opts.data = Lux.req.jsonToQuery(opts.data);
+        }
+        
+        console.log(opts);
         
         var xhr = new XMLHttpRequest();
         try{
-            xhr.open(method, url, true);/*open first*/
+            xhr.open(opts.method, opts.url, true);/*open first*/
             xhr.onreadystatechange = function(){
                 if(this.status !== 200)
                 {
-                    error.call(null, this.status);
+                    opts.error.call(null, this.status);
                     return;
                 }
 
@@ -351,19 +424,26 @@
                 {
                     if(this.status === 200)
                     {
-                        success.call(null, JSON.parse(this.responseText));
+                        if(opts.json)
+                        {
+                            console.log("json true");
+                            opts.success.call(null, JSON.parse(this.responseText));
+                        }else{
+                            console.log("json false");
+                            opts.success.call(null, this.responseText);
+                        }
                     }
                 }
             };
             
-            if(method.toLowerCase() === 'post')
+            if(opts.method.toLowerCase() === 'post')
             {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             }
             xhr.setRequestHeader("X-Requested-With", "xmlhttprequest");
             
             
-            xhr.send(data);
+            xhr.send(opts.data);
         }catch(e){
             console.log("AJAX ERROR: " + e);
         }
