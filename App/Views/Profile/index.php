@@ -1,5 +1,5 @@
 <article>
-    <form method="POST" class="form grid-9">
+    <form method="POST" class="form grid-half">
         <h2><?php echo $page_title;?></h2>
         
         <?php if(flash_has("error")):?>
@@ -32,7 +32,7 @@
             <input class="btn-green" type="submit" value="Guardar Perfil" name="updateprofile"/>
         </div>
     </form>
-    <form method="POST" class="form grid-9">
+    <form method="POST" class="form grid-half">
         <h2>Cambiar Password:</h2>
         
         <?php if(flash_has("error2")):?>

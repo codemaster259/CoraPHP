@@ -9,26 +9,13 @@ use System\CoraPHP\Mvc\View;
  */
 class HomeController extends SecureController{
     
-    public function indexAction()
-    {        
-        $title = "Home";
-        
-        $view = View::make("Home:index")
-                ->add("page_title", $title)
-                ->add("page_content", "This is Home!");
-        
-        $this->template->append("web_title", "{$title} - ");
-        $this->template->add("web_content", $view);
+    public function init(){
+        parent::init();
+        $this->template->append("web_title", "Inicio - ");
     }
     
-    public function mvcAction()
-    {
-        $title = "This is MVC";
-        
-        $view = View::make("Home:mvc")
-                ->add("page_title", $title);
-
-        $this->template->append("web_title", "{$title} - ");
-        $this->template->add("web_content", $view);
-    } 
+    public function indexAction()
+    {        
+        $this->template->add("web_content", View::make("Home:index"));
+    }
 }

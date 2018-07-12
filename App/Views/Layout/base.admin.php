@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="es">
     <head>
         <base href="/" />
@@ -19,31 +18,21 @@
     </head>
     <body>
         <div class="wrapper">
-
-            
-          <nav class="nav">
-              <div class="grid-full">
-                <header class="block header">
-                      <?php echo $web_site;?>
-                  </header>
-              <?php echo $web_menu;?>
-            </div>
-          </nav>
-          <main>              
-              <div class="grid-full">
-                <header class="block main-title">
-                    Bienvenido, <?php echo $usuario;?>
-                </header>
-                  
-                <div id="content">
-                <?php echo isset($web_content) ? $web_content : "no definido";?>
+            <div class="block header"><?php echo $web_site;?></div>
+            <div class="base">
+                <div class="nav">
+                    <?php echo $web_menu;?>
                 </div>
-                
-                <footer class="block main-title">
-                    <div><i class="fa fa-copyright"></i> 2018 - CoraPHP</div>
-                </footer>
+                <main class="main">            
+                    <div class="block main-title">
+                        Bienvenido, <?php echo $usuario;?>
+                    </div>
+
+                    <div class="main-content" id="content">
+                    <?php echo isset($web_content) ? $web_content : "";?>
+                    </div>
+                </main>
             </div>
-          </main>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script type="text/javascript" src="js/Lux.js"></script>

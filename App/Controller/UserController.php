@@ -109,10 +109,11 @@ class UserController extends SecureController{
             
             if($user->save())
             {
-                $this->redirect("/usuarios");
+                $this->request->flash->set("success", "Usuario Creado.");
             }else{
-                $view->add("error", "Error al crear el usuario");
+                $this->request->flash->set("error", "Error al crear el usuario.");
             }
+            $this->redirect("/usuarios");
         }
 
         $this->template->add("web_content", $view);
@@ -130,9 +131,11 @@ class UserController extends SecureController{
         /* @var $user \App\Entity\UserEntity */
         $user = $this->users->getById($id);
         
+        $view->add("user", $user);
+        
         if($this->request->isPost())
         {
-            debug($this->request->post->all());
+            $flag = true;
             
             $nombre = trim($this->request->post->get("nombre"));
             $apellido = trim($this->request->post->get("apellido"));
@@ -142,40 +145,49 @@ class UserController extends SecureController{
             
             if($nombre == "")
             {
+                $flag = false;
                 $this->request->flash->set("error", "Nombre en Blanco.");
-                $this->redirect("/usuarios/editar/".$id);
-            }
-            
-            if($apellido == "")
-            {
-                $this->request->flash->set("error", "Apellido en Blanco.");
-                $this->redirect("/usuarios/editar/".$id);
-            }
-            
-            if($email == "")
-            {
-                $this->request->flash->set("error", "Email en Blanco.");
-                $this->redirect("/usuarios/editar/".$id);
+                //$this->redirect("/usuarios/editar/".$id);
             }
             
             $user->nombre = $nombre;
-            $user->apellido = $apellido;
-            $user->email = $email;
             
-            if($reset)
+            if($apellido == "")
             {
-                $user->password = md5(1234);
+                $flag = false;
+                $this->request->flash->set("error", "Apellido en Blanco.");
+                //$this->redirect("/usuarios/editar/".$id);
             }
             
-            if($user->save())
+            $user->apellido = $apellido;
+            
+            if($email == "")
             {
-                $this->redirect("/usuarios");
-            }else{
-                $view->add("error", "Campos en blanco!");
+                $flag = false;
+                $this->request->flash->set("error", "Email en Blanco.");
+                //$this->redirect("/usuarios/editar/".$id);
+            }
+            
+            $user->email = $email;
+            
+            if($flag)
+            {
+                if($reset)
+                {
+                    $user->password = md5(1234);
+                }
+
+                if($user->save())
+                {
+                    $this->request->flash->set("success", "Usuario Guardado.");
+                    $this->redirect("/usuarios");
+                }else{
+                    $this->request->flash->set("error", "Campos en blanco!");
+                }
             }
         }
         
-        $view->add("user", $user);
+        
         
         $this->template->add("web_content", $view);
     }
@@ -186,6 +198,7 @@ class UserController extends SecureController{
         
         $user->delete();
         
+        $this->request->flash->set("success", "Usuario Eliminado.");
         $this->redirect("/usuarios");
     }
 }

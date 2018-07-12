@@ -17,6 +17,16 @@
   clear: both;
 }
 
+.grid-row .column{
+    padding:0px 5px;
+}
+.grid-row .column:first-child {
+    padding-left: 0px;
+}
+.grid-row .column:last-child {
+    padding-right: 0px;
+}
+
 .grid-full{
     position: absolute;
     top: 0px;
