@@ -5,13 +5,15 @@ namespace App\Entity;
 use System\CoraPHP\Model\Entity;
 
 /**
- * RoleEntity
+ * PermissionEntity
  */
-class RoleEntity extends Entity{
+class PermissionEntity extends Entity{
 
     public $nombre;
+    public $area;
+    public $accion;
     
     protected function getTable(){
-        return "roles";
+        return "permisos";
     }
 }

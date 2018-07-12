@@ -10,11 +10,12 @@ use App\Entity\UserEntity;
  * ProfileController
  */
 class ProfileController extends SecureController{
-        /**
+    
+    /**
      *
-     * @var \App\Entity\UserEntity 
+     * @var \System\CoraPHP\Model\EntityManager
      */
-    protected $users;
+    protected $em;
     
     public function init()
     {
@@ -22,9 +23,12 @@ class ProfileController extends SecureController{
         
         $this->template->append("web_title", "Perfil - ");
         
-        $factory = $this->request->injecter->get("ModelFactory");
+        $this->em = $this->request->injecter->get("EntityManager");
         
-        $this->users = $factory->create(UserEntity::class);
+        if($this->request->session->has("is_god"))  
+        {
+            return $this->response->body($this->template->add("web_content","<h2>Modulo desabilitado en 'GOD MODE'.</h2>"));
+        }
     }
     
     public function indexAction()
@@ -39,7 +43,10 @@ class ProfileController extends SecureController{
         
         $id = $this->request->session->get("usuario_id");
         
-        $user = $this->users->getById($id);
+        $user = new UserEntity();
+        $user->id = $id;
+        
+        $user = $this->em->findById($user);
         
         $view = View::make("Profile:index")
                 ->add("page_title", $title)
@@ -54,8 +61,11 @@ class ProfileController extends SecureController{
         {
             $id = $this->request->session->get("usuario_id");
             
-            /* @var $user \App\Entity\UserEntity */
-            $user = $this->users->getById($id);
+            $user = new UserEntity();
+            
+            $user->id = $id;
+        
+            $user = $this->em->findById($user);
             
             if($this->request->post->has("updateprofile"))
             {
@@ -83,12 +93,11 @@ class ProfileController extends SecureController{
                     $this->redirect("/perfil");
                 }
 
-                /* @var $user \App\Entity\UserEntity */
                 $user->nombre = $nombre;
                 $user->apellido = $apellido;
                 $user->email = $email;
 
-                if($user->save())
+                if($this->em->update($user))
                 {
                     $this->request->flash->set("success", "Perfil Actualizado.");
                 }else{
@@ -116,7 +125,7 @@ class ProfileController extends SecureController{
                 
                 $user->password = md5($password);
 
-                if($user->save())
+                if($this->em->update($user))
                 {
                     $this->request->flash->set("success2", "Password Cambiado.");
                 }else{

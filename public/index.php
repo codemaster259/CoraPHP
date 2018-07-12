@@ -28,6 +28,7 @@ use System\CoraPHP\Http\Router;
 
 use System\CoraPHP\Model\Database;
 use System\CoraPHP\Model\ModelFactory;
+use System\CoraPHP\Model\EntityManager;
 
 $app = new App();
 
@@ -72,6 +73,11 @@ $app->onLoad(function(App $app){
     $injecter->add("ModelFactory", function(Injecter $i){
         
         return new ModelFactory($i->get("database"));
+    });
+    
+    $injecter->add("EntityManager", function(Injecter $i){
+        
+        return new EntityManager($i->get("database"));
     });
     
     //ROUTING

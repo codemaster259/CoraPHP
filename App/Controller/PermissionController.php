@@ -3,14 +3,15 @@
 namespace App\Controller;
 
 /**
- * RoleController
+ * PermissionController
  */
-class RoleController extends SecureController{
+class PermissionController extends SecureController{
     
     public function indexAction()
-    {       
+    {
         $this->template->add("web_content","Hello from ".__METHOD__."!!");
     }
+    
     
     public function viewAction(){
         
@@ -29,6 +30,6 @@ class RoleController extends SecureController{
     
     public function deleteAction(){
      
-        $this->redirect("/roles");
+        $this->redirect("/permisos");
     }
 }

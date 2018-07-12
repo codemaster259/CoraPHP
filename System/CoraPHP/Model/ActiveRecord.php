@@ -86,6 +86,12 @@ abstract class ActiveRecord {
 
         return $this->makeAll($this->db->selectAll($this->getTable()));
     }
+    
+    
+    public function getAllBy($where){
+
+        return $this->makeAll($this->db->selectAll($this->getTable(), "*", $where));
+    }
 
     /**
      * Default implementation of <b>getById</b> method,
@@ -105,9 +111,9 @@ abstract class ActiveRecord {
         return null;
     }
     
-    public function getBy($field, $value){
+    public function getBy($where){
         
-        $data = $this->db->selectOne($this->getTable(), "*", "{$field} = '{$value}'");
+        $data = $this->db->selectOne($this->getTable(), "*", $where);
         
         if($data)
         {
@@ -115,6 +121,11 @@ abstract class ActiveRecord {
         }
         
         return null;
+    }
+    
+    public function getDB()
+    {
+        return $this->db;
     }
     
     /**

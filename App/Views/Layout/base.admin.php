@@ -25,7 +25,7 @@
                 </div>
                 <main class="main">            
                     <div class="block main-title">
-                        Bienvenido, <?php echo $usuario;?>
+                        Bienvenido, <?php echo $usuario;?><?php echo session_has("is_god") ? " (GOD MODE)" : "";?>
                     </div>
 
                     <div class="main-content" id="content">

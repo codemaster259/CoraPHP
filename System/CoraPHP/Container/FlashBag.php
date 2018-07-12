@@ -15,5 +15,4 @@ class FlashBag extends SessionBag{
         $this->remove($key);
         return $val;
     }
-    
 }

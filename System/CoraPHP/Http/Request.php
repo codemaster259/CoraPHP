@@ -48,8 +48,8 @@ class Request{
         $this->files = new DataBag($_FILES);
         
         $this->attributes = new DataBag();
-        $this->flash = new FlashBag(Registry::channel("Config")->get("flash_vars"));
-        $this->session = new SessionBag(Registry::channel("Config")->get("session_vars"));
+        $this->flash = new FlashBag(Registry::channel("Settings")->get("flash_vars"));
+        $this->session = new SessionBag(Registry::channel("Settings")->get("session_vars"));
         
         $this->method = strtolower($_SERVER['REQUEST_METHOD']);
         

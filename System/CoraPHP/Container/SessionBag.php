@@ -45,4 +45,16 @@ class SessionBag {
     {
         return $_SESSION[$this->key];
     }
+    
+        
+    /**
+     * Vacia la data
+     * @return self
+     */
+    public function clear()
+    {
+        $_SESSION[$this->key] = array();
+        
+        return $this;
+    }
 }

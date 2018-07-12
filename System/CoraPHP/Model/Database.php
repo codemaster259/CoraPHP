@@ -129,26 +129,61 @@ class Database{
         
         $this->mode = "select";
         
-        $sql = "SELECT {$fields} FROM {$table} WHERE {$where}";
-
+        $wa = array();
         
-        return $this->queryOne($sql, array());
+        if(is_array($where) && !empty($where))
+        {
+            $wa = $where;
+            $where = $this->buildSelect($where);
+        }
+        
+        if(empty($where))
+        {
+            $where = "1=1";
+        }
+        
+        $sql = "SELECT {$fields} FROM {$table} WHERE {$where}";
+        
+        return $this->queryOne($sql, $wa);
     }
     
     public function selectAll($table, $fields = "*", $where = "1=1"){
         
         $this->mode = "select";
         
+        $wa = array();
+        
+        if(is_array($where) && !empty($where))
+        {
+            $wa = $where;
+            $where = $this->buildSelect($where);
+        }
+        
+        if(empty($where))
+        {
+            $where = "1=1";
+        }
+        
         $sql = "SELECT {$fields} FROM {$table} WHERE {$where}";
         
-        return $this->queryAll($sql, array());
+        return $this->queryAll($sql, $wa);
     }
     
     public function delete($table, $where)
     {
         $this->mode = "delete";
         
-        return $this->execute("DELETE FROM {$table} WHERE {$where}");
+        $wa = array();
+        
+        if(is_array($where) && !empty($where))
+        {
+            $wa = $where;
+            $where = $this->buildSelect($where);
+        }
+        
+        echo "DELETE FROM {$table} WHERE {$where}";
+        
+        return $this->execute("DELETE FROM {$table} WHERE {$where}", $wa);
     }
     
     
@@ -156,6 +191,11 @@ class Database{
     public function update($table, $fields, $where)
     {
         $this->mode = "update";
+        
+        if(is_array($where))
+        {
+            $where = $this->buildSelect($where);
+        }
         
         $set = $this->buildUpdate($fields);
         
@@ -193,6 +233,20 @@ class Database{
             $f .= "{$comma}{$field} = :{$field}";
             
             $comma = ", ";
+        }
+        
+        return $f;
+    }
+    
+    private function buildSelect(array $fields){
+        $f = "";
+        $comma = "";
+        
+        foreach(array_keys($fields) as $field){
+            
+            $f .= "{$comma}{$field} = :{$field}";
+            
+            $comma = " AND ";
         }
         
         return $f;

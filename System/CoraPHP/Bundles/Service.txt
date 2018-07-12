@@ -3,9 +3,9 @@
 namespace App\Service;
 
 /**
- * {{name}}
+ * {{name}}Service
  */
-class {{name}}{
+class {{name}}Service{
 
     public function test()
     {

@@ -12,9 +12,9 @@ class UserController extends SecureController{
     
     /**
      *
-     * @var \App\Entity\UserEntity 
+     * @var \System\CoraPHP\Model\EntityManager
      */
-    protected $users;
+    protected $em;
     
     public function init()
     {
@@ -22,18 +22,18 @@ class UserController extends SecureController{
         
         $this->template->append("web_title", "Usuarios - ");
         
-        $factory = $this->request->injecter->get("ModelFactory");
-        
-        $this->users = $factory->create(UserEntity::class);
+        $this->em = $this->request->injecter->get("EntityManager");
     }
     
     public function indexAction()
     {
         $title = "Lista de Usuarios:";
         
+        $u = new UserEntity();
+        
         $view = View::make("User:index")
                 ->add("page_title", $title)
-                ->add("users", $this->users->getAll());
+                ->add("users", $this->em->findAll($u));
         
         $this->template->add("web_content", $view);
     } 
@@ -42,11 +42,14 @@ class UserController extends SecureController{
     {        
         $id = $this->request->query->get("id");
         
+        $u = new UserEntity();
+        $u->id = $id;
+        
         $title = "Ver Usuario:";
         
         $view = View::make("User:view")
                 ->add("page_title", $title)
-                ->add("user", $this->users->getById($id));
+                ->add("user", $this->em->findById($u));
         
         $this->template->add("web_content", $view);
     } 
@@ -58,9 +61,10 @@ class UserController extends SecureController{
         $view = View::make("User:create")
             ->add("page_title", $title);
         
+        $u = new UserEntity();
         
         if($this->request->isPost())
-        {            
+        {
             $flag = true;
             
             $usuario = trim($this->request->post->get("usuario"));
@@ -74,7 +78,9 @@ class UserController extends SecureController{
                 $this->redirect("/usuarios/crear");
             }
             
-            if($this->users->getBy("usuario", $usuario))
+            $u->usuario = $usuario;
+            
+            if($this->em->findBy($u))
             {
                 $this->request->flash->set("error", "Usuario en ya existe.");
                 $this->redirect("/usuarios/crear");
@@ -98,8 +104,11 @@ class UserController extends SecureController{
                 $this->redirect("/usuarios/crear");
             }
             
+            $user = new UserEntity();
+            
+            
             /* @var $user \App\Entity\UserEntity */
-            $user = $this->users->make(array(
+            $user->fill(array(
                 "usuario"=>$usuario,
                 "nombre"=>$nombre,
                 "apellido"=>$apellido,
@@ -107,7 +116,7 @@ class UserController extends SecureController{
                 "password"=>md5(1234)
             ));
             
-            if($user->save())
+            if($this->em->create($user))
             {
                 $this->request->flash->set("success", "Usuario Creado.");
             }else{
@@ -125,11 +134,12 @@ class UserController extends SecureController{
         
         $view = View::make("User:edit")
             ->add("page_title", $title);
+
+        $user = new UserEntity();
         
-        $id = $this->request->query->get("id");
+        $user->id = $this->request->query->get("id");
         
-        /* @var $user \App\Entity\UserEntity */
-        $user = $this->users->getById($id);
+        $user = $this->em->findById($user);
         
         $view->add("user", $user);
         
@@ -177,7 +187,7 @@ class UserController extends SecureController{
                     $user->password = md5(1234);
                 }
 
-                if($user->save())
+                if($this->em->update($user))
                 {
                     $this->request->flash->set("success", "Usuario Guardado.");
                     $this->redirect("/usuarios");
@@ -194,9 +204,10 @@ class UserController extends SecureController{
         
     public function deleteAction()
     {        
-        $user = $this->users->make(array("id" => $this->request->query->get("id")));
+        $user = new UserEntity();
+        $user->id = $this->request->query->get("id");
         
-        $user->delete();
+        $this->em->delete($user);
         
         $this->request->flash->set("success", "Usuario Eliminado.");
         $this->redirect("/usuarios");

@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use System\CoraPHP\Model\ActiveRecord;
+use System\CoraPHP\Model\Entity;
 
 /**
  * UserEntity
  */
-class UserEntity extends ActiveRecord{
+class UserEntity extends Entity{
 
     public $usuario;
     public $password;
@@ -15,7 +15,7 @@ class UserEntity extends ActiveRecord{
     public $apellido;
     public $email;
     
-    protected function getTable(){
+    public function getTable(){
         return "usuarios";
     }
 }

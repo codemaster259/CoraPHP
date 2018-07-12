@@ -19,6 +19,10 @@ class DataBag{
      */
     public function set($key, $value)
     {
+        if(trim($key) == "")
+        {
+            return $this;
+        }
         $this->data[$key] = $value;
         
         return $this;

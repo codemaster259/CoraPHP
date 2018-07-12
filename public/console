@@ -221,7 +221,7 @@ Command::addCommand("fw:service:create", function(){
                 return str_replace(array_keys($data), array_values($data), $str);
             });
             
-            $file = APP_ROOT."Service/".ucwords($name);
+            $file = APP_ROOT."Service/".ucwords($name)."Service";
             
             if(FileSystem::write($file.".php", $content))
             {

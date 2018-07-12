@@ -21,12 +21,7 @@ function define_urls(){
     $real_url = $scheme.$_SERVER['SERVER_NAME'].$port.$_SERVER["REQUEST_URI"];
         
     $request_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    /*
-    if($request_url == "")
-    {
-        $request_url = "/";
-    }
-    */
+
     //full request url
     $urls["REAL_URL"] = $real_url;
     //custom request uri fragment
@@ -127,26 +122,60 @@ function get_object_public_vars($object)
     return get_object_vars($object);
 }
 
+function flash_set($key, $value = false)
+{
+    $flash = new System\CoraPHP\Container\FlashBag(\System\CoraPHP\Container\Registry::channel("Settings")->get("flash_vars"));
+    $flash->set($key, $value);
+}
+
 function flash_has($key)
 {
-    $flash = new System\CoraPHP\Container\FlashBag(\System\CoraPHP\Container\Registry::channel("Config")->get("flash_vars"));
+    $flash = new System\CoraPHP\Container\FlashBag(\System\CoraPHP\Container\Registry::channel("Settings")->get("flash_vars"));
     return $flash->has($key);
 }
 
 function flash_show($key)
 {
-    $flash = new System\CoraPHP\Container\FlashBag(\System\CoraPHP\Container\Registry::channel("Config")->get("flash_vars"));
+    $flash = new System\CoraPHP\Container\FlashBag(\System\CoraPHP\Container\Registry::channel("Settings")->get("flash_vars"));
     return $flash->show($key);    
+}
+
+/*SESSIONS*/
+function session_set($key, $value = false)
+{
+    $session = new System\CoraPHP\Container\SessionBag(\System\CoraPHP\Container\Registry::channel("Settings")->get("session_vars"));
+    $session->set($key, $value);
 }
 
 function session_has($key)
 {
-    $flash = new System\CoraPHP\Container\SessionBag(\System\CoraPHP\Container\Registry::channel("Config")->get("session_vars"));
-    return $flash->has($key);
+    $session = new System\CoraPHP\Container\SessionBag(\System\CoraPHP\Container\Registry::channel("Settings")->get("session_vars"));
+    return $session->has($key);
 }
 
-function session_get($key)
+function session_get($key = null)
 {
-    $flash = new System\CoraPHP\Container\SessionBag(\System\CoraPHP\Container\Registry::channel("Config")->get("session_vars"));
-    return $flash->get($key);
+    $session = new System\CoraPHP\Container\SessionBag(\System\CoraPHP\Container\Registry::channel("Settings")->get("session_vars"));
+    if($key)
+    {
+        return $session->get($key);
+    }
+    return $session->all();
+}
+
+function session_remove($key = null)
+{
+    $session = new System\CoraPHP\Container\SessionBag(\System\CoraPHP\Container\Registry::channel("Settings")->get("session_vars"));
+    if($key)
+    {
+        $session->remove($key);
+    }
+    $session->clear();
+}
+
+function isGod($user, $pass)
+{
+    $Settings = \System\CoraPHP\Container\Registry::channel("Settings");
+    
+    return ($user == $Settings->get("god_user") && $pass == $Settings->get("god_pass"));
 }

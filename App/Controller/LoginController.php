@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\UserEntity;
+use App\Service\AuthService;
 
 use System\CoraPHP\Mvc\View;
-use System\CoraPHP\Container\Registry;
 
 /**
  * LoginController
@@ -14,19 +13,22 @@ class LoginController extends TemplateController{
     
     /**
      *
-     * @var \App\Entity\UserEntity 
+     * @var \System\CoraPHP\Model\EntityManager
      */
-    protected $users;
+    protected $em;
+    
+    /**
+     *
+     * @var \App\Service\AuthService
+     */
+    protected $auth;
     
     public function init(){
         parent::init();
         
         $this->template->append("web_title", "Iniciar Sesion - ");
         
-        $factory = $this->request->injecter->get("ModelFactory");
-        
-        $this->users = $factory->create(UserEntity::class);
-        
+        $this->em = $this->request->injecter->get("EntityManager");
         
         $this->template->setFile("Layout:base.login");
     }
@@ -41,23 +43,26 @@ class LoginController extends TemplateController{
         if($this->request->isPost())
         {
             $usuario = trim($this->request->post->get("usuario"));
-            $password = md5(($this->request->post->get("password")));
+            $password = trim($this->request->post->get("password"));
             
-            //die($password);
+            $this->auth = new AuthService($this->em);
             
-            $user = $this->users->getBy("usuario", $usuario);
-            
-            if(!$user)
+            if(isGod($usuario, $password))
             {
-                $this->request->flash->set("error", "Usuario no Existe.");
+                $this->request->session->set("login", true);
+                $this->request->session->set("usuario", "GOD");
+                $this->request->session->set("usuario_id", 0);
+                $this->request->session->set("is_god", true);
+                $this->redirect();
+            }
+            
+            if(!$this->auth->login($usuario, $password))
+            {
+                $this->request->flash->set("error", $this->auth->getLoginError());
                 $this->redirect("/login");
             }
             
-            if($password != $user->password)
-            {
-                $this->request->flash->set("error", "Password no Coincide.");
-                $this->redirect("/login");
-            }
+            $user = $this->auth->getUser();
         
             $this->request->session->set("login", true);
             $this->request->session->set("usuario", $user->usuario);
@@ -82,14 +87,8 @@ class LoginController extends TemplateController{
         
         $this->request->session->remove("login");
         $this->request->session->remove("usuario");
+        $this->request->session->remove("usuario_id");
+        $this->request->session->remove("is_god");
         $this->redirect();
-    }
-    
-    protected function masterLogin($usuario, $password)
-    {
-        $user = Registry::channel("Config")->get("god_user");
-        $pass = Registry::channel("Config")->get("god_pass");
-        
-        return ($user == $usuario && $pass == $password);
     }
 }

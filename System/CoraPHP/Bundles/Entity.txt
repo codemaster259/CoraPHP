@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use System\CoraPHP\Model\ActiveRecord;
+use System\CoraPHP\Model\Entity;
 
 /**
  * {{name}}Entity
  */
-class {{name}}Entity extends ActiveRecord{
+class {{name}}Entity extends Entity{
 
     
     protected function getTable(){
