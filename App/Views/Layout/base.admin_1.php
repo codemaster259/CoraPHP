@@ -12,33 +12,31 @@
         <link rel="stylesheet" href="css/pirulo.reset.css?<?php echo rand();?>" />
         <link rel="stylesheet" href="css/pirulo.grid.css?<?php echo rand();?>" />
         <link rel="stylesheet" href="css/pirulo.elements.css?<?php echo rand();?>" />
-        <!--<link rel="stylesheet" href="css/pirulo.style.css?<?php echo rand();?>" />-->
+        <link rel="stylesheet" href="css/pirulo.style.css?<?php echo rand();?>" />
         <link rel="stylesheet" href="css/pirulo.admin.css?<?php echo rand();?>" />
         <link rel="stylesheet" href="css/fontawesome-free-5.1.0-web/css/all.css?<?php echo rand();?>" />
     </head>
     <body>
         <div class="wrapper">
-            <header class="block header"><?php echo $web_site;?></header>
-            <nav class="nav">
-                <div class="grid-full">
-                <?php echo $web_menu;?>
+            <div class="header">
+                <div class="brand">
+                <?php echo $web_site;?>
                 </div>
-            </nav>
-            <main class="main">            
-                <div class="grid-full">
-                    <header class="block main-title">
-                        Bienvenido, <?php echo $usuario;?>
-                    </header>
-
+                <div class="welcome">
+                Bienvenido, <?php echo $usuario;?><?php echo session_has("is_god") ? " (GOD MODE)" : "";?>
+                | <a href="/logout" class="icon" title="Salir"><i class="fa fa-sign-out-alt"></i>Salir</a>
+                </div>
+            </div>
+            <div class="base">
+                <div class="nav">
+                    <?php echo $web_menu;?>
+                </div>
+                <main class="main">
                     <div class="main-content" id="content">
                     <?php echo isset($web_content) ? $web_content : "";?>
                     </div>
-
-                    <!--<footer class="block main-title">
-                        <div><i class="fa fa-copyright"></i> 2018 - CoraPHP</div>
-                    </footer>-->
-                </div>
-            </main>
+                </main>
+            </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script type="text/javascript" src="js/Lux.js"></script>
