@@ -20,6 +20,10 @@ ul {
   list-style: none;
 }
 
+.fa{
+    padding-right:5px;
+}
+
 .wrapper {
     position: absolute;
     width: 100%;
@@ -39,10 +43,25 @@ ul {
     position: relative;
     font-size: 1em;
     color: #fff;
-    background: #333;
     text-align: left;
-    height: 50px;
+    height:50px;
+    border-bottom: 1px solid #999;
+    overflow: hidden;
+}
+.header .brand{
+    width: 200px;
     padding: 17px;
+    float:left;
+    background: #444;
+}
+.header .welcome{
+    padding: 17px;
+    float:right;
+    color:#222;
+}
+
+.header .icon{
+    color:#444;
 }
 
 /*nav*/

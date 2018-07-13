@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `categorias`
 --
 
-CREATE TABLE `categorias` (
+CREATE TABLE IF NOT EXISTS `categorias` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `descripcion` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE `categorias` (
 -- Estructura de tabla para la tabla `permisos`
 --
 
-CREATE TABLE `permisos` (
+CREATE TABLE IF NOT EXISTS `permisos` (
   `id` int(7) NOT NULL,
   `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `area` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE `permisos` (
 -- Estructura de tabla para la tabla `productos`
 --
 
-CREATE TABLE `productos` (
+CREATE TABLE IF NOT EXISTS `productos` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `categoria_id` int(10) UNSIGNED NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE `productos` (
 -- Estructura de tabla para la tabla `roles`
 --
 
-CREATE TABLE `roles` (
+CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(7) NOT NULL,
   `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -80,7 +80,7 @@ CREATE TABLE `roles` (
 -- Estructura de tabla para la tabla `roles_permisos`
 --
 
-CREATE TABLE `roles_permisos` (
+CREATE TABLE IF NOT EXISTS `roles_permisos` (
   `id` int(7) NOT NULL,
   `rol_id` int(7) NOT NULL,
   `permiso_id` int(7) NOT NULL
@@ -92,7 +92,7 @@ CREATE TABLE `roles_permisos` (
 -- Estructura de tabla para la tabla `usuarios`
 --
 
-CREATE TABLE `usuarios` (
+CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` int(7) NOT NULL,
   `usuario` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   `password` varchar(32) COLLATE utf8_spanish_ci NOT NULL,
@@ -106,7 +106,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `apellido`, `email`) VALUES
-(6, 'pirulo', '72c93923e3f70f1689578dc60e296933', 'Carlos Tomas', 'Gonzalez Lemus', 'codemaster259@gmail.com');
+(6, 'pirulo2', '72c93923e3f70f1689578dc60e296933', 'Carlos Tomas', 'Gonzalez Lemus', 'codemaster259@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -114,7 +114,7 @@ INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `apellido`, `emai
 -- Estructura de tabla para la tabla `usuarios_roles`
 --
 
-CREATE TABLE `usuarios_roles` (
+CREATE TABLE IF NOT EXISTS `usuarios_roles` (
   `id` int(7) NOT NULL,
   `grupo` int(7) NOT NULL,
   `usuario_id` int(7) NOT NULL
@@ -220,10 +220,6 @@ ALTER TABLE `usuarios_roles`
 --
 -- Filtros para la tabla `productos`
 --
-ALTER TABLE `productos`
-  ADD CONSTRAINT `productos_categoria_id_foreign` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`);
-COMMIT;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

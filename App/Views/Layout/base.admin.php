@@ -18,16 +18,20 @@
     </head>
     <body>
         <div class="wrapper">
-            <div class="block header"><?php echo $web_site;?></div>
+            <div class="header">
+                <div class="brand">
+                <?php echo $web_site;?>
+                </div>
+                <div class="welcome">
+                Bienvenido, <?php echo $usuario;?><?php echo session_has("is_god") ? " (GOD MODE)" : "";?>
+                | <a href="/logout" class="icon" title="Salir"><i class="fa fa-sign-out-alt"></i>Salir</a>
+                </div>
+            </div>
             <div class="base">
                 <div class="nav">
                     <?php echo $web_menu;?>
                 </div>
-                <main class="main">            
-                    <div class="block main-title">
-                        Bienvenido, <?php echo $usuario;?><?php echo session_has("is_god") ? " (GOD MODE)" : "";?>
-                    </div>
-
+                <main class="main">
                     <div class="main-content" id="content">
                     <?php echo isset($web_content) ? $web_content : "";?>
                     </div>
