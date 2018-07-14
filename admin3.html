@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <title>title</title>
+        <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+        
+        #admin-section header{
+            background-color: #eee;
+            height:50px;
+            width: 100%;
+            overflow-y: hidden;
+            top: 0px;
+            position: sticky;
+            box-shadow: 1px 1px 4px rgba(100,100,100,0.3);
+            border-bottom: 1px solid rgba(100,100,100,0.2);
+        }
+
+        #admin-section #sitename{
+            width: 200px;
+            height: 100%;
+            background: #c32d5b;
+            color: #fff;
+            padding: 10px 5px;
+            font-size: 24px;
+            text-align: center;
+            letter-spacing: 3px;
+            float: left;
+        }
+        #admin-section #siteheader{
+            background: inherit;
+            height: 100%;
+        }
+        
+        #admin-section #siteheader #header-title{
+            color:#c32d5b;
+            font-size: 24px;
+            padding: 10px 25px;
+            margin-left: 0px;
+            float: left;
+            letter-spacing: 1px;
+        }
+        #admin-section #siteheader #welcome{
+            float: right;
+            color:gray;
+            padding: 18px 25px;
+            height: 100%;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+        
+        #nav{
+            background: #c32d5b;
+            width: 200px;
+            height: 100vh;
+            float: left;
+        }
+        
+        #content{
+            padding: 2em;
+            margin-left: 200px;
+            display: block;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="admin-section">
+            <header>
+                <div id="sitename">SITENAME</div>
+                <div id="siteheader">
+                    <div id="header-title">@PageTitle</div>
+                    <div id="welcome">Welcome Pirulo | <a href="#">Log Off</a></div>
+                </div>
+            </header>
+            <div>
+                <nav id="nav">
+                    Left side
+                </nav>
+                <div id="content">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
