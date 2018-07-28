@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Shared;
 
 use System\CoraPHP\Mvc\View;
 use System\CoraPHP\Container\Registry;
+use App\Controller\ProtectedController;
 
 /**
  * Partial views
@@ -34,7 +35,7 @@ class WidgetController extends ProtectedController{
                 ->add("login", false)
                 ->add("web_site", Registry::channel("Settings")->get("web_site"));
         
-        if($this->request->session->has("login"))
+        if(login_has("login"))
         {
             $view->add("login", true);
         }

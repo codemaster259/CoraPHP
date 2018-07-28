@@ -27,13 +27,12 @@ class EntityManager{
     }
     
     public function findBy(Entity $object)
-    {
-        
+    {        
         $data = $this->db->selectOne($object->getTable(), "*", $object->getNotNull());
         
         if($data)
         {
-            return $object->fill($data);
+            return $object->make($data);
         }
         return null;
     }
@@ -45,6 +44,7 @@ class EntityManager{
     
     public function create(Entity $object)
     {
+        debug($object->getPublicVars());
         return $this->db->insert($object->getTable(), $object->getPublicVars());
     }
     
@@ -57,7 +57,6 @@ class EntityManager{
     {
         return $this->db->delete($object->getTable(),array("id" => $object->id));
     }
-
 
     /**
      * 

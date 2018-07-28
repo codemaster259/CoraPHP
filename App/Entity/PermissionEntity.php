@@ -13,7 +13,7 @@ class PermissionEntity extends Entity{
     public $area;
     public $accion;
     
-    protected function getTable(){
+    public function getTable(){
         return "permisos";
     }
 }

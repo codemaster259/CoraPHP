@@ -181,8 +181,6 @@ class Database{
             $where = $this->buildSelect($where);
         }
         
-        echo "DELETE FROM {$table} WHERE {$where}";
-        
         return $this->execute("DELETE FROM {$table} WHERE {$where}", $wa);
     }
     

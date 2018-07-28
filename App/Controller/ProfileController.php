@@ -25,9 +25,9 @@ class ProfileController extends SecureController{
         
         $this->em = $this->request->injecter->get("EntityManager");
         
-        if($this->request->session->has("is_god"))  
+        if(login_has("is_god"))  
         {
-            return $this->response->body($this->template->add("web_content","<h2>Modulo desabilitado en 'GOD MODE'.</h2>"));
+            return $this->response->body($this->template->add("web_content","<h2 class='text-center'>Modulo desabilitado en 'GOD MODE'.</h2>"));
         }
     }
     
@@ -41,7 +41,7 @@ class ProfileController extends SecureController{
         
         $title = "Perfil:";
         
-        $id = $this->request->session->get("usuario_id");
+        $id = login_get("usuario_id");
         
         $user = new UserEntity();
         $user->id = $id;
@@ -59,7 +59,7 @@ class ProfileController extends SecureController{
     {
         if($this->request->isPost())
         {
-            $id = $this->request->session->get("usuario_id");
+            $id = login_get("usuario_id");
             
             $user = new UserEntity();
             
@@ -77,19 +77,19 @@ class ProfileController extends SecureController{
 
                 if($nombre == "")
                 {
-                    $this->request->flash->set("error", "Nombre en Blanco.");
+                    flash_set("error", "Nombre en Blanco.");
                     $this->redirect("/perfil");
                 }
 
                 if($apellido == "")
                 {
-                    $this->request->flash->set("error", "Apellido en Blanco.");
+                    flash_set("error", "Apellido en Blanco.");
                     $this->redirect("/perfil");
                 }
 
                 if($email == "")
                 {
-                    $this->request->flash->set("error", "Email en Blanco.");
+                    flash_set("error", "Email en Blanco.");
                     $this->redirect("/perfil");
                 }
 
@@ -99,9 +99,9 @@ class ProfileController extends SecureController{
 
                 if($this->em->update($user))
                 {
-                    $this->request->flash->set("success", "Perfil Actualizado.");
+                    flash_set("success", "Perfil Actualizado.");
                 }else{
-                    $this->request->flash->set("error", "Error...");
+                    flash_set("error", "Error...");
                 }
                 $this->redirect("/perfil");
             }
@@ -113,13 +113,13 @@ class ProfileController extends SecureController{
                 
                 if($password == "" || $password2 == "")
                 {
-                    $this->request->flash->set("error2", "Password en Blanco.");
+                    flash_set("error2", "Password en Blanco.");
                     $this->redirect("/perfil");
                 }
                 
                 if(md5($password) != md5($password2))
                 {
-                    $this->request->flash->set("error2", "Password no Coinciden.");
+                    flash_set("error2", "Password no Coinciden.");
                     $this->redirect("/perfil");
                 }
                 
@@ -127,9 +127,9 @@ class ProfileController extends SecureController{
 
                 if($this->em->update($user))
                 {
-                    $this->request->flash->set("success2", "Password Cambiado.");
+                    flash_set("success2", "Password Cambiado.");
                 }else{
-                    $this->request->flash->set("error2", "Error...");
+                    flash_set("error2", "Error...");
                 }
                 $this->redirect("/perfil");
             }

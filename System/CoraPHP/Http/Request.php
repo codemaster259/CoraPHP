@@ -3,10 +3,7 @@
 namespace System\CoraPHP\Http;
 
 use System\CoraPHP\Container\DataBag;
-use System\CoraPHP\Container\FlashBag;
-use System\CoraPHP\Container\SessionBag;
 use System\CoraPHP\Container\Injecter;
-use System\CoraPHP\Container\Registry;
 
 class Request{
     
@@ -16,14 +13,11 @@ class Request{
     /** @var DataBag $_GET */
     public $query = null;
     
+    /** @var DataBag $params */
+    public $params = null;
+    
     /** @var DataBag $_FILES */
     public $files = null;
-    
-    /** @var FlashBag $_SESSION['FLASH_VARS'] */
-    public $flash = null;
-    
-    /** @var SessionBag $_SESSION['SESSION_VARS'] */
-    public $session = null;
     
     /** @var DataBag attributes */
     public $attributes = null;
@@ -46,10 +40,8 @@ class Request{
         $this->post = new DataBag($_POST);
         $this->query = new DataBag($_GET);
         $this->files = new DataBag($_FILES);
-        
         $this->attributes = new DataBag();
-        $this->flash = new FlashBag(Registry::channel("Settings")->get("flash_vars"));
-        $this->session = new SessionBag(Registry::channel("Settings")->get("session_vars"));
+        $this->params = new DataBag();
         
         $this->method = strtolower($_SERVER['REQUEST_METHOD']);
         

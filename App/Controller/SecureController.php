@@ -11,9 +11,9 @@ class SecureController extends TemplateController{
     {
         parent::init();
                 
-        if(!$this->request->session->has("login"))
+        if(!login_has("login"))
         {
-            $this->redirect("login");
+            $this->redirect("/login");
         }
     }
 }

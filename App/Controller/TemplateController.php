@@ -30,9 +30,9 @@ class TemplateController extends Controller{
                 ->add("web_sidebar", $this->fordward("/widget/sidebar"))
                 ->add("web_menu", $this->fordward("/widget/menu"));
             
-            if($this->request->session->has("usuario"))
+            if(login_has("usuario"))
             {
-                $this->template->add("usuario", $this->request->session->get("usuario"));
+                $this->template->add("usuario", login_get("usuario"));
             }
         }
     }

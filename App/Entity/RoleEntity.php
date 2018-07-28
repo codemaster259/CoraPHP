@@ -11,7 +11,7 @@ class RoleEntity extends Entity{
 
     public $nombre;
     
-    protected function getTable(){
+    public function getTable(){
         return "roles";
     }
 }

@@ -9,12 +9,14 @@
 		
         <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
         
+        <link rel="stylesheet" href="css/CoraPHP.icons.css?<?php echo rand();?>" />
         <link rel="stylesheet" href="css/pirulo.reset.css?<?php echo rand();?>" />
         <link rel="stylesheet" href="css/pirulo.grid.css?<?php echo rand();?>" />
         <link rel="stylesheet" href="css/pirulo.elements.css?<?php echo rand();?>" />
         <link rel="stylesheet" href="css/pirulo.style.css?<?php echo rand();?>" />
         <link rel="stylesheet" href="css/pirulo.admin.css?<?php echo rand();?>" />
-        <link rel="stylesheet" href="css/fontawesome-free-5.1.0-web/css/all.css?<?php echo rand();?>" />
+        <!--<link rel="stylesheet" href="css/fontawesome-free-5.1.0-web/css/all.css?<?php echo rand();?>" />-->
+        
     </head>
     <body>
         <div class="wrapper">
@@ -23,8 +25,8 @@
                 <?php echo $web_site;?>
                 </div>
                 <div class="welcome">
-                Bienvenido, <?php echo $usuario;?><?php echo session_has("is_god") ? " (GOD MODE)" : "";?>
-                | <a href="/logout" class="icon" title="Salir"><i class="fa fa-sign-out-alt"></i>Salir</a>
+                Bienvenido, <?php echo $usuario;?><?php echo login_has("is_god") ? " (GOD MODE)" : "";?>
+                | <a href="/logout" class="icon" title="Salir"><i class="coraphpicon-log-out"></i>Salir</a>
                 </div>
             </div>
             <div class="base">

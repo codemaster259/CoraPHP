@@ -40,7 +40,7 @@ class UserController extends SecureController{
     
     public function viewAction()
     {        
-        $id = $this->request->query->get("id");
+        $id = $this->request->params->get("id");
         
         $u = new UserEntity();
         $u->id = $id;
@@ -74,7 +74,7 @@ class UserController extends SecureController{
             
             if($usuario == "")
             {
-                $this->request->flash->set("error", "Usuario en Blanco.");
+                flash_set("error", "Usuario en Blanco.");
                 $this->redirect("/usuarios/crear");
             }
             
@@ -82,25 +82,25 @@ class UserController extends SecureController{
             
             if($this->em->findBy($u))
             {
-                $this->request->flash->set("error", "Usuario en ya existe.");
+                flash_set("error", "Usuario en ya existe.");
                 $this->redirect("/usuarios/crear");
             }
             
             if($nombre == "")
             {
-                $this->request->flash->set("error", "Nombre en Blanco.");
+                flash_set("error", "Nombre en Blanco.");
                 $this->redirect("/usuarios/crear");
             }
             
             if($apellido == "")
             {
-                $this->request->flash->set("error", "Apellido en Blanco.");
+                flash_set("error", "Apellido en Blanco.");
                 $this->redirect("/usuarios/crear");
             }
             
             if($email == "")
             {
-                $this->request->flash->set("error", "Email en Blanco.");
+                flash_set("error", "Email en Blanco.");
                 $this->redirect("/usuarios/crear");
             }
             
@@ -113,14 +113,14 @@ class UserController extends SecureController{
                 "nombre"=>$nombre,
                 "apellido"=>$apellido,
                 "email"=>$email,
-                "password"=>md5(1234)
+                "password"=>md5("1234")
             ));
             
             if($this->em->create($user))
             {
-                $this->request->flash->set("success", "Usuario Creado.");
+                flash_set("success", "Usuario Creado.");
             }else{
-                $this->request->flash->set("error", "Error al crear el usuario.");
+                flash_set("error", "Error al crear el usuario.");
             }
             $this->redirect("/usuarios");
         }
@@ -137,7 +137,7 @@ class UserController extends SecureController{
 
         $user = new UserEntity();
         
-        $user->id = $this->request->query->get("id");
+        $user->id = $this->request->params->get("id");
         
         $user = $this->em->findById($user);
         
@@ -156,7 +156,7 @@ class UserController extends SecureController{
             if($nombre == "")
             {
                 $flag = false;
-                $this->request->flash->set("error", "Nombre en Blanco.");
+                flash_set("error", "Nombre en Blanco.");
                 //$this->redirect("/usuarios/editar/".$id);
             }
             
@@ -165,7 +165,7 @@ class UserController extends SecureController{
             if($apellido == "")
             {
                 $flag = false;
-                $this->request->flash->set("error", "Apellido en Blanco.");
+                flash_set("error", "Apellido en Blanco.");
                 //$this->redirect("/usuarios/editar/".$id);
             }
             
@@ -174,7 +174,7 @@ class UserController extends SecureController{
             if($email == "")
             {
                 $flag = false;
-                $this->request->flash->set("error", "Email en Blanco.");
+                flash_set("error", "Email en Blanco.");
                 //$this->redirect("/usuarios/editar/".$id);
             }
             
@@ -184,15 +184,15 @@ class UserController extends SecureController{
             {
                 if($reset)
                 {
-                    $user->password = md5(1234);
+                    $user->password = md5("1234");
                 }
 
                 if($this->em->update($user))
                 {
-                    $this->request->flash->set("success", "Usuario Guardado.");
+                    flash_set("success", "Usuario Guardado.");
                     $this->redirect("/usuarios");
                 }else{
-                    $this->request->flash->set("error", "Campos en blanco!");
+                    flash_set("error", "Campos en blanco!");
                 }
             }
         }
@@ -205,11 +205,11 @@ class UserController extends SecureController{
     public function deleteAction()
     {        
         $user = new UserEntity();
-        $user->id = $this->request->query->get("id");
+        $user->id = $this->request->params->get("id");
         
         $this->em->delete($user);
         
-        $this->request->flash->set("success", "Usuario Eliminado.");
+        flash_set("success", "Usuario Eliminado.");
         $this->redirect("/usuarios");
     }
 }

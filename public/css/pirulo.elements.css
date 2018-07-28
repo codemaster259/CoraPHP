@@ -197,6 +197,10 @@ article{
 }
 }
 
+.miniblock{
+    padding:10px;
+}
+
 .block{
     padding:20px;
 }
@@ -230,6 +234,19 @@ article{
 
 .lefter{
     float: left;
+}
+
+.jumbo-100{
+    padding: 100px 20px;
+}
+
+.jumbo-200{
+    padding: 200px 20px;
+}
+
+.shadow{
+    box-shadow: 5px 5px #bbb;
+    border: 1px solid black;
 }
 
 .modal-container{

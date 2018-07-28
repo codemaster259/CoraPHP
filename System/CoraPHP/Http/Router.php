@@ -193,14 +193,14 @@ class Router{
             }
             
             //armar controller
-            $ModuleControllerAction = explode(":", strtolower($match['path']));
+            $ModuleControllerAction = explode(":", str_replace("/","\\",$match['path']));
             
-            $module = ucwords($ModuleControllerAction[0]);
-            $controller = ucwords($ModuleControllerAction[1]);
-            $action = strtolower($ModuleControllerAction[2]);
+            $module = ($ModuleControllerAction[0]);
+            $controller = ($ModuleControllerAction[1]);
+            $action = ($ModuleControllerAction[2]);
             
             //llenar objeto request con parametros de url
-            $this->request->query->fill($matches);
+            $this->request->params->fill($matches);
             
             if(self::$injecter)
             {

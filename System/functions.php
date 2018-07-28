@@ -30,25 +30,6 @@ function define_urls(){
     return $urls;
 }
 
-function debug($obj, $label = null)
-{
-    if($label)
-    {
-        $label = "$label:<br>";
-    }
-    
-    echo "<pre>".$label.print_r($obj, 1)."</pre>";
-}
-
-function decide($b, $t, $f = null)
-{
-    return $b ? $t : $f;
-}
-
-function is($bool){
-    return decide($bool,"true","false");
-}
-
 function fake_loader($classOrCommand, $param = null, $other = null)
 {
     static $simplelog = false;
@@ -117,65 +98,133 @@ function fake_loader($classOrCommand, $param = null, $other = null)
     }
 }
 
+/*DEBUG HELPER*/
+function debug($obj, $label = null)
+{
+    if($label)
+    {
+        $label = "$label:<br>";
+    }
+    
+    echo "<pre>".$label.print_r($obj, 1)."</pre>";
+}
+/*DEBUG HELPER*/
+
+
+/*BOOLEAN HELPER*/
+function decide($b, $t, $f = null)
+{
+    return $b ? $t : $f;
+}
+
+function is($bool){
+    return decide($bool, "true", "false");
+}
+/*BOOLEAN HELPER*/
+
+
+/*STRING HELPER*/
+function startsWith($needle, $string)
+{ 
+    return (substr($string, 0, strlen($needle)) === $needle);
+}
+
+function endsWith($needle, $string)
+{        
+    return (substr($string, -strlen($needle)) === $needle);
+}
+/*STRING HELPER*/
+
+
+/*OBJECT HELPER*/
 function get_object_public_vars($object)
 {
     return get_object_vars($object);
 }
+/*OBJECT HELPER*/
+
+
+/*LOGIN HELPER*/
+define("LOGIN_KEY", md5("LOGIN_KEY"));
+
+function login_init()
+{
+    if(!isset($_SESSION[LOGIN_KEY]))
+    {
+        $_SESSION[LOGIN_KEY] = array();
+    }
+}
+
+function login_set($key, $value = false)
+{
+    $_SESSION[LOGIN_KEY][$key] = $value;
+}
+
+function login_has($key)
+{
+    return isset($_SESSION[LOGIN_KEY][$key]);
+}
+
+function login_get($key)
+{
+    return login_has($key) ? $_SESSION[LOGIN_KEY][$key] : null;
+}
+
+function login_delete($key)
+{
+    unset($_SESSION[LOGIN_KEY][$key]);
+}
+/*LOGIN HELPER*/
+
+
+/*FLASH HELPER*/
+define("FLASH_KEY", md5("FLASH_KEY"));
+
+function flash_init()
+{
+    if(!isset($_SESSION[FLASH_KEY]))
+    {
+        $_SESSION[FLASH_KEY] = array();
+    }
+}
 
 function flash_set($key, $value = false)
 {
-    $flash = new System\CoraPHP\Container\FlashBag(\System\CoraPHP\Container\Registry::channel("Settings")->get("flash_vars"));
-    $flash->set($key, $value);
+    $_SESSION[FLASH_KEY][$key] = $value;
 }
 
 function flash_has($key)
 {
-    $flash = new System\CoraPHP\Container\FlashBag(\System\CoraPHP\Container\Registry::channel("Settings")->get("flash_vars"));
-    return $flash->has($key);
+    return isset($_SESSION[FLASH_KEY][$key]);
+}
+
+function flash_get($key)
+{
+    return flash_has($key) ? $_SESSION[FLASH_KEY][$key] : null;
+}
+
+function flash_delete($key)
+{
+    unset($_SESSION[FLASH_KEY][$key]);
 }
 
 function flash_show($key)
 {
-    $flash = new System\CoraPHP\Container\FlashBag(\System\CoraPHP\Container\Registry::channel("Settings")->get("flash_vars"));
-    return $flash->show($key);    
+    $value = flash_get($key);
+    flash_delete($key);
+    return $value;
 }
+/*FLASH HELPER*/
 
-/*SESSIONS*/
-function session_set($key, $value = false)
-{
-    $session = new System\CoraPHP\Container\SessionBag(\System\CoraPHP\Container\Registry::channel("Settings")->get("session_vars"));
-    $session->set($key, $value);
-}
 
-function session_has($key)
-{
-    $session = new System\CoraPHP\Container\SessionBag(\System\CoraPHP\Container\Registry::channel("Settings")->get("session_vars"));
-    return $session->has($key);
-}
-
-function session_get($key = null)
-{
-    $session = new System\CoraPHP\Container\SessionBag(\System\CoraPHP\Container\Registry::channel("Settings")->get("session_vars"));
-    if($key)
-    {
-        return $session->get($key);
-    }
-    return $session->all();
-}
-
-function session_remove($key = null)
-{
-    $session = new System\CoraPHP\Container\SessionBag(\System\CoraPHP\Container\Registry::channel("Settings")->get("session_vars"));
-    if($key)
-    {
-        $session->remove($key);
-    }
-    $session->clear();
-}
-
+/*GOD LOGIN HELPER*/
 function isGod($user, $pass)
 {
     $Settings = \System\CoraPHP\Container\Registry::channel("Settings");
     
     return ($user == $Settings->get("god_user") && $pass == $Settings->get("god_pass"));
 }
+/*GOD LOGIN HELPER*/
+
+login_init();
+flash_init();

@@ -36,5 +36,3 @@
         <script type="text/javascript" src="js/base.js"></script>
     </body>
 </html>
-<?php
-echo md5("0538259");

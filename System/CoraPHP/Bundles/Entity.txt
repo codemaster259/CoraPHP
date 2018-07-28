@@ -9,8 +9,7 @@ use System\CoraPHP\Model\Entity;
  */
 class {{name}}Entity extends Entity{
 
-    
-    protected function getTable(){
+    public function getTable(){
         return "{{table}}";
     }
 }

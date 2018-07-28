@@ -20,8 +20,8 @@ ul {
   list-style: none;
 }
 
-.fa{
-    padding-right:5px;
+[class^="coraphpicon-"]{
+    padding-right:10px;
 }
 
 .wrapper {
@@ -73,7 +73,6 @@ ul {
     background: #444;
     overflow-y: auto;
 }
-
 .nav .menuitem{
     position: relative;
     display: block;
@@ -84,17 +83,19 @@ ul {
     cursor:pointer;
     transition: 0.2s;
 }
+.nav .menuitem.label{
+    padding: 10px 10px;
+    background: #555;
+}
+
 
 .nav input{
     display: none;
 }
 
-.nav .menuitem:hover,.nav .menuitem.active{
+.nav .menuitem.link:hover,.nav .menuitem.link.active{
     color: #fff;
     background: #111;
-}
-
-.nav .menuitem:hover{
     padding-left: 30px;
 }
 
@@ -146,6 +147,7 @@ ul {
 .table {
     border-collapse: collapse;
     border: 1px solid #ddd;
+    font-size:1em;
 }
 
 .table th, .table td {

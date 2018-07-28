@@ -26,16 +26,18 @@ class LoginController extends TemplateController{
     public function init(){
         parent::init();
         
+        $this->template->setFile("Layout:base.login");
+        
         $this->template->append("web_title", "Iniciar Sesion - ");
         
         $this->em = $this->request->injecter->get("EntityManager");
         
-        $this->template->setFile("Layout:base.login");
+        $this->auth = new AuthService($this->em);
     }
     
     public function indexAction(){
         
-        if($this->request->session->has("login"))
+        if(login_has("login"))
         {
             $this->redirect();
         }
@@ -45,28 +47,12 @@ class LoginController extends TemplateController{
             $usuario = trim($this->request->post->get("usuario"));
             $password = trim($this->request->post->get("password"));
             
-            $this->auth = new AuthService($this->em);
-            
-            if(isGod($usuario, $password))
-            {
-                $this->request->session->set("login", true);
-                $this->request->session->set("usuario", "GOD");
-                $this->request->session->set("usuario_id", 0);
-                $this->request->session->set("is_god", true);
-                $this->redirect();
-            }
-            
             if(!$this->auth->login($usuario, $password))
             {
-                $this->request->flash->set("error", $this->auth->getLoginError());
+                flash_set("error", $this->auth->getLoginError());
                 $this->redirect("/login");
             }
             
-            $user = $this->auth->getUser();
-        
-            $this->request->session->set("login", true);
-            $this->request->session->set("usuario", $user->usuario);
-            $this->request->session->set("usuario_id", $user->id);
             $this->redirect();
         }
         
@@ -80,15 +66,13 @@ class LoginController extends TemplateController{
     
     public function logoutAction(){
         
-        if(!$this->request->session->has("login"))
+        if(!login_has("login"))
         {
             $this->redirect("/login");
         }
         
-        $this->request->session->remove("login");
-        $this->request->session->remove("usuario");
-        $this->request->session->remove("usuario_id");
-        $this->request->session->remove("is_god");
+        $this->auth->logout();
+        
         $this->redirect();
     }
 }

@@ -30,6 +30,11 @@ class Controller{
     {
         $urlOrRoute = Router::getRouteByName($urlOrRoute);
         
+        if(!startsWith("/", $urlOrRoute))
+        {
+            $urlOrRoute = "/".$urlOrRoute;
+        }
+        
         header("Location: {$urlOrRoute}");
         
         exit();
