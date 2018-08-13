@@ -1,7 +1,7 @@
 /* 
     Created on : 10/06/2018, 11:43:35 AM
     Author     : Pirulo
-	File       : pirulo.elements.css
+    File       : pirulo.elements.css
 */
 
 /* Mobile first styles go here */
@@ -14,28 +14,6 @@ article{
 .scroll-y{overflow-y: auto;}
 .scroll-x{overflow-x: auto;}
 /*SCROLLABLES*/
-
-/*BUTTONS*/
-[class^="btn-"]{
-    text-decoration: none;
-    padding: 8px 10px;
-    background: #eee;
-    color: #000;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    display: inline-block;
-    box-sizing: border-box;
-    font-family: SANS-SERIF;
-    cursor: pointer;
-    font-weight: bold;
-}
-[class^="btn-"]:hover{background: #ddd;}
-[class^="btn-"]:active{background: #ccc;}
-/*BUTTONS*/
-
-/*ALERT*/
-[class^="alert-"]{padding:20px;border-radius:5px;margin-bottom:10px;}
-/*ALERT*/
 
 /*TABLE*/
 .table {
@@ -64,6 +42,8 @@ article{
 
 .form .input-group{
     display: block;
+    position: relative;
+    margin-top:10px;
 }
 
 .form .input-group .input-label{
@@ -71,14 +51,54 @@ article{
     padding: 8px 10px;
     float: left;
 }
+
 .form .input-group .input-field{
     display: inline-block;
-    padding: 8px 10px;
-    border: 1px solid #555;
-    border-radius: 5px;
+    padding: 8px 0px;
+    border: 0px;
+    border-bottom: 1px solid rgba(0,0,0,0.5);
     text-align: left;
     width: 100%;
+    transition: all 0.2s ease-in-out;
+    outline: transparent !important;
+    background: transparent !important;
 }
+
+.form .input-group .input-field + label{
+    position: absolute;
+    left: 0px;
+    top: 8px;
+    width: 100%;
+    user-select: none;
+    text-align: left;
+    cursor: text;
+    visibility: visible;
+    transition: all 0.2s ease-in-out;
+}
+
+.form .input-group .input-field + label:after{
+    content:"";
+    position: absolute;
+    display: block;
+    height:2px;
+    width: 0%;
+    left:50%;
+    bottom: 0;
+    background: rgba(0,0,0,1);
+    transition: all 0.2s ease-in-out;
+}
+
+.form .input-group .input-field:focus + label:after{
+    /*width: 100%;*/
+    /*left:0%;*/
+}
+
+.form .input-group .input-field:focus + label,
+.form .input-group .input-field:valid + label{
+    top: -6px;
+    font-size: 0.8em;
+}
+
 /*FORMS*/
 
 /*NAV MENU*/
@@ -245,40 +265,13 @@ article{
 }
 
 .shadow{
-    box-shadow: 5px 5px #bbb;
-    border: 1px solid black;
+    box-shadow: 5px 5px 10px 0px #ccc;
 }
 
-.modal-container{
-    position: fixed;
-    z-index: 100;
-    background-color: #fff;
-    width:70%;
-    max-width: 300px;
-    left:50%;
-    padding: 20px;
-    border-radius: 5px;
-    
-    transform: translate(-50%, -400%);
-    
-    transition: all 0.2s ease-out;
+.shadow-hover:hover{
+    box-shadow: 5px 5px 10px 0px #ccc;
 }
 
-.modal:before{
-    content: "";
-    position: fixed;
-    display: none;
-    background-color: rgba(0,0,0,.8);
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-}
-.modal:target .modal-container{
-    transform: translate(-50%, 0);
-    
-}
-
-.modal:target:before{
-    display: block;
+.p-0{
+    padding: 0px !important;
 }

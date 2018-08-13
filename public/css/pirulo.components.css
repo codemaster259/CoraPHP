@@ -1,0 +1,220 @@
+/* 
+    Created on : 09/08/2018, 07:36:35 PM
+    Author     : Pirulo
+    File       : pirulo.componentes.css
+*/
+
+/*BUTTONS*/
+[class^="btn-"],
+.btn{
+    text-decoration: none;
+    padding: 8px 10px;
+    background: #aaa;
+    color: #fff;
+    border: 1px solid #ddd;
+    display: inline-block;
+    box-sizing: border-box;
+    font-family: SANS-SERIF;
+    cursor: pointer;
+    font-weight: bold;
+}
+[class^="btn-"]:hover,
+.btn:hover{
+    background: #ddd;
+}
+[class^="btn-"]:active,
+.btn:active{
+    background: #ccc;
+}
+
+[class^="btn-"].round,
+.btn.round{
+    border-radius: 10px;
+}
+/*BUTTONS*/
+
+
+
+/*ALERT*/
+[class^="alert-"],
+.alert{
+    background: #ccc;
+    border:1px solid #aaa;
+    padding:20px;
+    margin-bottom:10px;
+}
+[class^="alert-"].round,
+.alert.round{
+    border-radius:5px;
+}
+/*ALERT*/
+
+
+
+/*CHECKBOX - RADIO*/
+[class^='switch-'] input,
+.switch input{
+    opacity: 0;
+    position: absolute;
+}
+
+[class^='switch-'] input + span,
+.switch input + span,
+[class^='switch-'] input + span:after,
+.switch input + span:after{
+    transition: all 0.2s ease-in-out;
+}
+
+[class^='switch-'] input + span,
+.switch input + span{
+    display: inline-block;
+    width: 35px;
+    height: 20px;
+    background: #ccc;
+    position: relative;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+[class^='switch-'] input + span:after,
+.switch input + span:after{
+    content: " ";
+    background: #eee;
+    width: 15px;
+    height: 15px;
+    top: 2px;
+    left: 2px;
+    position: absolute;
+    padding: 8px;
+}
+
+[class^='switch-'] input + span:hover:after,
+.switch input + span:hover:after,
+[class^='switch-'] input:focus + span:after,
+.switch input:focus + span:after{
+    background: #fff;
+}
+
+[class^='switch-'] input:checked + span,
+.switch input:checked + span{
+    background: #aaa;
+}
+
+[class^='switch-'] input:checked + span:after,
+.switch input:checked + span:after{
+    transform: translateX(15px);
+}
+
+[class^='switch-'].round > span,
+.switch.round > span,
+[class^='switch-'].round > span:after,
+.switch.round > span:after{
+    border-radius: 10px;
+}
+/*CHECKBOX - RADIO*/
+
+
+/*BOX*/
+[class^="box-"],
+.box{
+    margin-top: 15px;
+    background: #fff;
+}
+[class^="box-"] > .title,
+.box > .title{
+    color: #000;
+    background: #ccc;
+    padding: 5px;
+    padding-left: 15px;
+    font-size: 1.5em;
+}
+
+[class^="box-"] > .body,
+.box > .body{
+    padding: 15px;
+    background: #fff;
+}
+
+[class^="box-"].round,
+.box.round{
+    border-radius: 10px;
+}
+
+[class^="box-"].round > .title,
+.box.round > .title{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+[class^="box-"].round > .body,
+.box.round > .body{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+/*BOX*/
+
+
+
+/*MODAL*/
+.modal{
+    position: fixed;
+    z-index: 1050;
+    top: 0px;
+    bottom:0px;
+    left: 0px;
+    right:0px;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.2s ease-out;
+}
+
+.modal > .modal-overlay{
+    position: fixed;
+    background-color: rgba(0,0,0,0.5);
+    top: 0px;
+    bottom:0px;
+    left: 0px;
+    right:0px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+}
+
+.modal > .modal-content{
+    position: relative;
+    width: 600px;
+    max-width: 100%;
+    margin: auto;
+    transform: translate(0,-50%);
+    top: 20%;
+    transition: all 0.2s ease-out;
+}
+
+.modal > .modal-content [data-modal='close']{
+    cursor:pointer;
+    float: right;
+    padding: 0px 5px;
+}
+
+.modal > .modal-content [data-modal='close']:hover{
+    color:#ccc;
+}
+
+[data-modal='toggle']:checked + .modal, /*CHECK*/
+.modal.active /*JS*/
+{
+    visibility: visible;
+    opacity: 1;
+}
+    
+[data-modal='toggle']:checked + .modal > .modal-content, /*CHECK*/
+.modal.active > .modal-content /*JS*/
+{
+    top: 30%;
+}
+
+[data-modal='toggle']{
+    display:none;
+}
+/*MODAL*/
+
+

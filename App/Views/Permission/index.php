@@ -2,12 +2,12 @@
     <h2><?php echo $page_title;?></h2>
     <br />
     <?php if(flash_has("error")):?>
-        <div class="alert-error grid-4 automargin">
+        <div class="alert-red grid-4 automargin">
         <?php echo flash_show("error");?>
         </div>
     <?php endif;?>
     <?php if(flash_has("success")):?>
-        <div class="alert-success grid-4 automargin">
+        <div class="alert-green grid-4 automargin">
         <?php echo flash_show("success");?>
         </div>
     <?php endif;?>

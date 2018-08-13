@@ -85,18 +85,18 @@
 
 
     init.prototype.addClass = function (classes) {
-        var className = "";
-        if(typeof classes !== "string")
-        {
-            for (var i = 0; i < classes.length; i++)
-            {
-                className += " " + classes[i];
-            }
-        }else{
-            className = " " + classes;
-        }
+
         return this.forEach(function (el){
-            el.className += className;
+
+            var current = el.className.split(" ").filter(function(d){return d.trim();});
+            //console.log(current);
+            var newClasses = classes.split(" ").filter(function(d){return d.trim();});
+            
+            newClasses.forEach(function(cls){
+                current.push(cls);
+            });
+
+            el.className = current.join(" ").trim();
         });
     };
 
@@ -166,15 +166,25 @@
 
 
     init.prototype.append = function (els){
-        return this.forEach(function (parentEl, i){
-            els.forEach(function (childEl){
-                if (i > 0)
-                {
-                    childEl = childEl.cloneNode(true);
-                }
-                parentEl.appendChild(childEl);
+
+        if(typeof els === "string")
+        {
+            return this.forEach(function (parentEl, i){
+                Lux(parentEl).html(Lux(parentEl).html() + els);
             });
-        });
+
+        }else{
+
+            return this.forEach(function (parentEl, i){
+                els.forEach(function (childEl){
+                    if (i > 0)
+                    {
+                        childEl = childEl.cloneNode(true);
+                    }
+                    parentEl.appendChild(childEl);
+                });
+            });
+        }
     };
 
 
@@ -206,22 +216,31 @@
     /*EVENTS*/
     init.prototype.on = (function (){
         if(document.addEventListener)
-        {
-            return function (evt, fn) {
+        {            
+            return function (evt, fn) {             
                 return this.forEach(function (el) {
-                    el.addEventListener(evt, fn, false);
+                    var evtList = evt.split(" ").filter(function(d){return d.trim();});
+                    evtList.forEach(function(e){
+                        el.addEventListener(e, fn, false);
+                    });
                 });
             };
         }else if (document.attachEvent){
             return function (evt, fn){
                 return this.forEach(function (el) {
-                    el.attachEvent("on" + evt, fn);
+                    var evtList = evt.split(" ").filter(function(d){return d.trim();});
+                    evtList.forEach(function(e){
+                        el.attachEvent("on" + e, fn);
+                    });
                 });
             };
         }else{
             return function (evt, fn) {
                 return this.forEach(function (el) {
-                    el["on" + evt] = fn;
+                    var evtList = evt.split(" ").filter(function(d){return d.trim();});
+                    evtList.forEach(function(e){
+                        el["on" + evt] = fn;
+                    });
                 });
             };
         }
@@ -336,7 +355,7 @@
     Lux.doc = Lux(document);
     
     Lux.create = function (tagName, attrs){
-        var el = new Dome([document.createElement(tagName)]);
+        var el = new Lux([document.createElement(tagName)]);
         if(attrs)
         {
             if(attrs.className)
@@ -358,6 +377,10 @@
             }
         }
         return el;
+    };
+    
+    Lux.plugin = function(name, callback){
+        init.prototype[name] = callback;
     };
     
     Lux.extend = function(opts, ns){
@@ -408,8 +431,6 @@
             opts.data = Lux.req.jsonToQuery(opts.data);
         }
         
-        console.log(opts);
-        
         var xhr = new XMLHttpRequest();
         try{
             xhr.open(opts.method, opts.url, true);/*open first*/
@@ -426,10 +447,8 @@
                     {
                         if(opts.json)
                         {
-                            console.log("json true");
                             opts.success.call(null, JSON.parse(this.responseText));
                         }else{
-                            console.log("json false");
                             opts.success.call(null, this.responseText);
                         }
                     }

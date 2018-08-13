@@ -52,7 +52,9 @@ ul {
     width: 200px;
     padding: 17px;
     float:left;
+    left:0px;
     background: #444;
+    transition: all 0.5s ease-in-out;
 }
 .header .welcome{
     padding: 17px;
@@ -69,9 +71,11 @@ ul {
     width: 200px;
     height: 100%;
     float: left;
+    left: 0px;
     position: absolute;
     background: #444;
     overflow-y: auto;
+    transition: all 0.5s ease-in-out;
 }
 .nav .menuitem{
     position: relative;
@@ -99,6 +103,24 @@ ul {
     padding-left: 30px;
 }
 
+.nav ul ul{
+    max-height: 0px;
+    overflow-y: hidden;
+    transition: all 1s cubic-bezier(0, 1, 0, 1);
+}
+.nav input + label span{
+    transition: all 0.3s ease-in-out;
+}
+    
+.nav input:checked + label span{
+    transform: rotate(90deg);
+}
+
+.nav input:checked + label + ul{
+    max-height: 1000px;
+    transition: all 1s ease-in-out;
+}
+
 /*main*/
 .main{
     width: auto;
@@ -107,8 +129,9 @@ ul {
     right: 0px;
     float: left;
     position: absolute;
-    background: #eee;
+    background: #def;
     overflow-y: auto;
+    transition: all 0.5s ease-in-out;
 }
 
 .main-title{
@@ -121,27 +144,6 @@ ul {
 .main-content{
     padding: 20px;
 }
-
-
-/*card*/
-.box{
-    margin-top: 15px;
-    background: #fff;
-}
-.box .box-title{
-    color: #fff;
-    background: #38b;
-    padding: 5px;
-    padding-left: 15px;
-    text-shadow: 0px 1px #000;
-    font-size: 1.5em;
-}
-
-.box .box-body{
-    padding: 15px;
-}
-/*card*/
-
 
 /*table*/
 .table {
@@ -165,6 +167,24 @@ ul {
 
 /*
 ** Media Queries
-***********************************************************/
-@media (max-width: 1000px) {
+*/
+
+/*menos de 767px*/
+@media (max-width: 767px) {
+    
+    /*
+    .header .brand{
+        width: 0px;
+        padding: 17px 0px;
+        overflow-x: hidden;
+    }
+    
+    .nav{
+        left: -200px;
+    }
+    
+    .main{
+        left: 0px;
+    }
+    */
 }

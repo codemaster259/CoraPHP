@@ -13,7 +13,9 @@
         <link rel="stylesheet" href="css/pirulo.reset.css?<?php echo rand();?>" />
         <link rel="stylesheet" href="css/pirulo.grid.css?<?php echo rand();?>" />
         <link rel="stylesheet" href="css/pirulo.elements.css?<?php echo rand();?>" />
+        <link rel="stylesheet" href="css/pirulo.components.css?<?php echo rand();?>" />
         <link rel="stylesheet" href="css/pirulo.style.css?<?php echo rand();?>" />
+        <!--<link rel="stylesheet" href="css/pirulo.style_1.css?<?php echo rand();?>" />-->
         <link rel="stylesheet" href="css/pirulo.admin.css?<?php echo rand();?>" />
         <!--<link rel="stylesheet" href="css/fontawesome-free-5.1.0-web/css/all.css?<?php echo rand();?>" />-->
         

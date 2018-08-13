@@ -19,7 +19,10 @@ Lux.ready(function(){
     
     
     Lux('[class^="alert-"]').delay(2000, function(e){
-        Lux(e).hide();
+        if(!Lux(e).hasData("lock"))
+        {
+            Lux(e).hide();
+        }
         /*
         setTimeout(function(){
             Lux(e).show();

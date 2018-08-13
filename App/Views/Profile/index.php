@@ -3,13 +3,13 @@
         <h2><?php echo $page_title;?></h2>
         
         <?php if(flash_has("error")):?>
-        <div class="alert-error">
+        <div class="alert-red">
             <?php echo flash_show("error");?>
         </div>
         <?php endif;?>
         
         <?php if(flash_has("success")):?>
-        <div class="alert-success">
+        <div class="alert-green">
             <?php echo flash_show("success");?>
         </div>
         <?php endif;?>
@@ -36,13 +36,13 @@
         <h2>Cambiar Password:</h2>
         
         <?php if(flash_has("error2")):?>
-        <div class="alert-error">
+        <div class="alert-red">
             <?php echo flash_show("error2");?>
         </div>
         <?php endif;?>
         
         <?php if(flash_has("success2")):?>
-        <div class="alert-success">
+        <div class="alert-green">
             <?php echo flash_show("success2");?>
         </div>
         <?php endif;?>

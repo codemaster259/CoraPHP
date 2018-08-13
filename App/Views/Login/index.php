@@ -2,7 +2,7 @@
     <form method="POST" class="form grid-4 shadow">
         <h2>Iniciar Sesion</h2>
         <?php if(flash_has("error")):?>
-        <div class="alert-error">
+        <div class="alert-red">
             <?php echo flash_show("error");?>
         </div>
         <?php endif;?>

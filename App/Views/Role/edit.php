@@ -3,7 +3,7 @@
         <h2><?php echo $page_title;?></h2>
         
         <?php if(flash_has("error")):?>
-        <div class="alert-error grid-4 automargin">
+        <div class="alert-red grid-4 automargin">
             <?php echo flash_show("error");?>
         </div>
         <?php endif;?>
