@@ -62,3 +62,16 @@
 .box-red > .title{background:#e32}
 .box-black > .title{background:#000; color:#fff;}
 /*BOX*/
+
+/*LINK*/
+.link-blue{color:#39d;}
+.link-blue:hover{border-color:#39d;}
+.link-green{color:#5d5;}
+.link-green:hover{border-color:#5d5;}
+.link-sky{color:#3df;}
+.link-sky:hover{border-color:#3df;}
+.link-orange{color:#fd6;}
+.link-orange:hover{border-color:#fd6;}
+.link-red{color:#e32;}
+.link-red:hover{border-color:#e32;}
+/*LINK*/

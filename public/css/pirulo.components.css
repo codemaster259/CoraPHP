@@ -29,7 +29,7 @@
 
 [class^="btn-"].round,
 .btn.round{
-    border-radius: 10px;
+    border-radius: 5px;
 }
 /*BUTTONS*/
 
@@ -127,29 +127,35 @@
     padding: 5px;
     padding-left: 15px;
     font-size: 1.5em;
+    z-index: 1;
+    position: relative;
+    box-shadow: 0 4px 10px -2px rgba(0,0,0,0.3);
+    
 }
 
 [class^="box-"] > .body,
-.box > .body{
+.box > .body,
+[class^="box-"] > .footer,
+.box > .footer{
     padding: 15px;
     background: #fff;
 }
 
 [class^="box-"].round,
 .box.round{
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
-[class^="box-"].round > .title,
-.box.round > .title{
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+[class^="box-"].round > :first-child,
+.box.round > :first-child{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
-[class^="box-"].round > .body,
-.box.round > .body{
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+[class^="box-"].round > :last-child,
+.box.round > :last-child{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 /*BOX*/
 
@@ -193,6 +199,7 @@
     cursor:pointer;
     float: right;
     padding: 0px 5px;
+    font-family: monospace;
 }
 
 .modal > .modal-content [data-modal='close']:hover{
@@ -217,4 +224,17 @@
 }
 /*MODAL*/
 
+
+/*LINK*/
+[class^="link-"],
+.link{
+    cursor: pointer;
+    color:#333;
+}
+
+[class^="link-"]:hover,
+.link:hover{
+    border-bottom: 1px solid black;
+}
+/*LINK*/
 

@@ -35,7 +35,7 @@
                         <?php echo isset($web_sidebar) ? $web_sidebar : "no definido";?>
                     </div>
                     -->
-                    <div class="grid-all column">
+                    <div class="column">
                         <?php echo isset($web_content) ? $web_content : "no definido";?>
                     </div>
                 </div>

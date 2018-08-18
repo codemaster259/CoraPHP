@@ -47,24 +47,51 @@
     width: 100%;
 }
 
+/*mayor a 8000*/
 @media screen and (min-width: 800px) {
 /* Desktop styles go here */
 
 /*12-column*/
-.grid-1 {width:  8.3333%;}
-.grid-2 {width: 16.6666%;}
-.grid-3 {width: 25%;}
-.grid-4 {width: 33.3333%;}
-.grid-5 {width: 41.6666%;}
-.grid-half {width: 50%;}
-.grid-7 {width: 58.3333%;}
-.grid-8 {width: 66.6666%;}
-.grid-9 {width: 75%;}
-.grid-10 {width: 83.3333%;}
-.grid-11 {width: 91.6666%;}
-.grid-all {width: 100%;}
+.grid-t1 {width:  8.3333%;}
+.grid-t2 {width: 16.6666%;}
+.grid-t3 {width: 25%;}
+.grid-t4 {width: 33.3333%;}
+.grid-t5 {width: 41.6666%;}
+.grid-thalf {width: 50%;}
+.grid-t7 {width: 58.3333%;}
+.grid-t8 {width: 66.6666%;}
+.grid-t9 {width: 75%;}
+.grid-t10 {width: 83.3333%;}
+.grid-t11 {width: 91.6666%;}
+.grid-tfull {width: 100%;}
 
-/*column floated*/
+.container {
+    margin: 0px auto;
+    padding: 0px;
+    max-width: 480px;
+    }
+}
+
+.column {float:left;}
+
+/*mayor a 1200px*/
+@media screen and (min-width: 1200px) {
+/* Desktop styles go here */
+
+/*12-column*/
+.grid-d1 {width:  8.3333%;}
+.grid-d2 {width: 16.6666%;}
+.grid-d3 {width: 25%;}
+.grid-d4 {width: 33.3333%;}
+.grid-d5 {width: 41.6666%;}
+.grid-dhalf {width: 50%;}
+.grid-d7 {width: 58.3333%;}
+.grid-d8 {width: 66.6666%;}
+.grid-d9 {width: 75%;}
+.grid-d10 {width: 83.3333%;}
+.grid-d11 {width: 91.6666%;}
+.grid-dfull {width: 100%;}
+
 .column {float:left;}
 
 .container {

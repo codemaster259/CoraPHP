@@ -1,5 +1,5 @@
 <article class="jumbo-200">
-    <form method="POST" class="form grid-4 shadow">
+    <form method="POST" class="form grid-d4 grid-thalf shadow">
         <h2>Iniciar Sesion</h2>
         <?php if(flash_has("error")):?>
         <div class="alert-red">

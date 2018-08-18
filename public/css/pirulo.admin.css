@@ -87,11 +87,18 @@ ul {
     cursor:pointer;
     transition: 0.2s;
 }
+
 .nav .menuitem.label{
     padding: 10px 10px;
     background: #555;
+    cursor: default;
 }
 
+.nav .menuitem.brand{
+    padding: 10px 10px;
+    background: #555;
+    cursor: default;
+}
 
 .nav input{
     display: none;
@@ -103,24 +110,6 @@ ul {
     padding-left: 30px;
 }
 
-.nav ul ul{
-    max-height: 0px;
-    overflow-y: hidden;
-    transition: all 1s cubic-bezier(0, 1, 0, 1);
-}
-.nav input + label span{
-    transition: all 0.3s ease-in-out;
-}
-    
-.nav input:checked + label span{
-    transform: rotate(90deg);
-}
-
-.nav input:checked + label + ul{
-    max-height: 1000px;
-    transition: all 1s ease-in-out;
-}
-
 /*main*/
 .main{
     width: auto;
@@ -129,7 +118,7 @@ ul {
     right: 0px;
     float: left;
     position: absolute;
-    background: #def;
+    background: #ddd;
     overflow-y: auto;
     transition: all 0.5s ease-in-out;
 }
