@@ -67,7 +67,7 @@ $app->onLoad(function(App $app){
     $injecter->add("database", function(Injecter $i){ 
 
         extract($i->get("dbsettings"));
-        return new Database($host, $user, $pass, $dbname);
+        return new Database($dsn, $user, $pass);
     });
     
     $injecter->add("ModelFactory", function(Injecter $i){
@@ -80,8 +80,11 @@ $app->onLoad(function(App $app){
         return new EntityManager($i->get("database"));
     });
     
+    $url = Registry::channel("Urls")->get("REQUEST_URL");
+    $routes = Registry::channel("Routes")->all();
+    
     //ROUTING
-    echo Router::make(Registry::channel("Urls")->get("REQUEST_URL"), Registry::channel("Routes")->all(), $injecter);
+    echo Router::make($url, $routes, $injecter);
 
     //debug(Router::getRoutes());
 });

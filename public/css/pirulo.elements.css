@@ -20,7 +20,7 @@ article{
 .table {
     margin: auto;
     border-collapse: collapse;
-    border: 1px solid #ddd;
+    border: 1px solid #444;
 }
 
 .table th, .table td {
@@ -28,9 +28,10 @@ article{
     padding: 8px;
 }
 
-.table tr:nth-child(odd){background-color: #eee}
+.table tr:nth-child(odd){background-color: #fff;}
+.table tr:nth-child(even){background-color: #eee;}
 
-.table tr:first-of-type{background-color: #ddd}
+.table tr:first-of-type{background-color: #444; color: #ccc;}
 /*TABLE*/
 
 

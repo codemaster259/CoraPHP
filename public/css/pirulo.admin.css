@@ -134,25 +134,6 @@ ul {
     padding: 20px;
 }
 
-/*table*/
-.table {
-    border-collapse: collapse;
-    border: 1px solid #ddd;
-    font-size:1em;
-}
-
-.table th, .table td {
-    text-align: left;
-    padding: 8px;
-}
-
-.table tr:nth-child(odd){background-color: #ccc;}
-.table tr:nth-child(even){background-color: #ddd;}
-
-.table tr:first-of-type{background-color: #444; color: #ccc;}
-/*table*/
-
-
 
 /*
 ** Media Queries

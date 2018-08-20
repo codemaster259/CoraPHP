@@ -9,24 +9,22 @@ class Database{
     /** @var \PDO */
     protected $pdo = null;
     
-    protected $host = null;
+    protected $dsn = null;
     protected $user = null;
     protected $pass = null;
-    protected $dbname = null;
     
     protected $mode ="select";
 
-    public function __construct($host, $user, $pass, $dbname)
+    public function __construct($dsn, $user, $pass)
     {   
-        $this->host = $host;
+        $this->dsn = $dsn;
         $this->user = $user;
         $this->pass = $pass;
-        $this->dbname = $dbname;
     }
     
     private function connect()
     {
-        $this->pdo = new PDO("mysql:dbname=$this->dbname;host=$this->host", $this->user, $this->pass);
+        $this->pdo = new PDO($this->dsn, $this->user, $this->pass);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     
